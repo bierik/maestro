@@ -1,0 +1,43 @@
+{
+  "name": "maestro",
+  "discription": "Manage customers, tasks and invoices.",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt generate --modern",
+    "start": "nuxt start",
+    "test": "jest",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
+  },
+  "prettier": "@4tw/prettier-config",
+  "dependencies": {
+    "@fullcalendar/interaction": "^5.6.0",
+    "@fullcalendar/rrule": "^5.6.0",
+    "@fullcalendar/timegrid": "^5.6.0",
+    "@fullcalendar/vue": "^5.6.0",
+    "@nuxt/http": "^0.6.4",
+    "@nuxtjs/pwa": "^3.0.2",
+    "cookie": "^0.3.1",
+    "core-js": "^3.6.5",
+    "lodash": "^4.17.20",
+    "luxon": "^1.26.0",
+    "nuxt": "^2.14.6",
+    "portal-vue": "^2.1.7",
+    "rrule": "^2.6.8"
+  },
+  "devDependencies": {
+    "@4tw/eslint-config": "^0.6.0",
+    "@4tw/prettier-config": "^1.0.3",
+    "@mdi/js": "^5.9.55",
+    "@nuxtjs/proxy": "^2.0.1",
+    "@nuxtjs/vuetify": "^1.11.2",
+    "@vue/test-utils": "^1.1.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^26.5.0",
+    "eslint": "^7.15.0",
+    "jest": "^26.5.0",
+    "prettier": "^2.2.1",
+    "vue-jest": "^3.0.4"
+  }
+}
