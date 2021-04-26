@@ -23,25 +23,16 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
-    <v-btn to="/customers/new" color="primary" fab dark small right fixed bottom class="mb-14">
-      <v-icon>{{ mdiPlus }}</v-icon>
-    </v-btn>
+    <AddButton to="/customers/new" />
   </LayoutDefault>
 </template>
 
 <script>
-import { mdiPlus } from '@mdi/js'
-
 export default {
   name: 'Customers',
   async asyncData({ $http }) {
     const customers = await $http.$get('customers/')
     return { customers }
-  },
-  data() {
-    return {
-      mdiPlus,
-    }
   },
 }
 </script>

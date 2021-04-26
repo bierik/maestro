@@ -1,7 +1,8 @@
 from django.db import models
 from django_extensions.db.models import TimeStampedModel
-from customer.models import Customer
 from recurrence.fields import RecurrenceField
+
+from customer.models import Customer
 
 
 class Task(TimeStampedModel):

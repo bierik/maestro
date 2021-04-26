@@ -1,6 +1,7 @@
 <template>
   <div class="d-flex flex-column">
-    <strong>{{ customerName }}</strong>
+    <strong>{{ title }}</strong>
+    <strong>{{ customer.full_name }}</strong>
     <span>{{ timeText }}</span>
   </div>
 </template>
@@ -9,11 +10,15 @@
 export default {
   name: 'Event',
   props: {
-    customerName: {
+    customer: {
+      type: Object,
+      default: () => ({}),
+    },
+    timeText: {
       type: String,
       default: () => '',
     },
-    timeText: {
+    title: {
       type: String,
       default: () => '',
     },

@@ -1,17 +1,18 @@
-from rest_framework.viewsets import GenericViewSet
-from rest_framework.mixins import (
-    ListModelMixin,
-    CreateModelMixin,
-    RetrieveModelMixin,
-    DestroyModelMixin,
-    UpdateModelMixin,
-)
-from task.models import Task
-from task.serializers import TaskSerializer
 from django.utils import timezone
 from rest_framework.decorators import action
+from rest_framework.mixins import (
+    CreateModelMixin,
+    DestroyModelMixin,
+    ListModelMixin,
+    RetrieveModelMixin,
+    UpdateModelMixin,
+)
 from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
+
 from customer.serializers import NextEventSerializer
+from task.models import Task
+from task.serializers import TaskSerializer
 
 
 class TaskViewset(

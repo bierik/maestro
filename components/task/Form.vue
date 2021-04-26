@@ -18,7 +18,7 @@
         :error-messages="errors['title']"
       />
       <CustomerSelect
-        v-model="task.customer"
+        v-model="task.customer_id"
         :rules="[validators.required('Kunde')]"
         :error-messages="errors['customer']"
       />

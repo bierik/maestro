@@ -1,6 +1,6 @@
+from colorfield.fields import ColorField
 from django.db import models
 from django_extensions.db.models import TimeStampedModel
-from colorfield.fields import ColorField
 
 
 class Customer(TimeStampedModel):
@@ -8,6 +8,16 @@ class Customer(TimeStampedModel):
         verbose_name = "Kunde"
         verbose_name_plural = "Kunden"
 
+    class Sexes(models.TextChoices):
+        MALE = "MALE", "Herr"
+        FEMALE = "FEMALE", "Frau"
+
+    sex = models.CharField(
+        verbose_name="Geschlecht",
+        max_length=255,
+        choices=Sexes.choices,
+        default=Sexes.MALE,
+    )
     first_name = models.CharField(verbose_name="Vorname", max_length=255)
     last_name = models.CharField(verbose_name="Nachname", max_length=255)
     price_per_hour = models.DecimalField(

@@ -4,10 +4,10 @@
       <slot />
       <v-col cols="12">
         <portal to="append-actions">
-          <v-btn :disabled="!valid" icon @click="_save">
+          <v-btn :loading="loading" :disabled="!valid" icon @click="_save">
             <v-icon>{{ mdiCheck }}</v-icon>
           </v-btn>
-          <v-btn v-if="deleteable" icon @click="_destroy">
+          <v-btn v-if="deleteable" :loading="loading" icon @click="_destroy">
             <v-icon>{{ mdiTrashCan }}</v-icon>
           </v-btn>
         </portal>
@@ -52,6 +52,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       mdiCheck,
       mdiChevronLeft,
       mdiTrashCan,
@@ -69,15 +70,19 @@ export default {
   },
   methods: {
     async _destroy() {
+      this.loading = true
       try {
         const response = await this.destroy()
         this.$emit('successDestroy', response)
       } catch (error) {
         this.$emit('serverError', error)
         this.notifyError('Beim Löschen ist ein unerwarteter Fehler aufgetreten')
+      } finally {
+        this.loading = false
       }
     },
     async _save() {
+      this.loading = true
       try {
         const response = await this.save()
         this.$emit('success', response)
@@ -91,6 +96,8 @@ export default {
           this.notifyError('Beim Speichern ist ein unerwarteter Fehler aufgetreten')
         }
         this.$emit('error', error)
+      } finally {
+        this.loading = false
       }
     },
   },

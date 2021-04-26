@@ -12,7 +12,7 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-  css: [],
+  css: ['~/assets/main.css'],
   plugins: ['~/plugins/http', '~/plugins/filters', '~/plugins/config', '~/plugins/notification', '~/plugins/rules'],
   components: true,
   buildModules: ['@nuxtjs/vuetify'],
@@ -41,6 +41,17 @@ export default {
     customVariables: ['~/assets/variables.scss'],
     icons: {
       iconfont: 'mdiSvg',
+    },
+    theme: {
+      themes: {
+        light: {
+          primary: '#aac964',
+          created: '#e07a5f',
+          sent: '#f2cc8f',
+          payed: '#aac964',
+          archived: '#9299dd',
+        },
+      },
     },
   },
   pwa: {

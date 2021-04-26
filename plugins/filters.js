@@ -17,3 +17,10 @@ Vue.filter('dateString', (value) => {
     day: '2-digit',
   }).format(new Date(value))
 })
+
+Vue.filter('timeString', (value) => {
+  return new Intl.DateTimeFormat('de-CH', {
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(new Date(value))
+})

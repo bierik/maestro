@@ -1,4 +1,6 @@
+import contextlib
 import os
+
 import django_heroku
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,6 +21,8 @@ INSTALLED_APPS = [
     "customer",
     "task",
     "report",
+    "invoice",
+    "flat",
     "api",
 ]
 MIDDLEWARE = [
@@ -40,7 +44,7 @@ DATABASES = {
 }
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"  # noqa
     },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
@@ -55,21 +59,28 @@ USE_L10N = True
 USE_TZ = True
 TIME_ZONE = "Europe/Zurich"
 
-AWS_STORAGE_BUCKET_NAME = "maestro-bucket"
-AWS_S3_CUSTOM_DOMAIN = "%s.s3.amazonaws.com" % AWS_STORAGE_BUCKET_NAME
+AWS_S3_REGION_NAME = "eu-central-1"
+AWS_STORAGE_BUCKET_NAME = "putztrix-maestro-bucket"
 AWS_S3_OBJECT_PARAMETERS = {
     "CacheControl": "max-age=86400",
 }
 AWS_LOCATION = "media"
-DEFAULT_FILE_STORAGE = "maestro.storage_backends.MediaStorage"
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+DEFAULT_FILE_STORAGE = "invoice.storage_backends.MediaStorage"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 WHITENOISE_ROOT = STATIC_ROOT
 WHITENOISE_MAX_AGE = 31536000
-STATIC_URL = "/static/"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.jinja2.Jinja2",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {"environment": "invoice.jinja2.environment"},
+    },
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [STATIC_ROOT],
@@ -82,7 +93,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
             ]
         },
-    }
+    },
 ]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -129,7 +140,6 @@ LOGGING = {
 
 django_heroku.settings(locals(), logging=False)
 
-try:
-    from .settings_local import *
-except:
-    pass
+
+with contextlib.suppress():
+    from .settings_local import *  # noqa

@@ -4,7 +4,7 @@
       <nuxt />
     </v-main>
     <Notification />
-    <v-bottom-navigation app color="primary">
+    <v-bottom-navigation app color="white" class="elevation-0" background-color="primary">
       <v-btn to="/" nuxt>
         <!-- <span>Dashboard</span> -->
         <v-icon>{{ mdiViewDashboard }}</v-icon>

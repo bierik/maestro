@@ -1,8 +1,5 @@
 <template>
-  <LayoutDefault narrow>
-    <portal to="prepend-actions">
-      {{ currentMonth }}
-    </portal>
+  <LayoutDefault narrow :title="currentMonth">
     <portal to="append-actions">
       <v-btn icon @click="goToday">
         <v-icon>{{ mdiCalendar }}</v-icon>
@@ -15,9 +12,7 @@
       </v-btn>
     </portal>
     <FullCalendar ref="calendar" :options="calendarOptions" />
-    <v-btn to="/calendar/new" color="primary" fab dark small right fixed bottom class="mb-14">
-      <v-icon>{{ mdiPlus }}</v-icon>
-    </v-btn>
+    <AddButton to="/calendar/new" />
   </LayoutDefault>
 </template>
 
@@ -25,10 +20,11 @@
 import Vue from 'vue'
 import FullCalendar from '@fullcalendar/vue'
 import timeGridPlugin from '@fullcalendar/timegrid'
+import dayGridPlugin from '@fullcalendar/daygrid'
 import rrulePlugin from '@fullcalendar/rrule'
 import interactionPlugin from '@fullcalendar/interaction'
 import locale from '@fullcalendar/core/locales/de'
-import { mdiChevronLeft, mdiChevronRight, mdiCalendar, mdiPlus } from '@mdi/js'
+import { mdiChevronLeft, mdiChevronRight, mdiCalendar } from '@mdi/js'
 import DateTime from 'luxon/src/datetime'
 import { rrulestr, RRule } from 'rrule'
 import EventElement from '../../components/task/Event'
@@ -42,7 +38,7 @@ export default {
   data() {
     return {
       calendarOptions: {
-        plugins: [timeGridPlugin, rrulePlugin, interactionPlugin],
+        plugins: [timeGridPlugin, rrulePlugin, interactionPlugin, dayGridPlugin],
         initialView: 'timeGridWeek',
         eventSources: ['/api/tasks/'],
         headerToolbar: false,
@@ -68,7 +64,6 @@ export default {
       mdiChevronLeft,
       mdiChevronRight,
       mdiCalendar,
-      mdiPlus,
     }
   },
   computed: {
@@ -79,11 +74,12 @@ export default {
   methods: {
     renderEvent({
       event: {
-        extendedProps: { customer_name: customerName },
+        extendedProps: { customer },
+        title,
       },
       timeText,
     }) {
-      const event = new EventElementConstructor({ propsData: { customerName, timeText } })
+      const event = new EventElementConstructor({ propsData: { customer, timeText, title } })
       event.$mount()
       return { domNodes: [event.$el] }
     },

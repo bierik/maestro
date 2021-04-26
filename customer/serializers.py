@@ -1,8 +1,8 @@
+from pluck import pluck
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from customer.models import Customer
-from customer.models import Address
-from pluck import pluck
+
+from customer.models import Address, Customer
 
 
 class AddressSerializer(serializers.ModelSerializer):

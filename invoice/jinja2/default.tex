@@ -1,0 +1,76 @@
+\documentclass[12pt]{article}
+\usepackage{fontspec}
+\setmainfont{Arial}
+\usepackage{geometry}
+\usepackage{makecell}
+\usepackage{tabularx}
+\geometry{
+	paper=a4paper, % Change to letterpaper for US letter
+	top=5cm, % Top margin
+	bottom=1.5cm, % Bottom margin
+	left=2cm, % Left margin
+	right=3cm, % Right margin
+}
+
+\begin{document}
+
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\renewcommand{\arraystretch}{1.2}
+\pagenumbering{gobble}
+
+\noindent\hspace*{9cm}{\VAR{sex}}
+\newline
+\noindent\hspace*{9cm}{\VAR{full_name}}
+\newline
+\noindent\hspace*{9cm}{\VAR{address}}
+\newline
+\noindent\hspace*{9cm}{\VAR{zipcode} \VAR{place}}
+\newline
+\newline
+\newline
+\newline
+\newline
+\noindent\hspace*{9cm}{\VAR{invoice_place}, \VAR{date}}
+
+\vspace{1cm}
+
+\textbf{Rechnung \VAR{invoice_number}}
+
+\vspace{0.2cm}
+
+\begin{tabularx}{\textwidth}{|X|X|X|R|R|} 
+\hline
+\textbf{Datum} & \textbf{Bezichnung} & \textbf{Anzahl Std.} & \textbf{Ansatz} & \textbf{Subtotal}  \\ 
+\hline
+\BLOCK{ for report in reports }
+\VAR{report.date} & \VAR{report.title} & \VAR{report.hours} & \VAR{report.price_per_hour} & \VAR{report.total} \\ 
+\hline
+\BLOCK{ endfor }
+\multicolumn{1}{l}{\Gape[0.3cm][0.3cm]{Subtotal}} & \multicolumn{4}{r}{\VAR{subtotal_reports}} \\
+\hline
+\end{tabularx}
+
+\vspace{0.2cm}
+
+\begin{tabularx}{\textwidth}{|X|X|R|R|} 
+\hline
+\textbf{Bezeichnung} & \textbf{Anzahl} & \textbf{Ansataz} & \textbf{Subtotal} \\ 
+\hline
+\BLOCK{ for flat in flats }
+\VAR{flat.name} & \VAR{flat.amount} & \VAR{flat.price} & \VAR{flat.total} \\ 
+\hline
+\BLOCK{ endfor }
+\multicolumn{3}{l}{\Gape[0.3cm][0.3cm]{Subtotal}} & \multicolumn{1}{r}{\VAR{subtotal_flats}} \\ 
+\hline
+\multicolumn{3}{l}{\Gape[0.5cm][0.5cm]{\textbf{Total }}} & \multicolumn{1}{r}{\textbf{\VAR{total}}}  \\
+\hline
+\end{tabularx}
+
+\vspace{1cm}
+
+Konditionen: Zahlbar innert 10 Arbeitstagen rein netto.
+
+\vspace{2cm}
+Herzlichen Dank für Ihren Auftrag.
+ 
+\end{document}

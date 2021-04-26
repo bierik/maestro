@@ -1,0 +1,3 @@
+.v-btn::before {
+    content: none !important;
+}

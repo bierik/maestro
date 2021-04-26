@@ -40,7 +40,7 @@ export default {
         return getDurationPart(this.value, 0)
       },
       set(hours) {
-        this.$emit('input', this.toDurationString(hours, this.minutes, this.seconds))
+        this.$emit('input', this.toDurationString(hours, this.minutes))
       },
     },
     minutes: {
@@ -48,7 +48,7 @@ export default {
         return getDurationPart(this.value, 1)
       },
       set(minutes) {
-        this.$emit('input', this.toDurationString(this.hours, minutes, this.seconds))
+        this.$emit('input', this.toDurationString(this.hours, minutes))
       },
     },
   },

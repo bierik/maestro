@@ -1,5 +1,5 @@
 <template>
-  <v-btn fab absolute class="rounded-circle elevation-5 main-report-button darken-2" color="grey" to="/report">
+  <v-btn fab absolute class="rounded-circle main-report-button darken-2" color="grey" to="/reports">
     <span v-if="runningReport" class="mt-1 caption white--text">{{ runningReportDuration }}</span>
     <v-icon :small="hasRunningReport" color="white">{{ mdiAlarm }}</v-icon>
   </v-btn>

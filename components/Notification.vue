@@ -3,7 +3,7 @@
     :value="show"
     :color="severityColor"
     :data-severity="severity"
-    :timeout="9999999999"
+    :timeout="timeout"
     data-testid="snackbar-container"
     tile
     width="100%"
@@ -41,7 +41,7 @@ export default {
       if (this.severity === SEVERITIES.ERROR) {
         return 0
       }
-      return 6000
+      return 2000
     },
   },
   methods: {
