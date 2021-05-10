@@ -1,0 +1,59 @@
+
+version: "3.8"
+
+volumes:
+  postgres_data:
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./docker/maestro/Dockerfile
+      args:
+        - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+        - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    image: bierik/maestro-backend:latest
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ALLOWED_HOSTS: localhost
+      DJANGO_SECRET_KEY: secret
+      DJANGO_ALLOWED_HOSTS: localhost
+      DJANGO_DATABASE_NAME: postgres
+      DJANGO_DATABASE_USER: postgres
+      DJANGO_DATABASE_PASSWORD: postgres
+      DJANGO_DATABASE_HOST: db
+      DJANGO_DATABASE_PORT: 5432
+  pdflatex:
+    build:
+      context: .
+      dockerfile: ./docker/pdflatex/Dockerfile
+    image: bierik/pdflatex:latest
+    ports:
+      - 8080:8080    
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    image: bierik/maestro-web:latest
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

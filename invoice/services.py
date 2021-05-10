@@ -1,15 +1,17 @@
-import os
-import subprocess
 from datetime import datetime
+import os
 
 import arrow
-from django.conf import settings
 from django.template.loader import get_template
 from django.utils import timezone
+import tempfile
+
 
 from flat.serializers import FlatInvoiceSerializer
 from invoice.models import Invoice
 from report.serializers import ReportInvoiceSerializer
+import requests
+from django.conf import settings
 
 
 class InvoiceService:
@@ -72,24 +74,18 @@ class InvoiceService:
             }
         )
 
-        latex_file_path = os.path.join(settings.MEDIA_ROOT, f"{filename}.tex")
+        with tempfile.NamedTemporaryFile(suffix=".tex", delete=False) as latex_file:
+            latex_file.write(latex_content.encode())
 
-        with open(latex_file_path, "w") as latex_file:
-            latex_file.write(latex_content)
-
-        with open(latex_file_path, "rb") as latex_file:
+        with open(latex_file.name, mode="rb") as latex_file:
+            resp = requests.post(
+                f"http://{settings.PDFLATEX_HOST}:8080", files={"latex": latex_file}
+            )
             invoice.source_file.save(f"{filename}.tex", latex_file)
 
-        subprocess.run(
-            [
-                "xelatex",
-                "-interaction=nonstopmode",
-                latex_file_path,
-            ],
-            cwd=settings.MEDIA_ROOT,
-        )
+            with tempfile.NamedTemporaryFile(suffix=".pdf") as pdf_file:
+                pdf_file.write(resp.content)
+                pdf_file.flush()
+                invoice.file.save(f"{filename}.pdf", pdf_file)
 
-        with open(
-            os.path.join(settings.MEDIA_ROOT, f"{filename}.pdf"), "rb"
-        ) as pdf_file:
-            invoice.file.save(f"{filename}.pdf", pdf_file)
+        os.remove(latex_file.name)

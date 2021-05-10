@@ -4,7 +4,7 @@
       <InvoiceFilter v-model="statusFilter" @input="loadInvoices" />
     </v-container>
     <v-list>
-      <v-list-item v-for="invoice in invoices" :key="`invoice-${invoice.id}`" target="blank" :href="invoice.url">
+      <v-list-item v-for="invoice in invoices" :key="`invoice-${invoice.id}`" :to="`/invoices/${invoice.id}`">
         <v-list-item-avatar>
           <v-icon color="grey--darken-2">{{ mdiFilePdf }}</v-icon>
         </v-list-item-avatar>

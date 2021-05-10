@@ -30,7 +30,7 @@ class TaskViewset(
     def next_event(self, request):
         tasks = Task.objects.all()
         if not tasks.exists():
-            return None
+            return Response(None)
         events = [
             {"datetime": task.rrule.after(timezone.now()), "task": task}
             for task in list(tasks)

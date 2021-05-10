@@ -1,21 +1,20 @@
 \documentclass[12pt]{article}
-\usepackage{fontspec}
-\setmainfont{Arial}
 \usepackage{geometry}
 \usepackage{makecell}
 \usepackage{tabularx}
 \geometry{
-	paper=a4paper, % Change to letterpaper for US letter
-	top=5cm, % Top margin
-	bottom=1.5cm, % Bottom margin
-	left=2cm, % Left margin
-	right=3cm, % Right margin
+  paper=a4paper, % Change to letterpaper for US letter
+  top=5cm, % Top margin
+  bottom=1.5cm, % Bottom margin
+  left=2cm, % Left margin
+  right=3cm, % Right margin
 }
 
 \begin{document}
 
 \newcolumntype{R}{>{\raggedleft\arraybackslash}X}
 \renewcommand{\arraystretch}{1.2}
+\renewcommand{\familydefault}{ma1}
 \pagenumbering{gobble}
 
 \noindent\hspace*{9cm}{\VAR{sex}}

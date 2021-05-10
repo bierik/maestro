@@ -1,0 +1,64 @@
+%Filename: ts1ma1.fd
+%Created by: tex ma1
+%Created using fontinst v1.929
+
+%THIS FILE SHOULD BE PUT IN A TEX INPUTS DIRECTORY
+
+\ProvidesFile{ts1ma1.fd}
+   [2009/07/15 Fontinst v1.929 font definitions for TS1/ma1.]
+
+\DeclareFontFamily{TS1}{ma1}{}
+
+\DeclareFontShape{TS1}{ma1}{m}{n}{
+   <-> ma1r8c
+}{}
+
+\DeclareFontShape{TS1}{ma1}{m}{sl}{
+   <-> ma1ro8c
+}{}
+
+\DeclareFontShape{TS1}{ma1}{m}{it}{
+   <-> ma1ri8c
+}{}
+
+\DeclareFontShape{TS1}{ma1}{mc}{n}{
+   <-> ma1r8cn
+}{}
+
+\DeclareFontShape{TS1}{ma1}{mc}{sl}{
+   <-> ma1ro8cn
+}{}
+
+\DeclareFontShape{TS1}{ma1}{mc}{it}{
+   <-> ma1ri8cn
+}{}
+
+\DeclareFontShape{TS1}{ma1}{b}{n}{
+   <-> ma1b8c
+}{}
+
+\DeclareFontShape{TS1}{ma1}{b}{sl}{
+   <-> ma1bo8c
+}{}
+
+\DeclareFontShape{TS1}{ma1}{b}{it}{
+   <-> ma1bi8c
+}{}
+
+\DeclareFontShape{TS1}{ma1}{bc}{n}{
+   <-> ma1b8cn
+}{}
+
+\DeclareFontShape{TS1}{ma1}{bc}{sl}{
+   <-> ma1bo8cn
+}{}
+
+\DeclareFontShape{TS1}{ma1}{bc}{it}{
+   <-> ma1bi8cn
+}{}
+
+\DeclareFontShape{TS1}{ma1}{bx}{n}{<->ssub * ma1/b/n}{}
+\DeclareFontShape{TS1}{ma1}{bx}{sl}{<->ssub * ma1/b/sl}{}
+\DeclareFontShape{TS1}{ma1}{bx}{it}{<->ssub * ma1/b/it}{}
+
+\endinput

@@ -25,14 +25,14 @@
     "luxon": "^1.26.0",
     "nuxt": "^2.14.6",
     "portal-vue": "^2.1.7",
-    "rrule": "^2.6.8"
+    "rrule": "^2.6.8",
+    "@nuxtjs/vuetify": "^1.11.2",
+    "@mdi/js": "^5.9.55"
   },
   "devDependencies": {
     "@4tw/eslint-config": "^0.6.0",
     "@4tw/prettier-config": "^1.0.3",
-    "@mdi/js": "^5.9.55",
     "@nuxtjs/proxy": "^2.0.1",
-    "@nuxtjs/vuetify": "^1.11.2",
     "@vue/test-utils": "^1.1.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^26.5.0",

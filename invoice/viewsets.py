@@ -20,6 +20,8 @@ class InvoiceViewset(
 
     def filter_queryset(self, queryset):
         status_filter = self.request.query_params.getlist("status")
+        if not status_filter:
+            return queryset
         return queryset.filter(status__in=status_filter)
 
     @transaction.atomic

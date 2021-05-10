@@ -42,13 +42,12 @@
           <template v-slot:icon>
             <v-icon small color="white">{{ statusIcon(historyEntry) }}</v-icon>
           </template>
-          <div class="d-flex pr-4">
-            <div class="d-flex flex-column">
+          <div class="d-flex pr-4 flex-column">
+            <div class="d-flex flex-column mb-2">
               <strong>{{ historyEntry.status_display }}</strong>
               <span>{{ historyEntry.created | dateTimeString }}</span>
             </div>
-            <v-spacer />
-            <template v-if="invoice.status === historyEntry.status">
+            <div v-if="invoice.status === historyEntry.status">
               <v-btn
                 v-for="action in statusActions(historyEntry)"
                 :key="`history-entry-${historyEntry.id}-action-${action.name}`"
@@ -58,7 +57,7 @@
               >
                 {{ action.name }}
               </v-btn>
-            </template>
+            </div>
           </div>
         </v-timeline-item>
       </v-timeline>

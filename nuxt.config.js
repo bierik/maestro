@@ -16,16 +16,9 @@ export default {
   plugins: ['~/plugins/http', '~/plugins/filters', '~/plugins/config', '~/plugins/notification', '~/plugins/rules'],
   components: true,
   buildModules: ['@nuxtjs/vuetify'],
-  generate: {
-    dir: 'staticfiles',
-  },
   modules: ['@nuxt/http', '@nuxtjs/pwa', 'portal-vue/nuxt'],
   http: {
     prefix: '/api',
-    headers: {
-      Accept: 'application/json',
-      'X-CSRFToken': 'bla',
-    },
     proxy: true,
   },
   proxy: {
@@ -62,5 +55,9 @@ export default {
       theme_color: '#ffffff',
     },
   },
-  build: {},
+  build: {
+    babel: {
+      plugins: [['@babel/plugin-proposal-class-properties', { loose: false }]],
+    },
+  },
 }
