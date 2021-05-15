@@ -5,7 +5,7 @@ WORKDIR /app
 ENV NODE_ENV production
 
 COPY package.json package-lock.json ./
-RUN npm install 
+RUN npm install
 
 COPY ./assets ./assets
 COPY ./components ./components
