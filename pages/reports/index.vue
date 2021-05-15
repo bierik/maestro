@@ -139,17 +139,21 @@ export default {
       this.$router.push('/')
     },
     cancel() {
-      this.$router.push('/')
+      if (this.tab === 'rapport') {
+        this.$router.push(`/customers/${this.report.customer_id}#rapporte`)
+      } else if (this.tab === 'pauschal') {
+        this.$router.push(`/customers/${this.report.customer_id}#pauschale`)
+      }
     },
     saveReport() {
       if (this.report.id) {
         return this.$http.$patch(`/reports/${this.report.id}/`, this.report)
       }
-      return this.$http.$post(`/reports/`, this.report)
+      this.$router.push(`/customers/${this.report.customer_id}#rapporte`)
     },
     successFlat() {
       this.notifySuccess('Pauschaleintrag gespeichert')
-      this.$router.push('/')
+      this.$router.push(`/customers/${this.report.customer_id}#pauschale`)
     },
     saveFlat() {
       return this.$http.$post(`/flats/`, this.flat)

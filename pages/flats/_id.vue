@@ -42,11 +42,11 @@ export default {
       return this.$http.$patch(`flats/${this.flat.id}/`, this.flat)
     },
     cancel() {
-      this.$router.push(`/customers/${this.flat.customer_id}#rapporte`)
+      this.$router.push(`/customers/${this.flat.customer_id}#pauschale`)
     },
     success() {
       this.notifySuccess('Pauschal wurde aktualisiert')
-      this.$router.push(`/customers/${this.flat.customer_id}#rapporte`)
+      this.$router.push(`/customers/${this.flat.customer_id}#pauschale`)
     },
   },
 }
