@@ -45,12 +45,11 @@ class CustomerViewset(
 
     @action(detail=True)
     def reports(self, request, pk):
-        date_filter_string = request.query_params.get("date")
+        start = request.query_params.get("start")
+        end = request.query_params.get("end")
         customer = Customer.objects.get(id=pk)
         reports_serializer = ReportSerializer(
-            instance=self.filter_created(
-                customer.reports.order_by("-start"), date_filter_string
-            ),
+            customer.reports.filter(start__gte=start, end__lte=end),
             many=True,
         )
         return Response(reports_serializer.data)

@@ -1,7 +1,7 @@
 <template>
-  <LayoutDefault narrow title="Rechnungen">
+  <v-tab-item v-bind="$attrs">
     <v-container>
-      <InvoiceFilter v-model="statusFilter" @input="loadInvoices" />
+      <InvoiceFilter v-model="statusFilter" />
     </v-container>
     <v-list>
       <v-list-item v-for="invoice in invoices" :key="`invoice-${invoice.id}`" :to="`/invoices/${invoice.id}`">
@@ -16,36 +16,42 @@
           <v-list-item-subtitle>
             {{ invoice.date | dateString }}
           </v-list-item-subtitle>
-          <v-list-item-subtitle>
-            {{ invoice.customer.full_name }}
-          </v-list-item-subtitle>
+          <v-list-item-subtitle> Erstellt am: {{ invoice.created | dateTimeString }} </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </v-list>
-  </LayoutDefault>
+    <slot />
+  </v-tab-item>
 </template>
 
 <script>
 import { mdiFilePdf } from '@mdi/js'
-import status from '@/components/invoice/status'
 
 export default {
-  fetch() {
-    this.loadInvoices()
+  inheritAttrs: false,
+  props: {
+    invoices: {
+      type: Array,
+      default: () => [],
+    },
+    filter: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
-      invoices: [],
-      statusFilter: [status.CREATED],
       mdiFilePdf,
     }
   },
-  methods: {
-    async loadInvoices() {
-      const searchParams = this.statusFilter.map((status) => ['status', status])
-      this.invoices = await this.$http.$get('invoices/', {
-        searchParams,
-      })
+  computed: {
+    statusFilter: {
+      get() {
+        return this.filter
+      },
+      set(filter) {
+        this.$emit('update:filter', filter)
+      },
     },
   },
 }

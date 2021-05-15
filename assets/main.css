@@ -1,3 +1,15 @@
 .v-btn::before {
     content: none !important;
 }
+
+.v-tabs {
+    flex-grow: 0 !important;
+}
+
+.v-window {
+    flex-grow: 1 !important;
+}
+
+.v-window__container, .v-window-item {
+    height: 100% !important;
+}

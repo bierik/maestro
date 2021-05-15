@@ -1,59 +1,42 @@
 <template>
   <LayoutDefault narrow :title="currentMonth">
     <portal to="append-actions">
-      <v-btn icon @click="goToday">
+      <v-btn icon @click="$refs.calendar.today()">
         <v-icon>{{ mdiCalendar }}</v-icon>
       </v-btn>
-      <v-btn icon @click="prevDate">
+      <v-btn icon @click="$refs.calendar.prev()">
         <v-icon>{{ mdiChevronLeft }}</v-icon>
       </v-btn>
-      <v-btn icon @click="nextDate">
+      <v-btn icon @click="$refs.calendar.next()">
         <v-icon>{{ mdiChevronRight }}</v-icon>
       </v-btn>
     </portal>
-    <FullCalendar ref="calendar" :options="calendarOptions" />
+    <CalendarDefault ref="calendar" v-model="currentDate" :options="calendarOptions" />
     <AddButton to="/calendar/new" />
   </LayoutDefault>
 </template>
 
 <script>
 import Vue from 'vue'
-import FullCalendar from '@fullcalendar/vue'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import dayGridPlugin from '@fullcalendar/daygrid'
 import rrulePlugin from '@fullcalendar/rrule'
 import interactionPlugin from '@fullcalendar/interaction'
-import locale from '@fullcalendar/core/locales/de'
 import { mdiChevronLeft, mdiChevronRight, mdiCalendar } from '@mdi/js'
 import DateTime from 'luxon/src/datetime'
 import { rrulestr, RRule } from 'rrule'
-import EventElement from '../../components/task/Event'
+import EventElement from '@/components/task/Event'
 
 const monthFormat = new Intl.DateTimeFormat('de-CH', { month: 'long' })
 const EventElementConstructor = Vue.extend(EventElement)
 
 export default {
   name: 'Calendar',
-  components: { FullCalendar },
   data() {
     return {
       calendarOptions: {
-        plugins: [timeGridPlugin, rrulePlugin, interactionPlugin, dayGridPlugin],
-        initialView: 'timeGridWeek',
+        plugins: [rrulePlugin, interactionPlugin],
         eventSources: ['/api/tasks/'],
-        headerToolbar: false,
-        height: '100%',
-        displayEventEnd: true,
-        nowIndicator: true,
-        weekNumbers: true,
-        allDaySlot: false,
-        slotMinTime: '06:00:00',
-        slotMaxTime: '20:00:00',
-        slotDuration: '00:15:00',
-        scrollTime: '08:00:00',
         selectable: true,
         editable: true,
-        locale,
         select: this.createTask,
         eventClick: this.editTask,
         eventDrop: this.dragTask,
@@ -89,21 +72,6 @@ export default {
       const duration = endDateTime.diff(startDateTime, ['hours', 'minutes', 'seconds'])
       return duration.toFormat('hh:mm:ss')
     },
-    prevDate() {
-      const api = this.$refs.calendar.getApi()
-      api.prev()
-      this.currentDate = api.getDate()
-    },
-    nextDate() {
-      const api = this.$refs.calendar.getApi()
-      api.next()
-      this.currentDate = api.getDate()
-    },
-    goToday() {
-      const api = this.$refs.calendar.getApi()
-      api.today()
-      this.currentDate = api.getDate()
-    },
     createTask({ start, end }) {
       const duration = this.getDuration(start, end)
       const startDateTime = DateTime.fromJSDate(start).toISO()
@@ -137,8 +105,3 @@ export default {
   },
 }
 </script>
-<style>
-.fc-scrollgrid {
-  border: 0 !important;
-}
-</style>
