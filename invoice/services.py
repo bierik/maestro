@@ -1,17 +1,16 @@
-from datetime import datetime
 import os
+import tempfile
+from datetime import datetime
 
 import arrow
+import requests
+from django.conf import settings
 from django.template.loader import get_template
 from django.utils import timezone
-import tempfile
-
 
 from flat.serializers import FlatInvoiceSerializer
 from invoice.models import Invoice
 from report.serializers import ReportInvoiceSerializer
-import requests
-from django.conf import settings
 
 
 class InvoiceService:

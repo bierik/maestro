@@ -136,7 +136,7 @@ export default {
   methods: {
     successReport() {
       this.notifySuccess('Rapport gespeichert')
-      this.$router.push('/')
+      this.$router.push(`/customers/${this.report.customer_id}#rapporte`)
     },
     cancel() {
       if (this.tab === 'rapport') {
@@ -148,8 +148,9 @@ export default {
     saveReport() {
       if (this.report.id) {
         return this.$http.$patch(`/reports/${this.report.id}/`, this.report)
+      } else {
+        return this.$http.$post(`/reports/`, this.report)
       }
-      this.$router.push(`/customers/${this.report.customer_id}#rapporte`)
     },
     successFlat() {
       this.notifySuccess('Pauschaleintrag gespeichert')

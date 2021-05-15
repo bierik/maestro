@@ -22,8 +22,8 @@ export default {
     return {
       invoice: {
         customer: Number.parseInt(this.$route.params.id, 10),
-        start: DateTime.local().set({ day: 15 }).toFormat('yyyy-MM-dd'),
-        end: DateTime.local().plus({ months: 1 }).set({ day: 15 }).toFormat('yyyy-MM-dd'),
+        start: DateTime.local().set({ day: 15 }).minus({ months: 1 }).toFormat('yyyy-MM-dd'),
+        end: DateTime.local().set({ day: 15 }).toFormat('yyyy-MM-dd'),
       },
       errors: {},
     }

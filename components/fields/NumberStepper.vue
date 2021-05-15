@@ -28,6 +28,10 @@ export default {
       type: String,
       default: () => '',
     },
+    max: {
+      type: Number,
+      default: () => 100,
+    },
   },
   data() {
     return {
@@ -42,11 +46,11 @@ export default {
       },
       set(number) {
         if (!number) return
-        this.$emit('input', number)
+        this.$emit('input', Math.min(number, this.max - this.steps + 1))
       },
     },
     canIncrease() {
-      return this.value + this.steps < 99
+      return this.value + this.steps <= this.max
     },
     canDecrease() {
       return this.value > 0
@@ -55,7 +59,7 @@ export default {
   methods: {
     increase() {
       const nextStep = this.number + this.steps
-      if (nextStep <= 99) {
+      if (nextStep <= this.max) {
         this.$emit('input', nextStep)
       }
     },

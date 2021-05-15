@@ -30,6 +30,7 @@ export default {
   },
   proxy: {
     '/api/': 'http://localhost:8000',
+    '/media/': 'http://localhost:8000',
   },
   router: {
     middleware: ['running-report'],

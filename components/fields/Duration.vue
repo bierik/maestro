@@ -1,9 +1,9 @@
 <template>
   <v-input v-bind="$attrs" class="duration-field">
     <div class="d-flex align-center mt-1">
-      <FieldsNumberStepper v-model="hours" label="Stunden" />
+      <FieldsNumberStepper v-model="hours" label="Stunden" :max="23" />
       <span class="title px-4">:</span>
-      <FieldsNumberStepper v-model="minutes" label="Minuten" :steps="5" />
+      <FieldsNumberStepper v-model="minutes" label="Minuten" :steps="5" :max="59" />
     </div>
     <template v-for="(_, name) in $scopedSlots" :slot="name" slot-scope="slotData"
       ><slot :name="name" v-bind="slotData"

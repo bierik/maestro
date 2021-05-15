@@ -31,18 +31,6 @@ class CustomerViewset(
     queryset = Customer.objects.order_by("last_name", "first_name")
     serializer_class = CustomerSerializer
 
-    def filter_created(self, queryset, date_filter_string):
-        from_date_filter = (
-            arrow.get(date_filter_string, tzinfo=settings.TIME_ZONE)
-            if date_filter_string
-            else date.today()
-        )
-        to_date_filter = from_date_filter.shift(days=1)
-        return queryset.filter(
-            created__gte=from_date_filter.datetime,
-            created__lte=to_date_filter.datetime,
-        )
-
     @action(detail=True)
     def reports(self, request, pk):
         start = request.query_params.get("start")
@@ -56,12 +44,9 @@ class CustomerViewset(
 
     @action(detail=True)
     def flats(self, request, pk):
-        date_filter_string = request.query_params.get("date", date.today())
         customer = Customer.objects.get(id=pk)
         flats_serializer = FlatSerializer(
-            instance=self.filter_created(
-                customer.flats.order_by("-created"), date_filter_string
-            ),
+            instance=customer.flats.order_by("-created"),
             many=True,
         )
         return Response(flats_serializer.data)

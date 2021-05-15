@@ -6,11 +6,12 @@ A tiny aiohttp based web server that wraps pdflatex of the TexLive LaTeX
 distribution. It expects a multipart/form-data upload containing a .tex file
 with the name latex and any additional files with names prefixed with 'file.'.
 """
-from aiohttp import web
-import tempfile
+import logging
 import os.path
 import subprocess
-import logging
+import tempfile
+
+from aiohttp import web
 
 CHUNK_SIZE = 65536
 

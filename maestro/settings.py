@@ -1,6 +1,6 @@
 import os
-from configurations import values
-from configurations import Configuration
+
+from configurations import Configuration, values
 
 
 class Base(Configuration):
@@ -155,10 +155,6 @@ class Development(Base):
         return os.path.join(self.BASE_DIR, "media")
 
     PDFLATEX_HOST = "localhost"
-
-
-class DevelopmentDocker(Development):
-    pass
 
 
 class Production(Base):

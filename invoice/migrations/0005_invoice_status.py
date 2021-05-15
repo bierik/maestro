@@ -6,13 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invoice', '0004_auto_20210505_1649'),
+        ("invoice", "0004_auto_20210505_1649"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='invoice',
-            name='status',
-            field=models.CharField(choices=[('CREATED', 'Erstellt'), ('SENT', 'Versendet'), ('PAYED', 'Bezahlt'), ('ARCHIVED', 'Archiviert')], default='CREATED', max_length=255, verbose_name='Status'),
+            model_name="invoice",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("CREATED", "Erstellt"),
+                    ("SENT", "Versendet"),
+                    ("PAYED", "Bezahlt"),
+                    ("ARCHIVED", "Archiviert"),
+                ],
+                default="CREATED",
+                max_length=255,
+                verbose_name="Status",
+            ),
         ),
     ]
