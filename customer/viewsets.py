@@ -1,7 +1,3 @@
-from datetime import date
-
-import arrow
-from django.conf import settings
 from rest_framework.decorators import action
 from rest_framework.mixins import (
     CreateModelMixin,

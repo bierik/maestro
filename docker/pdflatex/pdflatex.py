@@ -28,7 +28,7 @@ async def pdflatex(request):
             "Bad request. Received content type %s instead of multipart/form-data.",
             request.content_type,
         )
-        return web.Response(status=400, text=f"Multipart request required.")
+        return web.Response(status=400, text="Multipart request required.")
 
     reader = await request.multipart()
 
@@ -76,7 +76,7 @@ async def pdflatex(request):
                 )
 
         logger.info("Bad request. No latex file provided.")
-        return web.Response(status=400, text=f"No latex file provided.")
+        return web.Response(status=400, text="No latex file provided.")
 
 
 async def save_part_to_file(part, directory):
@@ -91,12 +91,13 @@ async def save_part_to_file(part, directory):
 
 
 async def stream_file(request, filename, content_type):
+    content_disposition_header = f'attachment; filename="{os.path.basename(filename)}"'
     response = web.StreamResponse(
         status=200,
         reason="OK",
         headers={
             "Content-Type": content_type,
-            "Content-Disposition": f'attachment; filename="{os.path.basename(filename)}"',
+            "Content-Disposition": content_disposition_header,
         },
     )
     await response.prepare(request)
@@ -113,7 +114,7 @@ async def stream_file(request, filename, content_type):
 
 
 async def healthcheck(request):
-    return web.Response(status=200, text=f"OK")
+    return web.Response(status=200, text="OK")
 
 
 if __name__ == "__main__":
