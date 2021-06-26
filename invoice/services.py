@@ -1,4 +1,3 @@
-import os
 import tempfile
 from datetime import datetime
 
@@ -19,10 +18,8 @@ class InvoiceService:
         self.start = start
         self.end = end
 
-    def generate_invoice(self):
-        template = get_template("default.tex")
-        invoice = Invoice.objects.create(date=timezone.now(), customer=self.customer)
-        filename = datetime.now().timestamp()
+    def generate_content(self, created, number):
+        template = get_template("default.html")
         reports = self.customer.reports.filter(
             start__gte=self.start, start__lt=self.end
         )
@@ -55,16 +52,16 @@ class InvoiceService:
 
         total = float(subtotal_flats) + subtotal_reports
 
-        latex_content = template.render(
+        return template.render(
             {
                 "sex": self.customer.get_sex_display(),
                 "full_name": self.customer.full_name,
                 "address": self.customer.primary_address.address,
                 "place": self.customer.primary_address.place,
                 "zipcode": self.customer.primary_address.zip_code,
-                "date": arrow.get(invoice.created).format("DD.MM.YYYY"),
+                "date": created.format("DD.MM.YYYY"),
                 "invoice_place": "Bönigen",
-                "invoice_number": invoice.number(),
+                "invoice_number": number,
                 "reports": reports_data,
                 "subtotal_reports": "{:.2f} CHF".format(subtotal_reports),
                 "flats": flats_data,
@@ -73,18 +70,36 @@ class InvoiceService:
             }
         )
 
-        with tempfile.NamedTemporaryFile(suffix=".tex", delete=False) as latex_file:
-            latex_file.write(latex_content.encode())
-
-        with open(latex_file.name, mode="rb") as latex_file:
+    def generate_invoice_files(self, content):
+        with tempfile.NamedTemporaryFile(suffix=".html", delete=False) as html_file:
+            html_file.write(content.encode())
+        with open(html_file.name, mode="rb") as html_file:
             resp = requests.post(
-                f"http://{settings.PDFLATEX_HOST}:8080", files={"latex": latex_file}
+                f"http://{settings.WEASYPRINT_HOST}:8080", files={"html": html_file}
             )
-            invoice.source_file.save(f"{filename}.tex", latex_file)
 
-            with tempfile.NamedTemporaryFile(suffix=".pdf") as pdf_file:
+            with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as pdf_file:
                 pdf_file.write(resp.content)
                 pdf_file.flush()
-                invoice.file.save(f"{filename}.pdf", pdf_file)
+                return {
+                    "pdf_file": pdf_file,
+                    "html_file": html_file,
+                }
 
-        os.remove(latex_file.name)
+    def preview_invoice(self):
+        content = self.generate_content(arrow.now(), "<Nummer>")
+        return self.generate_invoice_files(content)
+
+    def persist_invoice(self):
+        invoice = Invoice.objects.create(date=timezone.now(), customer=self.customer)
+        content = self.generate_content(
+            arrow.get(invoice.created).format("DD.MM.YYYY"), invoice.number()
+        )
+        invoice_files = self.generate_invoice_files(content)
+        html_file = invoice_files["html_file"]
+        pdf_file = invoice_files["pdf_file"]
+        filename = datetime.now().timestamp()
+        invoice.source_file.save(f"{filename}.html", open(html_file.name, "rb"))
+        invoice.file.save(f"{filename}.pdf", open(pdf_file.name, "rb"))
+        pdf_file.close()
+        html_file.close()
