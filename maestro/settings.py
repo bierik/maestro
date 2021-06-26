@@ -80,6 +80,8 @@ class Base(Configuration):
 
     STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
+    X_FRAME_OPTIONS = "ALLOWALL"
+
     TEMPLATES = [
         {
             "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -176,3 +178,4 @@ class Production(Base):
 
     WEASYPRINT_HOST = "weasyprint"
 
+    X_FRAME_OPTIONS = "SAMEORIGIN"

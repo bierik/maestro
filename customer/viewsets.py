@@ -56,5 +56,6 @@ class CustomerViewset(
                 status__in=status_filter
             ),
             many=True,
+            context={"request": request},
         )
         return Response(invoice_serializer.data)
