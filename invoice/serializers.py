@@ -33,4 +33,4 @@ class InvoiceSerializer(serializers.ModelSerializer):
         )
 
     def get_url(self, obj):
-        return obj.file.url
+        return self.context["request"].build_absolute_uri(obj.file.url)

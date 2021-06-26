@@ -27,13 +27,13 @@ services:
       DJANGO_DATABASE_PASSWORD: postgres
       DJANGO_DATABASE_HOST: db
       DJANGO_DATABASE_PORT: 5432
-  pdflatex:
+  weasyprint:
     build:
       context: .
-      dockerfile: ./docker/pdflatex/Dockerfile
-    image: bierik/pdflatex:latest
+      dockerfile: ./docker/weasyprint/Dockerfile
+    image: bierik/weasyprint:latest
     ports:
-      - 8080:8080    
+      - 8080:8080
   web:
     build:
       context: .

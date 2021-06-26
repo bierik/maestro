@@ -80,13 +80,9 @@ class Base(Configuration):
 
     STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
+    X_FRAME_OPTIONS = "ALLOWALL"
+
     TEMPLATES = [
-        {
-            "BACKEND": "django.template.backends.jinja2.Jinja2",
-            "DIRS": [],
-            "APP_DIRS": True,
-            "OPTIONS": {"environment": "invoice.jinja2.environment"},
-        },
         {
             "BACKEND": "django.template.backends.django.DjangoTemplates",
             "APP_DIRS": True,
@@ -154,7 +150,7 @@ class Development(Base):
     def MEDIA_ROOT(self):
         return os.path.join(self.BASE_DIR, "media")
 
-    PDFLATEX_HOST = "localhost"
+    WEASYPRINT_HOST = "localhost"
 
 
 class Production(Base):
@@ -180,4 +176,6 @@ class Production(Base):
     PRIVATE_MEDIA_LOCATION = "media"
     PRIVATE_FILE_STORAGE = "invoice.storage_backends.MediaStorage"
 
-    PDFLATEX_HOST = "pdflatex"
+    WEASYPRINT_HOST = "weasyprint"
+
+    X_FRAME_OPTIONS = "SAMEORIGIN"

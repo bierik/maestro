@@ -10,6 +10,13 @@
       <v-col cols="12">
         <v-text-field v-model="invoice.end" type="date" label="Bis" />
       </v-col>
+      <v-col cols="12">
+        <InvoicePreviewDialog :src="previewURL">
+          <template #activator="{ on, attrs }">
+            <v-btn depressed color="primary" v-bind="attrs" v-on="on">Vorschau anzeigen</v-btn>
+          </template>
+        </InvoicePreviewDialog>
+      </v-col>
     </Form>
   </LayoutDefault>
 </template>
@@ -27,6 +34,16 @@ export default {
       },
       errors: {},
     }
+  },
+  computed: {
+    previewURL() {
+      const searchParams = new URLSearchParams({
+        customer: this.invoice.customer,
+        start: this.invoice.start,
+        end: this.invoice.end,
+      })
+      return `${location.origin}/api/invoices/preview/?${searchParams.toString()}`
+    },
   },
   methods: {
     save() {

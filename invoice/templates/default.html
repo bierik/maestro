@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Rechnung {{ invoice_number }}</title>
+    <meta name="description" content="Rechnung für {{ full_name }}" />
+    <meta name="author" content="Putztrix" />
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+      }
+
+      .flex {
+        display: flex;
+      }
+
+      .flex-column {
+        flex-direction: column;
+      }
+
+      .justify-end {
+        justify-content: flex-end;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      td,
+      th {
+        text-align: left;
+        border: 1px solid black;
+        padding: 3px 5px;
+      }
+
+      .text-align-right {
+        text-align: right;
+      }
+
+      .bottom-border {
+        border: 0;
+        border-bottom: 1px solid;
+      }
+
+      .md-padding {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+
+      .lg-padding {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div style="height: 2.8cm;"></div>
+    <div class="flex justify-end">
+      <div class="flex flex-column">
+        <address style="width: 7.5cm;">
+          {{ sex }}<br>
+          {{ full_name }}<br>
+          {{ address }}<br>
+          {{ zipcode }} {{ place }}<br>
+        </address>
+        <div style="height: 2cm;"></div>
+        <span>{{ invoice_place }}, {{ date }}</span>
+      </div>
+    </div>
+    <div style="height: 0.5cm;"></div>
+    <h1 style="font-size: 1rem;">Rechnung {{ invoice_number }}</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Datum</th>
+          <th>Bezeichnung</th>
+          <th>Anzahl Std.</th>
+          <th class="text-align-right">Ansatz</th>
+          <th class="text-align-right">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for report in reports %}    
+          <tr>
+            <td>{{ report.date }}</td>
+            <td>{{ report.title }}</td>
+            <td>{{ report.hours }}</td>
+            <td class="text-align-right">{{ report.price_per_hour }}</td>
+            <td class="text-align-right">{{ report.total }}</td>
+          </tr>
+        {% endfor %}
+        <tr>
+          <td class="bottom-border md-padding" colspan="4">Subtotal</td>
+          <td class="bottom-border text-align-right md-padding">{{ subtotal_reports }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="height: 0.5cm;"></div>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Bezeichnung</th>
+          <th>Anzahl</th>
+          <th class="text-align-right">Ansatz</th>
+          <th class="text-align-right">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for flat in flats %}
+          <tr>
+            <td>{{ flat.name }}</td>
+            <td>{{ flat.amount }}</td>
+            <td class="text-align-right">{{ flat.price }}</td>
+            <td class="text-align-right">{{ flat.total }}</td>
+          </tr>
+        {% endfor %}
+        <tr>
+          <td class="bottom-border md-padding" colspan="3">Subtotal</td>
+          <td class="text-align-right bottom-border md-padding">{{ subtotal_flats }}</td>
+        </tr>
+        <tr>
+          <td class="bottom-border lg-padding" colspan="3"><strong>Total</strong></td>
+          <td class="text-align-right bottom-border lg-padding"><strong>{{ total }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="height: 0.5cm;"></div>
+    <p>Konditionen: Zahlbar innert 10 Arbeitstagen rein netto.</p>
+    <div style="height: 1cm;"></div>
+    <p>Herzlichen Dank für Ihren Auftrag.</p>
+  </body>
+</html>

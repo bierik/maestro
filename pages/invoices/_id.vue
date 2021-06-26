@@ -1,9 +1,13 @@
 <template>
   <LayoutDefault :title="invoice.number" narrow>
     <portal to="append-actions">
-      <v-btn icon :href="invoice.url" target="blank">
-        <v-icon>{{ mdiFilePdf }}</v-icon>
-      </v-btn>
+      <InvoicePreviewDialog :src="invoice.url">
+        <template #activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon>{{ mdiFilePdf }}</v-icon>
+          </v-btn>
+        </template>
+      </InvoicePreviewDialog>
     </portal>
     <portal to="prepend-actions">
       <v-btn icon :to="`/customers/${invoice.customer.id}#rechnungen`">
