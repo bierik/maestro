@@ -12,4 +12,11 @@
 
 .v-window__container, .v-window-item {
     height: 100% !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.v-list {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }

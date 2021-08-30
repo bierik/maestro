@@ -1,5 +1,5 @@
 <template>
-  <LayoutDefault narrow title="Übersicht"> </LayoutDefault>
+  <LayoutDefault title="Übersicht"> </LayoutDefault>
 </template>
 <script>
 export default {}

@@ -6,10 +6,16 @@
     v-bind="$attrs"
     :options.sync="options"
     :loading="loading"
+    class="grow d-flex flex-column"
     @update:options="debounceLoadItems"
   >
     <template v-for="(index, name) in $scopedSlots" v-slot:[name]="data">
       <slot :name="name" v-bind="data"></slot>
+    </template>
+    <template #default="attrs">
+      <div class="grow">
+        <slot name="default" v-bind="attrs" />
+      </div>
     </template>
   </v-data-iterator>
 </template>

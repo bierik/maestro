@@ -1,5 +1,5 @@
 <template>
-  <LayoutDefault narrow title="Rechnungen">
+  <LayoutDefault title="Rechnungen">
     <ServerSideIterator :fetch="fetchInvoices" :filter="invoiceFilter">
       <template #header>
         <InvoiceStatusFilter v-model="invoiceFilter.status" />

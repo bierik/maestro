@@ -39,11 +39,11 @@ export default {
     defaultAssets: {
       icons: false,
     },
-    customVariables: ['~/assets/variables.scss'],
     icons: {
       iconfont: 'mdiSvg',
     },
     theme: {
+      options: { customProperties: true },
       themes: {
         light: {
           primary: '#aac964',

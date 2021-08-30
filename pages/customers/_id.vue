@@ -1,5 +1,5 @@
 <template>
-  <LayoutDefault narrow :title="customer.full_name">
+  <LayoutDefault :title="customer.full_name">
     <template #prepend-actions>
       <v-btn color="transparent" to="/customers" nuxt icon>
         <v-icon color="white">{{ mdiChevronLeft }}</v-icon>

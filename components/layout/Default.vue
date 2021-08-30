@@ -1,5 +1,5 @@
 <template>
-  <v-container :class="narrow ? 'pa-0' : 'pt-10'" class="fill-height flex-column align-stretch">
+  <v-container class="fill-height flex-column align-stretch pb-12">
     <v-app-bar app elevation="0" color="primary" dark>
       <slot name="prepend-actions">
         <portal-target name="prepend-actions" />

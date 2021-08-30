@@ -1,5 +1,5 @@
 <template>
-  <LayoutDefault narrow :title="currentMonth">
+  <LayoutDefault :title="currentMonth">
     <portal to="append-actions">
       <v-btn icon @click="$refs.calendar.today()">
         <v-icon>{{ mdiCalendar }}</v-icon>
