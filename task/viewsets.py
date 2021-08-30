@@ -23,7 +23,8 @@ class TaskViewset(
     DestroyModelMixin,
     UpdateModelMixin,
 ):
-    queryset = Task.objects.all()
+    pagination_class = None
+    queryset = Task.objects.order_by("title").all()
     serializer_class = TaskSerializer
 
     @action(detail=False)

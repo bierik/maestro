@@ -24,15 +24,8 @@
         :customer="customer"
       />
       <CustomerReportsTabItem value="rapporte" :transition="false" :reverse-transition="false" />
-      <CustomerFlatsTabItem :flats="flats" value="pauschale" :transition="false" :reverse-transition="false" />
-      <CustomerInvoicesTabItem
-        :invoices="invoices"
-        :filter.sync="statusFilter"
-        value="rechnungen"
-        :transition="false"
-        :reverse-transition="false"
-        @update:filter="loadInvoices"
-      >
+      <CustomerFlatsTabItem value="pauschale" :transition="false" :reverse-transition="false" />
+      <CustomerInvoicesTabItem value="rechnungen" :transition="false" :reverse-transition="false">
         <AddButton :to="`/invoices/new/${customer.id}`" />
       </CustomerInvoicesTabItem>
     </v-tabs-items>
@@ -42,7 +35,6 @@
 <script>
 import { mdiPencil, mdiChevronLeft, mdiAlarm } from '@mdi/js'
 import DateTime from 'luxon/src/datetime'
-import status from '@/components/invoice/status'
 
 export default {
   name: 'ShowCustomer',
@@ -58,7 +50,6 @@ export default {
   data() {
     return {
       tab: 'personalien',
-      statusFilter: [status.CREATED],
       reports: [],
       flats: [],
       invoices: [],
@@ -68,25 +59,7 @@ export default {
       mdiAlarm,
     }
   },
-  watch: {
-    tab: {
-      handler(tab) {
-        if (tab === 'rechnungen') {
-          this.loadInvoices()
-        } else if (tab === 'pauschale') {
-          this.loadFlats()
-        }
-      },
-      immediate: true,
-    },
-  },
   methods: {
-    async loadInvoices() {
-      const searchParams = this.statusFilter.map((status) => ['status', status])
-      this.invoices = await this.$http.$get(`customers/${this.customer.id}/invoices/`, {
-        searchParams,
-      })
-    },
     async loadFlats() {
       this.flats = await this.$http.$get(`customers/${this.customer.id}/flats/`)
     },

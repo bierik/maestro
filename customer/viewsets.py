@@ -1,4 +1,3 @@
-from rest_framework.decorators import action
 from rest_framework.mixins import (
     CreateModelMixin,
     DestroyModelMixin,
@@ -6,14 +5,18 @@ from rest_framework.mixins import (
     RetrieveModelMixin,
     UpdateModelMixin,
 )
-from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from customer.models import Customer
+from invoice.models import Invoice
+from flat.models import Flat
+from report.models import Report
 from customer.serializers import CustomerSerializer
 from flat.serializers import FlatSerializer
 from invoice.serializers import InvoiceSerializer
 from report.serializers import ReportSerializer
+from invoice.filters import InvoiceFilter
+from report.filters import ReportFilter
 
 
 class CustomerViewset(
@@ -27,35 +30,32 @@ class CustomerViewset(
     queryset = Customer.objects.order_by("last_name", "first_name")
     serializer_class = CustomerSerializer
 
-    @action(detail=True)
-    def reports(self, request, pk):
-        start = request.query_params.get("start")
-        end = request.query_params.get("end")
-        customer = Customer.objects.get(id=pk)
-        reports_serializer = ReportSerializer(
-            customer.reports.filter(start__gte=start, end__lte=end),
-            many=True,
-        )
-        return Response(reports_serializer.data)
 
-    @action(detail=True)
-    def flats(self, request, pk):
-        customer = Customer.objects.get(id=pk)
-        flats_serializer = FlatSerializer(
-            instance=customer.flats.order_by("-created"),
-            many=True,
-        )
-        return Response(flats_serializer.data)
+class CustomerInvoiceViewset(GenericViewSet, ListModelMixin):
+    queryset = Invoice.objects.order_by("-created").all()
+    serializer_class = InvoiceSerializer
+    filterset_class = InvoiceFilter
 
-    @action(detail=True)
-    def invoices(self, request, pk):
-        status_filter = request.query_params.getlist("status")
-        customer = Customer.objects.get(id=pk)
-        invoice_serializer = InvoiceSerializer(
-            instance=customer.invoices.order_by("-created").filter(
-                status__in=status_filter
-            ),
-            many=True,
-            context={"request": request},
-        )
-        return Response(invoice_serializer.data)
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(customer_id=self.kwargs["customer_pk"])
+
+
+class CustomerFlatViewset(GenericViewSet, ListModelMixin):
+    queryset = Flat.objects.order_by("-created").all()
+    serializer_class = FlatSerializer
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(customer_id=self.kwargs["customer_pk"])
+
+
+class CustomerReportViewset(GenericViewSet, ListModelMixin):
+    pagination_class = None
+    queryset = Report.objects.order_by("start").all()
+    serializer_class = ReportSerializer
+    filterset_class = ReportFilter
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(customer_id=self.kwargs["customer_pk"])

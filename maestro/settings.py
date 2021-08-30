@@ -18,6 +18,7 @@ class Base(Configuration):
         "colorfield",
         "recurrence",
         "rest_framework",
+        "django_filters",
         "storages",
         "customer",
         "task",
@@ -97,6 +98,14 @@ class Base(Configuration):
         },
     ]
 
+    REST_FRAMEWORK = {
+        "DEFAULT_PAGINATION_CLASS": "api.pagination.PageNumberPagination",
+        "PAGE_SIZE": 100,
+        "DEFAULT_FILTER_BACKENDS": (
+            "django_filters.rest_framework.DjangoFilterBackend",
+        ),
+    }
+
     LOGGING = {
         "version": 1,
         "disable_existing_loggers": False,
@@ -129,6 +138,11 @@ class Base(Configuration):
                 "propagate": True,
             },
             "django.request": {
+                "handlers": ["console"],
+                "level": "DEBUG",
+                "propagate": False,
+            },
+            "django.db.backends": {
                 "handlers": ["console"],
                 "level": "DEBUG",
                 "propagate": False,

@@ -35,7 +35,8 @@ export default {
   },
   async mounted() {
     try {
-      this.customers = await this.$http.$get('/customers/')
+      const { results: customers } = await this.$http.$get('/customers/')
+      this.customers = customers
     } catch (error) {
       this.notifyError('Die Kundenliste konnte nicht geladen werden.')
       this.customers = []

@@ -11,6 +11,7 @@ from customer.models import Customer
 from invoice.models import Invoice
 from invoice.serializers import InvoiceSerializer
 from invoice.services import InvoiceService
+from invoice.filters import InvoiceFilter
 
 
 class InvoiceViewset(
@@ -18,12 +19,7 @@ class InvoiceViewset(
 ):
     queryset = Invoice.objects.order_by("-created").all()
     serializer_class = InvoiceSerializer
-
-    def filter_queryset(self, queryset):
-        status_filter = self.request.query_params.getlist("status")
-        if not status_filter:
-            return queryset
-        return queryset.filter(status__in=status_filter)
+    filterset_class = InvoiceFilter
 
     def get_invoice_service(self, customer, start, end):
         customer = Customer.objects.get(id=customer)
