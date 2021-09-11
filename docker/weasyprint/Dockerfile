@@ -14,11 +14,12 @@ RUN apk add --no-cache \
     cairo-dev \
     pango-dev \
     gdk-pixbuf-dev \
-    python3 \
+    python3-dev \
     py3-pip \
     py3-cffi \
     py3-pillow \
-    py3-lxml
+    py3-lxml \
+    g++
 
 RUN pip3 install weasyprint
 

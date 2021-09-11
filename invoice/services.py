@@ -39,11 +39,13 @@ class InvoiceService:
             subtotal_flats += flat.price
 
         route_flats_count = reports.filter(route_flat=True).count()
-        subtotal_route_flats = route_flats_count * 5
+        subtotal_route_flats = (
+            route_flats_count * self.customer.primary_address.route_flat
+        )
         flats_data.append(
             {
                 "name": "Wegpauschale",
-                "price": "5.00 CHF",
+                "price": self.customer.primary_address.route_flat,
                 "amount": route_flats_count,
                 "total": "{:.2f} CHF".format(subtotal_route_flats),
             }

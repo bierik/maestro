@@ -8,7 +8,7 @@ from customer.models import Address, Customer
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = ("id", "address", "zip_code", "place", "is_primary")
+        fields = ("id", "address", "zip_code", "place", "is_primary", "route_flat")
 
 
 class SimpleCustomerSerializer(serializers.ModelSerializer):

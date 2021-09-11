@@ -41,7 +41,7 @@ export default {
   vuetify: {
     lang: {
       locales: { de },
-      current: 'de-CH',
+      current: 'de',
     },
     defaultAssets: {
       icons: false,

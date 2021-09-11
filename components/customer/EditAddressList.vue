@@ -10,6 +10,7 @@
           <v-text-field v-model="address.address" label="Adresse" />
           <v-text-field v-model="address.zip_code" label="PLZ" />
           <v-text-field v-model="address.place" label="Ort" />
+          <v-text-field v-model="address.route_flat" label="Wegpauschale" type="number" />
           <v-radio label="Primäradresse" cols="12" :value="address.id" />
         </div>
       </div>

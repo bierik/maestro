@@ -24,3 +24,10 @@ Vue.filter('timeString', (value) => {
     minute: '2-digit',
   }).format(new Date(value))
 })
+
+Vue.filter('currency', (value) => {
+  return new Intl.NumberFormat('de-CH', {
+    style: 'currency',
+    currency: 'CHF',
+  }).format(value)
+})

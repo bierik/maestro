@@ -49,6 +49,9 @@ class Address(models.Model):
         Customer, on_delete=models.CASCADE, related_name="addresses"
     )
     is_primary = models.BooleanField(verbose_name="Primäradresse", default=False)
+    route_flat = models.DecimalField(
+        verbose_name="Wegpauschale", decimal_places=2, max_digits=5, default=0
+    )
 
     def __str__(self):
         return f"{self.address}, {self.zip_code} {self.place}"
