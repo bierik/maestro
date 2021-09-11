@@ -1,6 +1,6 @@
 <template>
   <LayoutDefault title="Rapport" narrow>
-    <v-tabs v-model="tab" fixed-tabs>
+    <v-tabs v-model="tab" fixed-tabs class="mb-4">
       <v-tab to="#rapport"> Rapport </v-tab>
       <v-tab to="#pauschal"> Pauschal </v-tab>
     </v-tabs>
@@ -85,6 +85,7 @@ import DateTime from 'luxon/src/datetime'
 import get from 'lodash/get'
 import { mdiChevronLeft, mdiCheck } from '@mdi/js'
 import omit from 'lodash/omit'
+import { mapActions } from 'vuex'
 
 export default {
   layout: 'blank',
@@ -134,7 +135,9 @@ export default {
     },
   },
   methods: {
+    ...mapActions('report', ['trackReportDuration']),
     successReport() {
+      this.trackReportDuration()
       this.notifySuccess('Rapport gespeichert')
       this.$router.push(`/customers/${this.report.customer_id}#rapporte`)
     },

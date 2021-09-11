@@ -5,7 +5,9 @@ WORKDIR /app
 ENV NODE_ENV production
 
 COPY package.json package-lock.json ./
-RUN npm install
+RUN --mount=type=cache,target=/usr/src/app/.npm \
+    npm set cache /usr/src/app/.npm && \
+    npm ci
 
 COPY ./assets ./assets
 COPY ./components ./components
@@ -27,5 +29,4 @@ COPY ./docker/web/nginx.conf /etc/nginx/conf.d
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]

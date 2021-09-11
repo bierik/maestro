@@ -1,4 +1,4 @@
-FROM python:3.9-alpine
+FROM python:3.9-alpine as builder
 
 ENV PYTHONUNBUFFERED 1
 
@@ -12,7 +12,8 @@ RUN apk add --no-cache \
 WORKDIR /app
 
 COPY requirements.txt ./
-RUN pip install --no-cache-dir --no-warn-script-location -r requirements.txt
+RUN --mount=type=cache,target=/root/.cache \
+    pip install --no-cache-dir --no-warn-script-location -r requirements.txt
 
 # Backend
 COPY ./api ./api
@@ -37,6 +38,29 @@ ENV DJANGO_AWS_SECRET_ACCESS_KEY $AWS_SECRET_ACCESS_KEY
 
 RUN python manage.py collectstatic --noinput
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+FROM python:3.9-alpine
 
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /app
+
+RUN apk add --no-cache \
+    postgresql-client \
+    postgresql-libs
+
+COPY --from=builder /app /app
+COPY --from=builder /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
+
+ENV DJANGO_SETTINGS_MODULE=maestro.settings
+ENV DJANGO_CONFIGURATION=Production
+
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
+
+ENV DJANGO_AWS_ACCESS_KEY_ID $AWS_ACCESS_KEY_ID
+ENV DJANGO_AWS_SECRET_ACCESS_KEY $AWS_SECRET_ACCESS_KEY
+
+EXPOSE 8000
+ENTRYPOINT ["/app/entrypoint.sh"]
 CMD ["gunicorn", "maestro.wsgi:application", "--bind", "0.0.0.0:8000"]

@@ -1,3 +1,5 @@
+import de from 'vuetify/lib/locale/de'
+
 export default {
   ssr: false,
   target: 'static',
@@ -20,6 +22,7 @@ export default {
     '~/plugins/notification',
     '~/plugins/rules',
     '~/plugins/full-calendar',
+    '~/plugins/report',
   ],
   components: true,
   buildModules: ['@nuxtjs/vuetify'],
@@ -36,6 +39,10 @@ export default {
     middleware: ['running-report'],
   },
   vuetify: {
+    lang: {
+      locales: { de },
+      current: 'de-CH',
+    },
     defaultAssets: {
       icons: false,
     },

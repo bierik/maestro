@@ -1,10 +1,17 @@
 <template>
   <v-app>
+    <LayoutNavigation v-if="$vuetify.breakpoint.smAndUp" />
     <v-main>
       <nuxt />
     </v-main>
     <Notification />
-    <v-bottom-navigation app color="white" class="elevation-0" background-color="primary">
+    <v-bottom-navigation
+      v-if="$vuetify.breakpoint.smAndDown"
+      app
+      color="white"
+      class="elevation-0"
+      background-color="primary"
+    >
       <v-btn to="/" nuxt>
         <!-- <span>Dashboard</span> -->
         <v-icon>{{ mdiViewDashboard }}</v-icon>
@@ -21,7 +28,7 @@
         <!-- <span>Rechnungen</span> -->
         <v-icon>{{ mdiReceipt }}</v-icon>
       </v-btn>
-      <ReportMainButton />
+      <ReportRunningButton />
     </v-bottom-navigation>
   </v-app>
 </template>

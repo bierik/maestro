@@ -10,7 +10,7 @@
         <v-icon color="white">{{ mdiPencil }}</v-icon>
       </v-btn>
     </template>
-    <v-tabs v-model="tab" fixed-tabs>
+    <v-tabs v-model="tab" fixed-tabs class="mb-4">
       <v-tab to="#personalien">Personalien</v-tab>
       <v-tab to="#rapporte">Rapporte</v-tab>
       <v-tab to="#pauschale">Pauschale</v-tab>

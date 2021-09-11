@@ -1,6 +1,6 @@
 <template>
   <v-tab-item v-bind="$attrs">
-    <v-container>
+    <v-container class="px-0">
       <InvoiceStatusFilter v-model="invoiceFilter.status" />
     </v-container>
     <ServerSideIterator :fetch="fetchInvoices" :filter="invoiceFilter">

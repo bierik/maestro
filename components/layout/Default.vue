@@ -1,6 +1,6 @@
 <template>
-  <v-container class="fill-height flex-column align-stretch pb-12">
-    <v-app-bar app elevation="0" color="primary" dark>
+  <v-container class="fill-height flex-column align-stretch">
+    <v-app-bar app elevation="0" color="primary" dark height="67" class="app-bar">
       <slot name="prepend-actions">
         <portal-target name="prepend-actions" />
       </slot>
@@ -29,3 +29,8 @@ export default {
   },
 }
 </script>
+<style>
+.v-app-bar > .v-toolbar__content {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+</style>

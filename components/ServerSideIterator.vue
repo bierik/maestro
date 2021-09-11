@@ -17,6 +17,12 @@
         <slot name="default" v-bind="attrs" />
       </div>
     </template>
+    <template #no-data>
+      <div class="d-flex align-center justify-center flex-column">
+        <img src="~assets/stories/no-items.svg" style="max-height: 50vh" />
+        <span class="text-h6 font-weight-light">Keine Einträge gefunden</span>
+      </div>
+    </template>
   </v-data-iterator>
 </template>
 
@@ -79,4 +85,18 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.v-data-iterator > div {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.v-data-iterator > .v-data-footer {
+  flex-grow: 0;
+  flex-shrink: 1;
+}
+
+.v-data-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+</style>

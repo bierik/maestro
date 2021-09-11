@@ -1,9 +1,9 @@
 <template>
   <LayoutDefault title="Rechnungen">
+    <v-container class="px-0">
+      <InvoiceStatusFilter v-model="invoiceFilter.status" />
+    </v-container>
     <ServerSideIterator :fetch="fetchInvoices" :filter="invoiceFilter">
-      <template #header>
-        <InvoiceStatusFilter v-model="invoiceFilter.status" />
-      </template>
       <template #default="{ items }">
         <v-list>
           <v-list-item v-for="invoice in items" :key="`invoice-${invoice.id}`" :to="`/invoices/${invoice.id}`">

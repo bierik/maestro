@@ -9,6 +9,9 @@
             nuxt
             :to="{ name: 'customers-id', params: { id: customer.id } }"
           >
+            <v-list-item-icon>
+              <v-icon>{{ mdiAccount }}</v-icon>
+            </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>
                 {{ customer.full_name }}
@@ -32,8 +35,13 @@
 </template>
 
 <script>
+import { mdiAccount } from '@mdi/js'
+
 export default {
   name: 'Customers',
+  data() {
+    return { mdiAccount }
+  },
   methods: {
     fetchCustomers({ page, itemsPerPage }) {
       const searchParams = {
