@@ -36,7 +36,8 @@ export default {
   },
   async mounted() {
     try {
-      this.templates = await this.$http.$get('/flat_templates/')
+      const { results } = await this.$http.$get('/flat_templates/')
+      this.templates = results
     } catch (error) {
       this.notifyError('Die Pauschalvorlagen konnte nicht geladen werden.')
       this.templates = []

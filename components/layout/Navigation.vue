@@ -12,7 +12,7 @@
 
     <v-divider></v-divider>
 
-    <v-list dense nav>
+    <v-list class="py-2" dense nav>
       <v-list-item to="/">
         <v-list-item-icon>
           <v-icon>{{ mdiViewDashboard }}</v-icon>
