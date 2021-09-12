@@ -23,6 +23,7 @@ export default {
     '~/plugins/rules',
     '~/plugins/full-calendar',
     '~/plugins/report',
+    { src: '~/plugins/vuex-persist', ssr: false },
   ],
   components: true,
   buildModules: ['@nuxtjs/vuetify'],

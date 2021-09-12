@@ -1,23 +1,9 @@
 <template>
   <LayoutDefault :title="currentMonth">
     <portal to="append-actions">
-      <v-btn icon @click="$refs.calendar.weekView()">
-        <v-icon>{{ mdiCalendarWeek }}</v-icon>
-      </v-btn>
-      <v-btn icon @click="$refs.calendar.monthView()">
-        <v-icon>{{ mdiCalendarMonth }}</v-icon>
-      </v-btn>
-      <v-btn icon @click="$refs.calendar.today()">
-        <v-icon>{{ mdiCalendarToday }}</v-icon>
-      </v-btn>
-      <v-btn icon @click="$refs.calendar.prev()">
-        <v-icon>{{ mdiChevronLeft }}</v-icon>
-      </v-btn>
-      <v-btn icon @click="$refs.calendar.next()">
-        <v-icon>{{ mdiChevronRight }}</v-icon>
-      </v-btn>
+      <CalendarActions />
     </portal>
-    <CalendarDefault ref="calendar" v-model="currentDate" :options="calendarOptions" />
+    <CalendarDefault ref="calendar" :options="calendarOptions" />
     <AddButton to="/calendar/new" />
   </LayoutDefault>
 </template>
@@ -26,12 +12,11 @@
 import Vue from 'vue'
 import rrulePlugin from '@fullcalendar/rrule'
 import interactionPlugin from '@fullcalendar/interaction'
-import { mdiChevronLeft, mdiChevronRight, mdiCalendarToday, mdiCalendarMonth, mdiCalendarWeek } from '@mdi/js'
 import DateTime from 'luxon/src/datetime'
 import { rrulestr, RRule } from 'rrule'
 import EventElement from '@/components/task/Event'
+import { mapGetters } from 'vuex'
 
-const monthFormat = new Intl.DateTimeFormat('de-CH', { month: 'long' })
 const EventElementConstructor = Vue.extend(EventElement)
 
 export default {
@@ -49,18 +34,10 @@ export default {
         eventResize: this.dragTask,
         eventContent: this.renderEvent,
       },
-      currentDate: new Date(),
-      mdiChevronLeft,
-      mdiChevronRight,
-      mdiCalendarToday,
-      mdiCalendarMonth,
-      mdiCalendarWeek,
     }
   },
   computed: {
-    currentMonth() {
-      return monthFormat.format(this.currentDate)
-    },
+    ...mapGetters('calendar', ['currentMonth']),
   },
   methods: {
     renderEvent({

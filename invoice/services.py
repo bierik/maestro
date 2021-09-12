@@ -42,14 +42,18 @@ class InvoiceService:
         subtotal_route_flats = (
             route_flats_count * self.customer.primary_address.route_flat
         )
-        flats_data.append(
+
+        route_flat_data = [
             {
                 "name": "Wegpauschale",
-                "price": self.customer.primary_address.route_flat,
+                "price": "{:.2f} CHF".format(self.customer.primary_address.route_flat),
                 "amount": route_flats_count,
                 "total": "{:.2f} CHF".format(subtotal_route_flats),
             }
-        )
+        ]
+
+        flats_data = route_flat_data + flats_data
+
         subtotal_flats += subtotal_route_flats
 
         total = float(subtotal_flats) + subtotal_reports

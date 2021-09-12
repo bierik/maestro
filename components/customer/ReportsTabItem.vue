@@ -1,5 +1,8 @@
 <template>
   <v-tab-item v-bind="$attrs">
+    <div class="d-flex justify-end primary white--text py-1">
+      <CalendarActions />
+    </div>
     <CalendarDefault ref="calendar" :options="calendarOptions" />
   </v-tab-item>
 </template>

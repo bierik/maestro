@@ -6,8 +6,9 @@
       </v-btn>
     </template>
     <template #append-actions>
-      <v-btn color="transparent" nuxt :to="{ name: 'customers-edit-id', params: { id: customer.id } }" icon>
-        <v-icon color="white">{{ mdiPencil }}</v-icon>
+      <v-btn nuxt :to="{ name: 'customers-edit-id', params: { id: customer.id } }" text>
+        <v-icon v-if="$vuetify.breakpoint.smAndDown">{{ mdiPencil }}</v-icon>
+        <span v-else>Bearbeiten</span>
       </v-btn>
     </template>
     <v-tabs v-model="tab" fixed-tabs class="mb-4">

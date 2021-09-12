@@ -27,7 +27,8 @@
     "luxon": "^1.26.0",
     "nuxt": "^2.14.6",
     "portal-vue": "^2.1.7",
-    "rrule": "^2.6.8"
+    "rrule": "^2.6.8",
+    "vuex-persistedstate": "^4.0.0"
   },
   "devDependencies": {
     "@4tw/eslint-config": "^0.6.0",

@@ -21,16 +21,14 @@ class Report(TimeStampedModel):
     def running(cls):
         return cls.objects.filter(end__isnull=True).first()
 
-    def _rounded_hours_decimal(self):
-        hours_decimal = (self.end - self.start).seconds / 3600
-        return round(hours_decimal * 4) / 4
+    def hours_decimal(self):
+        return (self.end - self.start).seconds / 3600
 
     def duration(self):
-        rounded_hours_decimal = self._rounded_hours_decimal()
-        hours = int(rounded_hours_decimal)
-        minutes = int((rounded_hours_decimal * 60) % 60)
+        hours_decimal = self.hours_decimal()
+        hours = int(hours_decimal)
+        minutes = int((hours_decimal * 60) % 60)
         return (hours, minutes)
 
     def price(self):
-        rounded_hours_decimal = self._rounded_hours_decimal()
-        return float(self.customer.price_per_hour) * rounded_hours_decimal
+        return float(self.customer.price_per_hour) * self.hours_decimal()

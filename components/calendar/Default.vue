@@ -7,15 +7,11 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import locale from '@fullcalendar/core/locales/de'
 import mergeWith from 'lodash/mergeWith'
-import get from 'lodash/get'
 import isArray from 'lodash/isArray'
+import { mapMutations, mapActions } from 'vuex'
 
 export default {
   props: {
-    value: {
-      type: Date,
-      default: () => new Date(),
-    },
     options: {
       type: Object,
       default: () => ({}),
@@ -65,40 +61,18 @@ export default {
     },
   },
   methods: {
+    ...mapMutations('calendar', ['setApi']),
+    ...mapActions('calendar', ['applyDesktopView', 'applyMobileView']),
     applyCalendarView() {
       if (this.$vuetify.breakpoint.smAndUp) {
-        this.api.changeView(get(localStorage, 'view', 'timeGridWeek'))
+        this.applyDesktopView()
       } else {
-        this.api.changeView('timeGridThreeDay')
+        this.applyMobileView()
       }
     },
-    emitCurrentDate() {
-      this.$emit('input', this.api.getDate())
-    },
     init() {
-      this.api = this.$refs.calendar.getApi()
-      this.emitCurrentDate()
+      this.setApi(this.$refs.calendar.getApi())
       this.applyCalendarView()
-    },
-    prev() {
-      this.api.prev()
-      this.emitCurrentDate()
-    },
-    next() {
-      this.api.next()
-      this.emitCurrentDate()
-    },
-    today() {
-      this.api.today()
-      this.emitCurrentDate()
-    },
-    monthView() {
-      localStorage.setItem('view', 'dayGridMonth')
-      this.api.changeView('dayGridMonth')
-    },
-    weekView() {
-      localStorage.setItem('view', 'timeGridWeek')
-      this.api.changeView('timeGridWeek')
     },
   },
 }

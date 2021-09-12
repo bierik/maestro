@@ -4,11 +4,13 @@
       <slot />
       <v-col cols="12">
         <portal to="append-actions">
-          <v-btn :loading="loading" :disabled="!valid" icon @click="_save">
-            <v-icon>{{ mdiCheck }}</v-icon>
+          <v-btn :loading="loading" :disabled="!valid" text @click="_save">
+            <v-icon v-if="$vuetify.breakpoint.smAndDown">{{ mdiCheck }}</v-icon>
+            <span v-else>Speichern</span>
           </v-btn>
-          <v-btn v-if="deleteable" :loading="loading" icon @click="_destroy">
-            <v-icon>{{ mdiTrashCan }}</v-icon>
+          <v-btn v-if="deleteable" :loading="loading" depressed color="error" @click="_destroy">
+            <v-icon v-if="$vuetify.breakpoint.smAndDown">{{ mdiTrashCan }}</v-icon>
+            <span v-else>Löschen</span>
           </v-btn>
         </portal>
         <portal to="prepend-actions">
