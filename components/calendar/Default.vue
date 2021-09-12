@@ -6,7 +6,9 @@
 import timeGridPlugin from '@fullcalendar/timegrid'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import locale from '@fullcalendar/core/locales/de'
-import merge from 'lodash/merge'
+import mergeWith from 'lodash/mergeWith'
+import get from 'lodash/get'
+import isArray from 'lodash/isArray'
 
 export default {
   props: {
@@ -48,7 +50,11 @@ export default {
   },
   computed: {
     calendarOptions() {
-      return merge(this.defaultOptions, this.options)
+      return mergeWith(this.defaultOptions, this.options, (objValue, srcValue) => {
+        if (isArray(objValue)) {
+          return objValue.concat(srcValue)
+        }
+      })
     },
   },
   watch: {
@@ -60,8 +66,11 @@ export default {
   },
   methods: {
     applyCalendarView() {
-      const view = this.$vuetify.breakpoint.smAndUp ? 'timeGridWeek' : 'timeGridThreeDay'
-      this.api.changeView(view)
+      if (this.$vuetify.breakpoint.smAndUp) {
+        this.api.changeView(get(localStorage, 'view', 'timeGridWeek'))
+      } else {
+        this.api.changeView('timeGridThreeDay')
+      }
     },
     emitCurrentDate() {
       this.$emit('input', this.api.getDate())
@@ -82,6 +91,14 @@ export default {
     today() {
       this.api.today()
       this.emitCurrentDate()
+    },
+    monthView() {
+      localStorage.setItem('view', 'dayGridMonth')
+      this.api.changeView('dayGridMonth')
+    },
+    weekView() {
+      localStorage.setItem('view', 'timeGridWeek')
+      this.api.changeView('timeGridWeek')
     },
   },
 }

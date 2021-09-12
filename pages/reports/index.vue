@@ -90,7 +90,7 @@ import { mapActions } from 'vuex'
 export default {
   layout: 'blank',
   async asyncData({ $http }) {
-    const { customer } = await $http.$get('/tasks/next_event/')
+    const { customer, next_event_title: nextEventTitle } = await $http.$get('/tasks/next_event/')
     const report = (await $http.$get('/reports/running/')) || {}
     return {
       report: Object.assign({
@@ -99,7 +99,7 @@ export default {
         start: report.start
           ? DateTime.fromISO(report.start).toFormat("yyyy-MM-dd'T'HH:mm")
           : DateTime.local().toFormat("yyyy-MM-dd'T'HH:mm"),
-        title: report.title || '',
+        title: report.title || nextEventTitle,
         end: report.start ? DateTime.local().toFormat("yyyy-MM-dd'T'HH:mm") : null,
         route_flat: true,
       }),

@@ -41,6 +41,7 @@ class TaskViewset(
         next_event_serializer = NextEventSerializer(
             data={
                 "next_event": next_event["datetime"],
+                "next_event_title": next_event["task"].title,
                 "customer": next_event["task"].customer.id,
             }
         )

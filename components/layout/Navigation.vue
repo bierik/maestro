@@ -15,10 +15,10 @@
     <v-list class="py-2" dense nav>
       <v-list-item to="/">
         <v-list-item-icon>
-          <v-icon>{{ mdiViewDashboard }}</v-icon>
+          <v-icon>{{ mdiCalendar }}</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>Dashboard</v-list-item-title>
+          <v-list-item-title>Kalender</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-list-item to="/customers">
@@ -27,14 +27,6 @@
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>Kunden</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-      <v-list-item to="/calendar">
-        <v-list-item-icon>
-          <v-icon>{{ mdiCalendar }}</v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>Kalender</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-list-item to="/invoices">
@@ -50,11 +42,11 @@
   </v-navigation-drawer>
 </template>
 <script>
-import { mdiViewDashboard, mdiAccountGroup, mdiCalendar, mdiReceipt, mdiChartArc } from '@mdi/js'
+import { mdiAccountGroup, mdiCalendar, mdiReceipt, mdiChartArc } from '@mdi/js'
 
 export default {
   data() {
-    return { mdiViewDashboard, mdiAccountGroup, mdiCalendar, mdiReceipt, mdiChartArc }
+    return { mdiAccountGroup, mdiCalendar, mdiReceipt, mdiChartArc }
   },
 }
 </script>
