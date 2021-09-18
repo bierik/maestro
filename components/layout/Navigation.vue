@@ -12,7 +12,7 @@
 
     <v-divider></v-divider>
 
-    <v-list class="py-2" dense nav>
+    <v-list class="py-2" nav>
       <v-list-item to="/">
         <v-list-item-icon>
           <v-icon>{{ mdiCalendar }}</v-icon>
@@ -20,6 +20,11 @@
         <v-list-item-content>
           <v-list-item-title>Kalender</v-list-item-title>
         </v-list-item-content>
+        <v-list-item-action>
+          <v-btn depressed small to="/calendar/new">
+            <v-icon>{{ mdiPlus }}</v-icon>
+          </v-btn>
+        </v-list-item-action>
       </v-list-item>
       <v-list-item to="/customers">
         <v-list-item-icon>
@@ -28,6 +33,9 @@
         <v-list-item-content>
           <v-list-item-title>Kunden</v-list-item-title>
         </v-list-item-content>
+        <v-btn depressed small to="/customers/new">
+          <v-icon>{{ mdiPlus }}</v-icon>
+        </v-btn>
       </v-list-item>
       <v-list-item to="/invoices">
         <v-list-item-icon>
@@ -36,17 +44,20 @@
         <v-list-item-content>
           <v-list-item-title>Rechnungen</v-list-item-title>
         </v-list-item-content>
+        <v-btn depressed small to="/invoices/new">
+          <v-icon>{{ mdiPlus }}</v-icon>
+        </v-btn>
       </v-list-item>
       <ReportRunningListItem />
     </v-list>
   </v-navigation-drawer>
 </template>
 <script>
-import { mdiAccountGroup, mdiCalendar, mdiReceipt, mdiChartArc } from '@mdi/js'
+import { mdiAccountGroup, mdiCalendar, mdiReceipt, mdiChartArc, mdiPlus } from '@mdi/js'
 
 export default {
   data() {
-    return { mdiAccountGroup, mdiCalendar, mdiReceipt, mdiChartArc }
+    return { mdiAccountGroup, mdiCalendar, mdiReceipt, mdiChartArc, mdiPlus }
   },
 }
 </script>
