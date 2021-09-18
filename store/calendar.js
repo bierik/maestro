@@ -58,6 +58,9 @@ export const actions = {
   applyDesktopView({ state: { view } }) {
     api.changeView(view)
   },
+  refetchEvents() {
+    api.refetchEvents()
+  },
 }
 
 export const getters = {

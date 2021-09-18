@@ -21,7 +21,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import DateTime from 'luxon/src/datetime'
 import { rrulestr, RRule } from 'rrule'
 import EventElement from '@/components/task/Event'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 const EventElementConstructor = Vue.extend(EventElement)
 
@@ -50,6 +50,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions('calendar', ['refetchEvents']),
     renderEvent({
       event: {
         extendedProps: { customer },
@@ -93,6 +94,7 @@ export default {
         const rrule = rrulestr(rruleString)
         const updateRrule = new RRule({ freq: rrule.options.freq, dtstart: start, interval: rrule.options.interval })
         await this.$http.$patch(`/tasks/${id}/`, { rrule: updateRrule.toString(), duration })
+        this.refetchEvents()
       } catch (error) {
         this.notifyError('Beim Aktualisieren ist ein Fehler aufgetreten')
         revert()
