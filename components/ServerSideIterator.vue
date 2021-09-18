@@ -7,8 +7,17 @@
     :options.sync="options"
     :loading="loading"
     class="grow d-flex flex-column"
+    hide-default-footer
     @update:options="debounceLoadItems"
   >
+    <template #header="{ pagination, options: paginationOptions, updateOptions }">
+      <v-data-footer
+        :pagination="pagination"
+        :options="paginationOptions"
+        :items-per-page-options="[]"
+        @update:options="updateOptions"
+      />
+    </template>
     <template v-for="name in $scopedSlots" v-slot:[name]="data">
       <slot :name="name" v-bind="data"></slot>
     </template>
@@ -44,7 +53,7 @@ export default {
   data() {
     return {
       items: { count: 0, results: [] },
-      options: {},
+      options: { itemsPerPage: 100 },
       loading: true,
     }
   },
@@ -97,6 +106,8 @@ export default {
 }
 
 .v-data-footer {
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 </style>

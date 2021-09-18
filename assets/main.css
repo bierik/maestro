@@ -28,3 +28,7 @@
 .col {
     padding-bottom: 0 !important;
 }
+
+.v-slide-group__prev {
+    display: none !important;   
+}

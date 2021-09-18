@@ -48,8 +48,12 @@ export const actions = {
     commit('setView', 'timeGridWeek')
     api.changeView('timeGridWeek')
   },
-  applyMobileView() {
-    api.changeView('timeGridThreeDay')
+  applyMobileView({ state }) {
+    if (state.view === 'timeGridWeek') {
+      api.changeView('timeGridThreeDay')
+    } else {
+      api.changeView(state.view)
+    }
   },
   applyDesktopView({ state: { view } }) {
     api.changeView(view)

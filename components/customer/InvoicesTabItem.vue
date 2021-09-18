@@ -58,7 +58,7 @@ export default {
         page,
         ...filter,
       }
-      return this.$http.$get(path.join('customers', this.$route.params.id, 'invoices'), { searchParams })
+      return this.$http.$get(path.join('customers', this.$route.params.id, 'invoices/'), { searchParams })
     },
   },
 }

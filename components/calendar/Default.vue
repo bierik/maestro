@@ -48,7 +48,7 @@ export default {
     calendarOptions() {
       return mergeWith(this.defaultOptions, this.options, (objValue, srcValue) => {
         if (isArray(objValue)) {
-          return objValue.concat(srcValue)
+          return [...objValue, ...srcValue]
         }
       })
     },
@@ -81,5 +81,9 @@ export default {
 <style>
 .fc-scrollgrid {
   border: 0 !important;
+}
+
+.fc-day {
+  overflow: hidden;
 }
 </style>

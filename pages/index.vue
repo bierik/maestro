@@ -55,6 +55,7 @@ export default {
         extendedProps: { customer },
         title,
       },
+      view: { type },
       timeText,
     }) {
       const event = new EventElementConstructor({ propsData: { customer, timeText, title } })
