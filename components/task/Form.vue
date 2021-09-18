@@ -120,11 +120,11 @@ export default {
     },
     success() {
       this.notifySuccess('Auftrag wurde gespeichert')
-      this.$router.push('/calendar')
+      this.$router.push('/')
     },
     successDestroy() {
       this.notifySuccess('Auftrag wurde gelöscht')
-      this.$router.push('/calendar')
+      this.$router.push('/')
     },
   },
 }

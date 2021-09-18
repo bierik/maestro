@@ -63,13 +63,11 @@
                 />
               </v-col>
               <v-col cols="6">
-                <FieldsText
+                <FieldsCurrency
                   v-model="flat.price"
                   :rules="[validators.required('Preis')]"
                   :error-messages="flatErrors.price"
                   label="Preis"
-                  type="number"
-                  suffix="CHF"
                 />
               </v-col>
             </Form>

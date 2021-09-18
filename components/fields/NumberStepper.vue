@@ -3,7 +3,14 @@
     <v-btn small outlined tile :disabled="!canIncrease" @click="increase"
       ><v-icon>{{ mdiChevronUp }}</v-icon></v-btn
     >
-    <FieldsText v-model="number" hide-details outlined dense class="rounded-0 my-2" :label="label" />
+    <FieldsText
+      v-model="number"
+      hide-details
+      outlined
+      dense
+      class="number-stepper-input rounded-0 my-2"
+      :label="label"
+    />
     <v-btn small outlined tile :disabled="!canDecrease" @click="decrease"
       ><v-icon>{{ mdiChevronDown }}</v-icon></v-btn
     >
@@ -69,3 +76,8 @@ export default {
   },
 }
 </script>
+<style>
+.number-stepper-input input {
+  text-align: center;
+}
+</style>

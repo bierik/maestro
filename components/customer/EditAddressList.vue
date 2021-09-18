@@ -25,11 +25,10 @@
             <FieldsText v-model="address.place" :error-messages="errorsForAddressIndex(index).place" label="Ort" />
           </v-col>
           <v-col cols="12">
-            <FieldsText
+            <FieldsCurrency
               v-model="address.route_flat"
               :error-messages="errorsForAddressIndex(index).route_flat"
               label="Wegpauschale"
-              type="number"
             />
           </v-col>
           <v-col cols="12">

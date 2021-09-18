@@ -10,7 +10,7 @@
       <FieldsText v-model="customer.first_name" label="Vorname" :error-messages="errors.first_name" />
     </v-col>
     <v-col cols="12">
-      <FieldsText
+      <FieldsCurrency
         v-model.number="customer.price_per_hour"
         type="number"
         label="Stundenansatz"
