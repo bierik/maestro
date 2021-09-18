@@ -72,9 +72,4 @@ export default {
       theme_color: '#ffffff',
     },
   },
-  build: {
-    babel: {
-      plugins: [['@babel/plugin-proposal-class-properties', { loose: false }]],
-    },
-  },
 }

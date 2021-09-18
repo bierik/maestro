@@ -4,7 +4,7 @@
       <InvoicePreviewDialog :src="invoice.url">
         <template #activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>{{ mdiFilePdf }}</v-icon>
+            <v-icon>{{ mdiFilePdfBox }}</v-icon>
           </v-btn>
         </template>
       </InvoicePreviewDialog>
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { mdiChevronLeft, mdiCog, mdiSend, mdiCurrencyUsd, mdiArchive, mdiFilePdf } from '@mdi/js'
+import { mdiChevronLeft, mdiCog, mdiSend, mdiCurrencyUsd, mdiArchive, mdiFilePdfBox } from '@mdi/js'
 import status from '@/components/invoice/status'
 
 export default {
@@ -90,7 +90,7 @@ export default {
       mdiSend,
       mdiCurrencyUsd,
       mdiArchive,
-      mdiFilePdf,
+      mdiFilePdfBox,
       STATUS_MAPPING: {
         [status.CREATED]: {
           icon: mdiCog,

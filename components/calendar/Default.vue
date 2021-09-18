@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import '@fullcalendar/core'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import locale from '@fullcalendar/core/locales/de'

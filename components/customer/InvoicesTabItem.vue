@@ -7,7 +7,7 @@
           <template #item="{ item: invoice }">
             <v-list-item :key="`invoice-${invoice.id}`" :to="`/invoices/${invoice.id}`">
               <v-list-item-avatar>
-                <v-icon color="grey--darken-2">{{ mdiFilePdf }}</v-icon>
+                <v-icon color="grey--darken-2">{{ mdiFilePdfBox }}</v-icon>
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title class="d-flex align-center">
@@ -30,7 +30,7 @@
 
 <script>
 import path from 'path'
-import { mdiFilePdf } from '@mdi/js'
+import { mdiFilePdfBox } from '@mdi/js'
 import flatten from 'lodash/flatten'
 
 import status from '@/components/invoice/status'
@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      mdiFilePdf,
+      mdiFilePdfBox,
       invoiceFilter: { status: flatten([this.$route.query.status]) || [status.CREATED] },
     }
   },
