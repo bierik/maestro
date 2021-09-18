@@ -9,9 +9,10 @@
       v-if="$vuetify.breakpoint.smAndDown"
       app
       color="white"
-      class="elevation-0"
+      class="elevation-0 justify-start"
       background-color="primary"
     >
+      <ReportRunningButton />
       <v-btn to="/" nuxt>
         <v-icon>{{ mdiCalendar }}</v-icon>
       </v-btn>
@@ -21,7 +22,6 @@
       <v-btn to="/invoices" nuxt>
         <v-icon>{{ mdiReceipt }}</v-icon>
       </v-btn>
-      <ReportRunningButton />
     </v-bottom-navigation>
   </v-app>
 </template>

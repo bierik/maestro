@@ -1,11 +1,5 @@
 <template>
-  <v-btn
-    fab
-    absolute
-    class="rounded-circle main-report-button darken-2"
-    :color="hasRunningReport ? 'info' : 'grey'"
-    to="/reports"
-  >
+  <v-btn fab absolute :color="hasRunningReport ? 'info' : 'grey'" to="/reports">
     <span v-if="hasRunningReport" class="mt-1 caption white--text">{{ runningReportDuration }}</span>
     <v-icon :small="hasRunningReport" color="white">{{ mdiAlarm }}</v-icon>
   </v-btn>
@@ -27,15 +21,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.main-report-button {
-  top: -40px !important;
-  min-width: 0 !important;
-  width: 60px !important;
-  height: 60px !important;
-  left: 50% !important;
-  position: absolute !important;
-  margin-left: -30px !important;
-}
-</style>

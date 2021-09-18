@@ -8,7 +8,8 @@
     right
     fixed
     bottom
-    style="margin-bottom: 80px"
+    :style="{ bottom: `${$vuetify.application.bottom}px` }"
+    class="mb-4"
   >
     <v-icon>{{ mdiPlus }}</v-icon>
   </v-btn>

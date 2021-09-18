@@ -107,6 +107,7 @@ export default {
 
 .v-data-footer {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
   padding-top: 6px;
   padding-bottom: 6px;
 }

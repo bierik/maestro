@@ -113,7 +113,7 @@ export default {
       return this.$http.$post('tasks/', { ...this.task, rrule: this.rrule.toString() })
     },
     cancel() {
-      this.$router.push('/calendar')
+      this.$router.push('/')
     },
     destroy() {
       return this.$http.$delete(`tasks/${this.task.id}/`)

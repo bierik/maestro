@@ -1,9 +1,6 @@
 <template>
   <v-tab-item v-bind="$attrs">
-    <div class="d-flex flex-column">
-      <InvoiceStatusFilter v-model="invoiceFilter.status" class="px-4" />
-      <v-divider />
-    </div>
+    <InvoiceStatusFilter v-model="invoiceFilter.status" class="px-4" />
     <ServerSideIterator :fetch="fetchInvoices" :filter="invoiceFilter">
       <template #default="{ items }">
         <ListDivided :items="items">
