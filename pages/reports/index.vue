@@ -4,7 +4,7 @@
       <v-tab to="#rapport"> Rapport </v-tab>
       <v-tab to="#pauschal"> Pauschal </v-tab>
     </v-tabs>
-    <v-tabs-items v-model="tab">
+    <v-tabs-items v-model="tab" touchless>
       <v-tab-item value="rapport">
         <Form :cancel="cancel" :save="saveReport" :errors.sync="reportErrors" @success="successReport">
           <v-col cols="12">

@@ -60,9 +60,17 @@ export default {
       },
     },
   },
+  mounted() {
+    document.addEventListener('swiped-left', this.prev)
+    document.addEventListener('swiped-right', this.next)
+  },
+  destroyed() {
+    document.removeEventListener('swiped-left', this.prev)
+    document.removeEventListener('swiped-right', this.next)
+  },
   methods: {
     ...mapMutations('calendar', ['setApi']),
-    ...mapActions('calendar', ['applyDesktopView', 'applyMobileView']),
+    ...mapActions('calendar', ['applyDesktopView', 'applyMobileView', 'prev', 'next']),
     applyCalendarView() {
       if (this.$vuetify.breakpoint.smAndUp) {
         this.applyDesktopView()

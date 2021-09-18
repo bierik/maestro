@@ -17,7 +17,7 @@
       <v-tab to="#pauschale">Pauschale</v-tab>
       <v-tab to="#rechnungen">Rechnungen</v-tab>
     </v-tabs>
-    <v-tabs-items v-model="tab">
+    <v-tabs-items v-model="tab" touchless>
       <CustomerPersonalDataTabItem
         value="personalien"
         :transition="false"

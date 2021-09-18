@@ -24,6 +24,7 @@ export default {
     '~/plugins/full-calendar',
     '~/plugins/report',
     { src: '~/plugins/vuex-persist', ssr: false },
+    { src: '~/plugins/swiped-events', ssr: false },
   ],
   components: true,
   buildModules: ['@nuxtjs/vuetify'],

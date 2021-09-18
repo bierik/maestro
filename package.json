@@ -28,6 +28,7 @@
     "nuxt": "^2.14.6",
     "portal-vue": "^2.1.7",
     "rrule": "^2.6.8",
+    "swiped-events": "^1.1.4",
     "vuex-persistedstate": "^4.0.0"
   },
   "devDependencies": {
