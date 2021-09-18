@@ -1,5 +1,5 @@
 <template>
-  <LayoutDefault :title="customer.full_name">
+  <LayoutDefault :title="customer.full_name" narrow>
     <template #prepend-actions>
       <v-btn color="transparent" to="/customers" nuxt icon>
         <v-icon color="white">{{ mdiChevronLeft }}</v-icon>
@@ -11,7 +11,7 @@
         <span v-else>Bearbeiten</span>
       </v-btn>
     </template>
-    <v-tabs v-model="tab" fixed-tabs class="mb-4">
+    <v-tabs v-model="tab" fixed-tabs class="mb-4" height="40">
       <v-tab to="#personalien">Personalien</v-tab>
       <v-tab to="#rapporte">Rapporte</v-tab>
       <v-tab to="#pauschale">Pauschale</v-tab>

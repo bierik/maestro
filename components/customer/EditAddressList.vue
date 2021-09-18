@@ -1,34 +1,64 @@
 <template>
   <v-radio-group v-model="primaryAddress">
-    <div v-for="address in addresses" :key="`address-${address.id}`" class="d-flex flex-column">
+    <div v-for="(address, index) in addresses" :key="`address-${address.id}`" class="d-flex flex-column">
       <div class="d-flex align-center">
-        <v-btn icon @click="deleteAddress(address)">
+        <v-btn :disabled="!canDeleteAddress" icon @click="deleteAddress(address)">
           <v-icon color="error">{{ mdiDelete }}</v-icon>
         </v-btn>
         <v-divider vertical class="mx-2" />
-        <div class="grow">
-          <v-text-field v-model="address.address" label="Adresse" />
-          <v-text-field v-model="address.zip_code" label="PLZ" />
-          <v-text-field v-model="address.place" label="Ort" />
-          <v-text-field v-model="address.route_flat" label="Wegpauschale" type="number" />
-          <v-radio label="Primäradresse" cols="12" :value="address.id" />
-        </div>
+        <v-row>
+          <v-col cols="12">
+            <FieldsText
+              v-model="address.address"
+              :error-messages="errorsForAddressIndex(index).address"
+              label="Adresse"
+            />
+          </v-col>
+          <v-col cols="4">
+            <FieldsText
+              v-model="address.zip_code"
+              :error-messages="errorsForAddressIndex(index).zip_code"
+              label="PLZ"
+            />
+          </v-col>
+          <v-col cols="8">
+            <FieldsText v-model="address.place" :error-messages="errorsForAddressIndex(index).place" label="Ort" />
+          </v-col>
+          <v-col cols="12">
+            <FieldsText
+              v-model="address.route_flat"
+              :error-messages="errorsForAddressIndex(index).route_flat"
+              label="Wegpauschale"
+              type="number"
+            />
+          </v-col>
+          <v-col cols="12">
+            <v-radio label="Primäradresse" cols="12" :value="address.id" />
+          </v-col>
+        </v-row>
       </div>
       <v-divider class="my-4" />
     </div>
-    <v-btn depressed x-large color="primary" @click="newAddress">Neue Adresse</v-btn>
+    <div>
+      <v-btn depressed color="primary" @click="newAddress">Weitere Adresse hinzufügen</v-btn>
+    </div>
   </v-radio-group>
 </template>
 
 <script>
 import cloneDeep from 'lodash/cloneDeep'
 import { mdiDelete } from '@mdi/js'
-import isEmpty from 'lodash/isEmpty'
+import last from 'lodash/last'
+import first from 'lodash/first'
 
 export default {
   name: 'EditAddress',
   props: {
     value: {
+      type: Array,
+      default: () => [{ id: 0 }],
+    },
+    errors: {
       type: Array,
       default: () => [],
     },
@@ -42,10 +72,8 @@ export default {
   computed: {
     primaryAddress: {
       get() {
-        if (isEmpty(this.addresses)) {
-          return null
-        }
-        return this.addresses.find((address) => address.is_primary === true).id
+        const primaryAddress = this.addresses.find((address) => address.is_primary === true)
+        return primaryAddress ? primaryAddress.id : first(this.addresses).id
       },
       set(addressId) {
         this.addresses = this.addresses.map((address) => {
@@ -55,6 +83,9 @@ export default {
           return Object.assign(address, { is_primary: false })
         })
       },
+    },
+    canDeleteAddress() {
+      return this.addresses.length > 1
     },
   },
   watch: {
@@ -67,14 +98,18 @@ export default {
   },
   methods: {
     newAddress() {
-      if (this.addresses.find((address) => address.is_primary === true)) {
-        this.addresses.push({})
-      } else {
-        this.addresses.push({ is_primary: true, id: 0 })
-      }
+      this.addresses.push({ id: this.createNewAddressId() })
     },
     deleteAddress(address) {
       this.addresses.splice(this.addresses.indexOf(address), 1)
+    },
+    errorsForAddressIndex(index) {
+      return this.errors[index] || {}
+    },
+    createNewAddressId() {
+      const ids = this.addresses.map((address) => address.id).sort()
+      const lastId = last(ids)
+      return lastId === null ? 0 : lastId + 1
     },
   },
 }

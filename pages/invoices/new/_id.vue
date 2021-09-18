@@ -5,10 +5,10 @@
         <CustomerSelect v-model="invoice.customer" />
       </v-col>
       <v-col cols="12">
-        <v-text-field v-model="invoice.start" type="date" label="Von" />
+        <FieldsText v-model="invoice.start" type="date" label="Von" />
       </v-col>
       <v-col cols="12">
-        <v-text-field v-model="invoice.end" type="date" label="Bis" />
+        <FieldsText v-model="invoice.end" type="date" label="Bis" />
       </v-col>
       <v-col cols="12">
         <InvoicePreviewDialog :src="previewURL">

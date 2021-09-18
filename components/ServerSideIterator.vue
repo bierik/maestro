@@ -9,7 +9,7 @@
     class="grow d-flex flex-column"
     @update:options="debounceLoadItems"
   >
-    <template v-for="(index, name) in $scopedSlots" v-slot:[name]="data">
+    <template v-for="name in $scopedSlots" v-slot:[name]="data">
       <slot :name="name" v-bind="data"></slot>
     </template>
     <template #default="attrs">

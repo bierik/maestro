@@ -1,5 +1,5 @@
 <template>
-  <LayoutDefault :title="invoice.number" narrow>
+  <LayoutDefault :title="invoice.number">
     <portal to="append-actions">
       <InvoicePreviewDialog :src="invoice.url">
         <template #activator="{ on, attrs }">

@@ -6,6 +6,10 @@
     flex-grow: 0 !important;
 }
 
+.v-tab {
+    text-transform: none !important;
+}
+
 .v-window {
     flex-grow: 1 !important;
 }
@@ -18,5 +22,9 @@
 
 .v-list {
     padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.col {
     padding-bottom: 0 !important;
 }

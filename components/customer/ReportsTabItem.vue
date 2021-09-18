@@ -1,7 +1,13 @@
 <template>
   <v-tab-item v-bind="$attrs">
-    <div class="d-flex justify-end primary white--text py-1">
-      <CalendarActions />
+    <div class="d-flex justify-end align-center primary white--text">
+      <CalendarActionsToday dark />
+      <CalendarActionsPrev dark />
+      <CalendarActionsNext class="mr-2" dark />
+      <span>{{ currentDateString }}</span>
+      <v-spacer />
+      <CalendarActionsMonth dark />
+      <CalendarActionsWeek dark />
     </div>
     <CalendarDefault ref="calendar" :options="calendarOptions" />
   </v-tab-item>
@@ -9,6 +15,7 @@
 
 <script>
 import interactionPlugin from '@fullcalendar/interaction'
+import { mapGetters } from 'vuex'
 
 export default {
   inheritAttrs: false,
@@ -26,6 +33,9 @@ export default {
         eventClick: this.editReport,
       },
     }
+  },
+  computed: {
+    ...mapGetters('calendar', ['currentDateString']),
   },
   methods: {
     editReport({ event: { id } }) {

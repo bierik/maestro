@@ -1,7 +1,13 @@
 <template>
-  <LayoutDefault :title="currentMonth">
+  <LayoutDefault :title="currentDateString" narrow>
+    <portal to="prepend-actions">
+      <CalendarActionsToday small class="mr-2" />
+      <CalendarActionsPrev small />
+      <CalendarActionsNext small />
+    </portal>
     <portal to="append-actions">
-      <CalendarActions />
+      <CalendarActionsWeek small class="mr-2" />
+      <CalendarActionsMonth small />
     </portal>
     <CalendarDefault ref="calendar" :options="calendarOptions" />
     <AddButton to="/calendar/new" />
@@ -37,7 +43,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('calendar', ['currentMonth']),
+    ...mapGetters('calendar', ['currentDateString']),
+    title() {
+      const format = new Intl.DateTimeFormat('de-CH', { month: 'long', year: 'numeric' })
+      return format.format(this.currentDate)
+    },
   },
   methods: {
     renderEvent({

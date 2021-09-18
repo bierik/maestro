@@ -1,29 +1,32 @@
 <template>
-  <LayoutDefault title="Rechnungen">
-    <v-container class="px-0">
-      <InvoiceStatusFilter v-model="invoiceFilter.status" />
-    </v-container>
+  <LayoutDefault title="Rechnungen" narrow>
+    <div class="d-flex flex-column">
+      <InvoiceStatusFilter v-model="invoiceFilter.status" class="px-4" />
+      <v-divider />
+    </div>
     <ServerSideIterator :fetch="fetchInvoices" :filter="invoiceFilter">
       <template #default="{ items }">
-        <v-list>
-          <v-list-item v-for="invoice in items" :key="`invoice-${invoice.id}`" :to="`/invoices/${invoice.id}`">
-            <v-list-item-avatar>
-              <v-icon color="grey--darken-2">{{ mdiFilePdf }}</v-icon>
-            </v-list-item-avatar>
-            <v-list-item-content>
-              <v-list-item-title class="d-flex align-center">
-                {{ invoice.number }}
-                <InvoiceStatusChip :invoice="invoice" class="ml-2" />
-              </v-list-item-title>
-              <v-list-item-subtitle>
-                {{ invoice.date | dateString }}
-              </v-list-item-subtitle>
-              <v-list-item-subtitle>
-                {{ invoice.customer.full_name }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
+        <ListDivided :items="items">
+          <template #item="{ item: invoice }">
+            <v-list-item :key="`invoice-${invoice.id}`" :to="`/invoices/${invoice.id}`">
+              <v-list-item-avatar>
+                <v-icon color="grey--darken-2">{{ mdiFilePdf }}</v-icon>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title class="d-flex align-center">
+                  {{ invoice.number }}
+                  <InvoiceStatusChip :invoice="invoice" class="ml-2" />
+                </v-list-item-title>
+                <v-list-item-subtitle>
+                  {{ invoice.date | dateString }}
+                </v-list-item-subtitle>
+                <v-list-item-subtitle>
+                  {{ invoice.customer.full_name }}
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+        </ListDivided>
       </template>
     </ServerSideIterator>
   </LayoutDefault>

@@ -5,10 +5,10 @@
         <CustomerSelect v-model="flat.customer_id" :error-messages="errors.customer_id" />
       </v-col>
       <v-col cols="12">
-        <v-text-field v-model="flat.name" label="Name" :error-messages="errors.title" />
+        <FieldsText v-model="flat.name" label="Name" :error-messages="errors.title" />
       </v-col>
       <v-col cols="12">
-        <v-text-field v-model="flat.price" type="number" postfix="CHF" label="Preis" :error-messages="errors.price" />
+        <FieldsText v-model="flat.price" type="number" postfix="CHF" label="Preis" :error-messages="errors.price" />
       </v-col>
     </Form>
   </LayoutDefault>

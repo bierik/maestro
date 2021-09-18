@@ -3,10 +3,14 @@
     <v-col cols="12" class="py-0">
       <h2>Personalien</h2>
     </v-col>
+    <v-col cols="6">
+      <FieldsText v-model="customer.last_name" autofocus label="Nachname" :error-messages="errors.last_name" />
+    </v-col>
+    <v-col cols="6">
+      <FieldsText v-model="customer.first_name" label="Vorname" :error-messages="errors.first_name" />
+    </v-col>
     <v-col cols="12">
-      <v-text-field v-model="customer.last_name" autofocus label="Nachname" :error-messages="errors.last_name" />
-      <v-text-field v-model="customer.first_name" label="Vorname" :error-messages="errors.first_name" />
-      <v-text-field
+      <FieldsText
         v-model.number="customer.price_per_hour"
         type="number"
         label="Stundenansatz"
@@ -17,14 +21,12 @@
       <h2>Adressen</h2>
     </v-col>
     <v-col cols="12">
-      <CustomerEditAddressList v-model="customer.addresses" />
+      <CustomerEditAddressList v-model="customer.addresses" :errors="errors.addresses" />
     </v-col>
   </Form>
 </template>
 
 <script>
-import isEmpty from 'lodash/isEmpty'
-
 export default {
   name: 'CustomerForm',
   props: {
@@ -36,7 +38,7 @@ export default {
   data() {
     return {
       errors: {},
-      isEditMode: !isEmpty(this.customer),
+      isEditMode: this.customer.id,
     }
   },
   methods: {

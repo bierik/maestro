@@ -10,7 +10,7 @@
     @successDestroy="successDestroy"
   >
     <v-col cols="12">
-      <v-text-field
+      <FieldsText
         v-model="task.title"
         autofocus
         label="Titel"
@@ -22,7 +22,7 @@
         :rules="[validators.required('Kunde')]"
         :error-messages="errors['customer']"
       />
-      <v-text-field
+      <FieldsText
         v-model="dtstart"
         type="datetime-local"
         label="Startdatum"

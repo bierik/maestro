@@ -1,50 +1,48 @@
 <template>
   <LayoutDefault title="Rapport" narrow>
-    <v-tabs v-model="tab" fixed-tabs class="mb-4">
+    <v-tabs v-model="tab" fixed-tabs class="mb-4" height="40">
       <v-tab to="#rapport"> Rapport </v-tab>
       <v-tab to="#pauschal"> Pauschal </v-tab>
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item value="rapport">
-        <v-container>
-          <Form :cancel="cancel" :save="saveReport" :errors.sync="reportErrors" @success="successReport">
-            <v-col cols="12">
-              <CustomerSelect v-model="report.customer_id" :error-messages="reportErrors.customer_id" />
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="report.title"
-                autofocus
-                label="Titel"
-                :rules="[validators.required('Titel')]"
-                :error-messages="reportErrors.title"
-              />
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="report.start"
-                type="datetime-local"
-                label="Startzeit"
-                :error-messages="reportErrors.start"
-              />
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="report.end"
-                type="datetime-local"
-                label="Endzeit"
-                :rules="endRules"
-                :error-messages="reportErrors.end"
-              />
-            </v-col>
-            <v-col cols="12">
-              <v-checkbox v-model="report.route_flat" label="Wegpauschale" :error-messages="reportErrors.route_flat" />
-            </v-col>
-            <v-col cols="12">
-              <v-text-field label="Dauer" :value="reportDuration" readonly disabled />
-            </v-col>
-          </Form>
-        </v-container>
+        <Form :cancel="cancel" :save="saveReport" :errors.sync="reportErrors" @success="successReport">
+          <v-col cols="12">
+            <CustomerSelect v-model="report.customer_id" :error-messages="reportErrors.customer_id" />
+          </v-col>
+          <v-col cols="12">
+            <FieldsText
+              v-model="report.title"
+              autofocus
+              label="Titel"
+              :rules="[validators.required('Titel')]"
+              :error-messages="reportErrors.title"
+            />
+          </v-col>
+          <v-col cols="4">
+            <FieldsText
+              v-model="report.start"
+              type="datetime-local"
+              label="Startzeit"
+              :error-messages="reportErrors.start"
+            />
+          </v-col>
+          <v-col cols="4">
+            <FieldsText
+              v-model="report.end"
+              type="datetime-local"
+              label="Endzeit"
+              :rules="endRules"
+              :error-messages="reportErrors.end"
+            />
+          </v-col>
+          <v-col cols="4">
+            <FieldsText label="Dauer" :value="reportDuration" readonly disabled />
+          </v-col>
+          <v-col cols="12">
+            <v-checkbox v-model="report.route_flat" label="Wegpauschale" :error-messages="reportErrors.route_flat" />
+          </v-col>
+        </Form>
       </v-tab-item>
       <v-tab-item value="pauschal">
         <v-container>
@@ -55,16 +53,16 @@
             <v-col cols="12">
               <FlatTemplateSelect @input="applyTemplate" />
             </v-col>
-            <v-col cols="12">
-              <v-text-field
+            <v-col cols="6">
+              <FieldsText
                 v-model="flat.name"
                 :rules="[validators.required('Name')]"
                 :error-messages="flatErrors.name"
                 label="Name"
               />
             </v-col>
-            <v-col cols="12">
-              <v-text-field
+            <v-col cols="6">
+              <FieldsText
                 v-model="flat.price"
                 :rules="[validators.required('Preis')]"
                 :error-messages="flatErrors.price"

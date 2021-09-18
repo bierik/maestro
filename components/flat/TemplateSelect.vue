@@ -1,5 +1,5 @@
 <template>
-  <v-autocomplete
+  <FieldsAutocomplete
     v-model="template"
     v-bind="$attrs"
     :items="templates"

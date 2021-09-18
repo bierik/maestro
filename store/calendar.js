@@ -1,6 +1,6 @@
 import noop from 'lodash/noop'
 
-const monthFormat = new Intl.DateTimeFormat('de-CH', { month: 'long' })
+const dateFormat = new Intl.DateTimeFormat('de-CH', { month: 'long', year: 'numeric' })
 
 let api = {
   changeView: noop,
@@ -57,8 +57,8 @@ export const actions = {
 }
 
 export const getters = {
-  currentMonth(state) {
-    return monthFormat.format(state.currentDate)
+  currentDateString(state) {
+    return dateFormat.format(state.currentDate)
   },
 }
 

@@ -5,19 +5,19 @@
         <CustomerSelect v-model="report.customer_id" :error-messages="errors.customer_id" />
       </v-col>
       <v-col cols="12">
-        <v-text-field v-model="report.title" label="Titel" :error-messages="errors.title" />
+        <FieldsText v-model="report.title" label="Titel" :error-messages="errors.title" />
       </v-col>
       <v-col cols="12">
-        <v-text-field v-model="report.start" type="datetime-local" label="Startzeit" :error-messages="errors.start" />
+        <FieldsText v-model="report.start" type="datetime-local" label="Startzeit" :error-messages="errors.start" />
       </v-col>
       <v-col cols="12">
-        <v-text-field v-model="report.end" type="datetime-local" label="Endzeit" :error-messages="errors.end" />
+        <FieldsText v-model="report.end" type="datetime-local" label="Endzeit" :error-messages="errors.end" />
       </v-col>
       <v-col cols="12">
         <v-checkbox v-model="report.route_flat" label="Wegpauschale" :error-messages="errors.route_flat" />
       </v-col>
       <v-col cols="12">
-        <v-text-field readonly disabled :value="duration" />
+        <FieldsText readonly disabled :value="duration" />
       </v-col>
     </Form>
   </LayoutDefault>

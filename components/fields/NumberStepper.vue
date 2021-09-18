@@ -3,7 +3,7 @@
     <v-btn small outlined tile :disabled="!canIncrease" @click="increase"
       ><v-icon>{{ mdiChevronUp }}</v-icon></v-btn
     >
-    <v-text-field v-model="number" hide-details outlined dense class="rounded-0 my-2" :label="label" />
+    <FieldsText v-model="number" hide-details outlined dense class="rounded-0 my-2" :label="label" />
     <v-btn small outlined tile :disabled="!canDecrease" @click="decrease"
       ><v-icon>{{ mdiChevronDown }}</v-icon></v-btn
     >

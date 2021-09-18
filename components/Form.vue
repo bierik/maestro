@@ -1,5 +1,5 @@
 <template>
-  <v-form v-model="valid" v-bind="$attrs" @keyup.enter.native="_save">
+  <v-form v-model="valid" v-bind="$attrs" class="form" @keyup.enter.native="_save">
     <v-row>
       <slot />
       <v-col cols="12">
@@ -105,3 +105,8 @@ export default {
   },
 }
 </script>
+<style>
+.form {
+  max-width: 800px;
+}
+</style>
