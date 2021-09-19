@@ -31,7 +31,7 @@ export default {
     return {
       calendarOptions: {
         plugins: [rrulePlugin, interactionPlugin],
-        eventSources: ['/api/tasks/'],
+        events: this.loadTasks,
         selectable: true,
         editable: true,
         select: this.createTask,
@@ -78,6 +78,12 @@ export default {
     },
     editTask({ event: { id } }) {
       this.$router.push({ path: `/calendar/edit/${id}` })
+    },
+    loadTasks({ startStr, endStr }, resolve, reject) {
+      this.$axios
+        .$get('/tasks/', { params: { start: startStr, end: endStr } })
+        .then(resolve)
+        .catch(reject)
     },
     async dragTask({
       event: {

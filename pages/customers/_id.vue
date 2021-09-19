@@ -5,12 +5,6 @@
         <v-icon color="white">{{ mdiChevronLeft }}</v-icon>
       </v-btn>
     </template>
-    <template #append-actions>
-      <v-btn nuxt :to="{ name: 'customers-edit-id', params: { id: customer.id } }" text>
-        <v-icon v-if="$vuetify.breakpoint.smAndDown">{{ mdiPencil }}</v-icon>
-        <span v-else>Bearbeiten</span>
-      </v-btn>
-    </template>
     <v-tabs v-model="tab" fixed-tabs class="mb-4" height="40">
       <v-tab to="#personalien">Personalien</v-tab>
       <v-tab to="#rapporte">Rapporte</v-tab>

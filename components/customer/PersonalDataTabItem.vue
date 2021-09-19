@@ -40,6 +40,11 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+    <v-container>
+      <v-btn nuxt :to="{ name: 'customers-edit-id', params: { id: customer.id } }" depressed color="primary">
+        <span>Bearbeiten</span>
+      </v-btn>
+    </v-container>
   </v-tab-item>
 </template>
 

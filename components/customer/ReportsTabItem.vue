@@ -29,7 +29,7 @@ export default {
     return {
       calendarOptions: {
         plugins: [interactionPlugin],
-        eventSources: [`/api/customers/${this.$route.params.id}/reports/`],
+        events: this.loadReports,
         eventClick: this.editReport,
       },
     }
@@ -40,6 +40,12 @@ export default {
   methods: {
     editReport({ event: { id } }) {
       this.$router.push(`/reports/${id}`)
+    },
+    loadReports({ startStr, endStr }, resolve, reject) {
+      this.$axios
+        .$get(`/customers/${this.$route.params.id}/reports/`, { params: { start: startStr, end: endStr } })
+        .then(resolve)
+        .catch(reject)
     },
   },
 }
