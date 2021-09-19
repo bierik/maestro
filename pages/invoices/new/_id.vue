@@ -61,5 +61,10 @@ export default {
       this.$router.push(`/customers/${this.invoice.customer}#rechnungen`)
     },
   },
+  head() {
+    return {
+      title: 'Neue Rechung',
+    }
+  },
 }
 </script>

@@ -49,5 +49,10 @@ export default {
       this.$router.push(`/customers/${this.flat.customer_id}#pauschale`)
     },
   },
+  head() {
+    return {
+      title: this.flat.name,
+    }
+  },
 }
 </script>

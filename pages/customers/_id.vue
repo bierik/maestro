@@ -30,6 +30,7 @@
 <script>
 import { mdiPencil, mdiChevronLeft, mdiAlarm } from '@mdi/js'
 import DateTime from 'luxon/src/datetime'
+import upperFirst from 'lodash/upperFirst'
 
 export default {
   name: 'ShowCustomer',
@@ -58,6 +59,11 @@ export default {
     async loadFlats() {
       this.flats = await this.$axios.$get(`customers/${this.customer.id}/flats/`)
     },
+  },
+  head() {
+    return {
+      title: [upperFirst(this.tab), this.customer.full_name].join(' - '),
+    }
   },
 }
 </script>

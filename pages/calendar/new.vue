@@ -18,5 +18,10 @@ export default {
       },
     }
   },
+  head() {
+    return {
+      title: 'Neuer Auftrag',
+    }
+  },
 }
 </script>

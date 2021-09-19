@@ -50,5 +50,10 @@ export default {
       return this.$axios.$get('invoices/', { searchParams })
     },
   },
+  head() {
+    return {
+      title: 'Rechnungen',
+    }
+  },
 }
 </script>

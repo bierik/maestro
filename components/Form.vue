@@ -1,5 +1,5 @@
 <template>
-  <v-form v-model="valid" v-bind="$attrs" class="form" @keyup.enter.native="_save">
+  <v-form v-model="valid" v-bind="$attrs" class="form" @submit.prevent="_save">
     <v-row>
       <slot />
       <v-col cols="12" class="d-flex">
@@ -8,10 +8,10 @@
         <v-btn color="error" depressed class="mr-2" @click="cancel">
           <span>Abbrechen</span>
         </v-btn>
-        <v-btn :loading="loading" :disabled="!valid" depressed color="success" @click="_save">
+        <v-btn type="submit" :loading="loading" :disabled="!valid" depressed color="success" @click="_save">
           <span>Speichern</span>
         </v-btn>
-        <v-btn v-if="deleteable" :loading="loading" depressed color="error" @click="_destroy">
+        <v-btn v-if="deleteable" :loading="loading" depressed color="error" class="ml-2" @click="_destroy">
           <v-icon v-if="$vuetify.breakpoint.smAndDown">{{ mdiTrashCan }}</v-icon>
           <span v-else>Löschen</span>
         </v-btn>

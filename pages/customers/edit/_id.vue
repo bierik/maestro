@@ -16,6 +16,11 @@ export default {
     const customer = await $axios.$get(`customers/${id}/`)
     return { customer }
   },
+  head() {
+    return {
+      title: this.customer.full_name,
+    }
+  },
 }
 </script>
 

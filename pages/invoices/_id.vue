@@ -156,5 +156,10 @@ export default {
       this.reloadInvoice()
     },
   },
+  head() {
+    return {
+      title: ['Rechnung', this.invoice.number].join(' - '),
+    }
+  },
 }
 </script>

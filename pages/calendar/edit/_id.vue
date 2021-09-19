@@ -24,6 +24,11 @@ export default {
       },
     }
   },
+  head() {
+    return {
+      title: ['Auftrag', this.task.title].join(' - '),
+    }
+  },
 }
 </script>
 

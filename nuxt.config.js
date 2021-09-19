@@ -5,8 +5,8 @@ export default {
   target: 'static',
   loading: false,
   head: {
-    titleTemplate: '%s - maestro',
-    title: 'maestro',
+    titleTemplate: '%s | Maestro',
+    title: '…',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },

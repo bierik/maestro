@@ -206,8 +206,9 @@ class Production(Base):
 
     X_FRAME_OPTIONS = "SAMEORIGIN"
 
-    sentry_sdk.init(
-        dsn=os.environ["SENTRY_DSN"],
-        integrations=[DjangoIntegration()],
-        release="1.0",
-    )
+    if "SENTRY_DSN" in os.environ:
+        sentry_sdk.init(
+            dsn=os.environ["SENTRY_DSN"],
+            integrations=[DjangoIntegration()],
+            release="1.0",
+        )

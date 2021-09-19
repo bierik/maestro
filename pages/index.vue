@@ -106,5 +106,10 @@ export default {
       }
     },
   },
+  head() {
+    return {
+      title: 'Kalender',
+    }
+  },
 }
 </script>

@@ -41,6 +41,7 @@ export default {
         end: DateTime.fromISO(report.end).toFormat("yyyy-MM-dd'T'HH:mm"),
         title: report.title,
         customer_id: report.customer.id,
+        customer_full_name: report.customer.full_name,
         route_flat: report.route_flat,
       },
     }
@@ -68,6 +69,11 @@ export default {
       this.notifySuccess('Rapport wurde aktualisiert')
       this.$router.push(`/customers/${this.report.customer_id}#rapporte`)
     },
+  },
+  head() {
+    return {
+      title: ['Rapport', this.report.customer_full_name].join(' - '),
+    }
   },
 }
 </script>

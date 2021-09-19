@@ -172,5 +172,10 @@ export default {
       Object.assign(this.flat, omit(template, ['id']))
     },
   },
+  head() {
+    return {
+      title: this.tab === 'rapport' ? 'Neuer Rapport' : 'Neue Pauschale',
+    }
+  },
 }
 </script>

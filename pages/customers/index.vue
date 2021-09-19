@@ -52,5 +52,10 @@ export default {
       return this.$axios.$get('customers/', { searchParams })
     },
   },
+  head() {
+    return {
+      title: 'Kunden',
+    }
+  },
 }
 </script>
