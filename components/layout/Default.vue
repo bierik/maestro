@@ -1,14 +1,10 @@
 <template>
   <v-container class="fill-height flex-column align-stretch" :class="{ 'pa-0': narrow }">
-    <v-app-bar app elevation="0" color="primary" dark height="67" class="app-bar">
-      <slot name="prepend-actions">
-        <portal-target name="prepend-actions" />
-      </slot>
+    <v-app-bar app elevation="0" color="primary" dark height="67" class="app-bar pl-2">
+      <slot name="prepend-actions" />
       <v-toolbar-title class="ml-2">{{ title }}</v-toolbar-title>
       <v-spacer />
-      <slot name="append-actions">
-        <portal-target name="append-actions" />
-      </slot>
+      <slot name="append-actions" />
       <LayoutUserMenu v-if="$vuetify.breakpoint.smAndUp" target-class="ml-4" />
     </v-app-bar>
     <slot />

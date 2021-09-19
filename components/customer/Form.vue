@@ -49,7 +49,11 @@ export default {
       return this.$axios.$post('customers/', { ...this.customer })
     },
     cancel() {
-      this.$router.push({ name: 'customers-id', params: { id: this.customer.id } })
+      if (this.isEditMode) {
+        this.$router.push({ name: 'customers-id', params: { id: this.customer.id } })
+      } else {
+        this.$router.push('/customers')
+      }
     },
     success() {
       this.notifySuccess('Kunde wurde gespeichert')

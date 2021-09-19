@@ -1,14 +1,14 @@
 <template>
   <LayoutDefault :title="currentDateString" narrow>
-    <portal to="prepend-actions">
+    <template #prepend-actions>
       <CalendarActionsToday small class="mr-2" />
       <CalendarActionsPrev small />
       <CalendarActionsNext small />
-    </portal>
-    <portal to="append-actions">
+    </template>
+    <template #append-actions>
       <CalendarActionsWeek small class="mr-2" />
       <CalendarActionsMonth small />
-    </portal>
+    </template>
     <CalendarDefault ref="calendar" :options="calendarOptions" />
     <AddButton to="/calendar/new" />
   </LayoutDefault>

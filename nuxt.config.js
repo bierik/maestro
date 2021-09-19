@@ -28,7 +28,7 @@ export default {
   ],
   components: true,
   buildModules: ['@nuxtjs/vuetify'],
-  modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/pwa', 'portal-vue/nuxt'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/pwa'],
   axios: {
     prefix: '/api',
     proxy: true,

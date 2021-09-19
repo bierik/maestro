@@ -2,22 +2,19 @@
   <v-form v-model="valid" v-bind="$attrs" class="form" @keyup.enter.native="_save">
     <v-row>
       <slot />
-      <v-col cols="12">
-        <portal to="append-actions">
-          <v-btn :loading="loading" :disabled="!valid" text @click="_save">
-            <v-icon v-if="$vuetify.breakpoint.smAndDown">{{ mdiCheck }}</v-icon>
-            <span v-else>Speichern</span>
-          </v-btn>
-          <v-btn v-if="deleteable" :loading="loading" depressed color="error" @click="_destroy">
-            <v-icon v-if="$vuetify.breakpoint.smAndDown">{{ mdiTrashCan }}</v-icon>
-            <span v-else>Löschen</span>
-          </v-btn>
-        </portal>
-        <portal to="prepend-actions">
-          <v-btn icon @click="cancel">
-            <v-icon>{{ mdiChevronLeft }}</v-icon>
-          </v-btn>
-        </portal>
+      <v-col cols="12" class="d-flex">
+        <slot name="prepend-actions" />
+        <v-spacer />
+        <v-btn color="error" depressed class="mr-2" @click="cancel">
+          <span>Abbrechen</span>
+        </v-btn>
+        <v-btn :loading="loading" :disabled="!valid" depressed color="success" @click="_save">
+          <span>Speichern</span>
+        </v-btn>
+        <v-btn v-if="deleteable" :loading="loading" depressed color="error" @click="_destroy">
+          <v-icon v-if="$vuetify.breakpoint.smAndDown">{{ mdiTrashCan }}</v-icon>
+          <span v-else>Löschen</span>
+        </v-btn>
       </v-col>
     </v-row>
   </v-form>

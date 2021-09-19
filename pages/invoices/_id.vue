@@ -1,19 +1,10 @@
 <template>
   <LayoutDefault :title="invoice.number">
-    <portal to="append-actions">
-      <InvoicePreviewDialog :src="invoice.url">
-        <template #activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>{{ mdiFilePdfBox }}</v-icon>
-          </v-btn>
-        </template>
-      </InvoicePreviewDialog>
-    </portal>
-    <portal to="prepend-actions">
+    <template #prepend-actions>
       <v-btn icon :to="`/customers/${invoice.customer.id}#rechnungen`">
         <v-icon>{{ mdiChevronLeft }}</v-icon>
       </v-btn>
-    </portal>
+    </template>
     <div class="d-flex flex-column fill-height grow">
       <v-list>
         <v-list-item :to="`/customers/${invoice.customer.id}`">
@@ -41,6 +32,16 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <div class="mb-4 ml-4">
+        <InvoicePreviewDialog :src="invoice.url">
+          <template #activator="{ on, attrs }">
+            <v-btn v-bind="attrs" color="primary" depressed v-on="on">
+              <v-icon left>{{ mdiFilePdfBox }}</v-icon>
+              <span>Vorschau anzeigen</span>
+            </v-btn>
+          </template>
+        </InvoicePreviewDialog>
+      </div>
       <v-timeline dense clipped class="grow">
         <v-timeline-item v-for="historyEntry in invoice.history" :key="`history-entry-${historyEntry.id}`" fill-dot>
           <template v-slot:icon>

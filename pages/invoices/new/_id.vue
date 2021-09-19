@@ -10,13 +10,13 @@
       <v-col cols="12">
         <FieldsText v-model="invoice.end" type="date" label="Bis" />
       </v-col>
-      <v-col cols="12">
+      <template #prepend-actions>
         <InvoicePreviewDialog :src="previewURL">
           <template #activator="{ on, attrs }">
             <v-btn depressed color="primary" v-bind="attrs" v-on="on">Vorschau anzeigen</v-btn>
           </template>
         </InvoicePreviewDialog>
-      </v-col>
+      </template>
     </Form>
   </LayoutDefault>
 </template>
@@ -50,7 +50,11 @@ export default {
       return this.$axios.post('/invoices/', this.invoice)
     },
     cancel() {
-      this.$router.push(`/customers/${this.invoice.customer}#rechnungen`)
+      if (this.invoice.customer) {
+        this.$router.push(`/customers/${this.invoice.customer}#rechnungen`)
+      } else {
+        this.$router.push('/invoices')
+      }
     },
     success() {
       this.notifySuccess('Rechnung erstellt')
