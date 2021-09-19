@@ -25,8 +25,8 @@ export default {
     { src: '~/plugins/swiped-events', ssr: false },
   ],
   components: true,
-  buildModules: ['@nuxtjs/vuetify'],
-  modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/pwa', '@nuxtjs/sentry'],
+  buildModules: ['@nuxtjs/vuetify', '@nuxtjs/pwa'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/sentry'],
   sentry: {
     disabled: process.env.NODE_ENV !== 'production',
     publishRelease: process.env.NODE_ENV === 'production',
@@ -71,11 +71,18 @@ export default {
     },
   },
   pwa: {
-    useWebmanifestExtension: true,
-    lang: 'de',
     meta: {
+      name: 'Maestro',
+      author: 'Bieri Kevin',
+      theme_color: '#aac964',
+      lang: 'de',
       nativeUI: true,
-      theme_color: '#ffffff',
+    },
+    manifest: {
+      name: 'Maestro',
+      short_name: 'Maestro',
+      lang: 'de',
+      background_color: '#aac964',
     },
   },
   auth: {
