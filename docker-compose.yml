@@ -12,6 +12,7 @@ services:
       args:
         - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
         - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+        - SENTRY_DSN=${SENTRY_DSN}
     image: bierik/maestro-backend:latest
     ports:
       - "8000:8000"
@@ -38,6 +39,9 @@ services:
     build:
       context: .
       dockerfile: ./docker/web/Dockerfile
+      args:
+        - SENTRY_DSN=${SENTRY_DSN}
+        - SOURCE_COMMIT=${SOURCE_COMMIT}
     image: bierik/maestro-web:latest
     ports:
       - "3000:80"

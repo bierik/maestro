@@ -16,19 +16,25 @@ export default {
   },
   css: ['~/assets/main.css'],
   plugins: [
-    '~/plugins/http',
     '~/plugins/filters',
     '~/plugins/config',
     '~/plugins/notification',
     '~/plugins/rules',
     '~/plugins/full-calendar',
-    '~/plugins/report',
     { src: '~/plugins/vuex-persist', ssr: false },
     { src: '~/plugins/swiped-events', ssr: false },
   ],
   components: true,
   buildModules: ['@nuxtjs/vuetify'],
-  modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/pwa'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/pwa', '@nuxtjs/sentry'],
+  sentry: {
+    disabled: process.env.NODE_ENV !== 'production',
+    publishRelease: process.env.NODE_ENV === 'production',
+    dsn: process.env.SENTRY_DSN,
+    config: {
+      release: process.env.SOURCE_COMMIT,
+    },
+  },
   axios: {
     prefix: '/api',
     proxy: true,
@@ -38,7 +44,7 @@ export default {
     '/media/': 'http://localhost:8000',
   },
   router: {
-    middleware: ['auth', 'running-report'],
+    middleware: ['auth', 'report'],
   },
   vuetify: {
     lang: {

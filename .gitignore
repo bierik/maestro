@@ -313,4 +313,7 @@ pyvenv.cfg
 .venv
 pip-selfcheck.json
 
+# Sentry CLI
+.sentryclirc
+
 # End of https://www.toptal.com/developers/gitignore/api/venv

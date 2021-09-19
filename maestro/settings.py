@@ -1,6 +1,8 @@
 import os
 
 from configurations import Configuration, values
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 
 class Base(Configuration):
@@ -203,3 +205,9 @@ class Production(Base):
     WEASYPRINT_HOST = "weasyprint"
 
     X_FRAME_OPTIONS = "SAMEORIGIN"
+
+    sentry_sdk.init(
+        dsn=os.environ["SENTRY_DSN"],
+        integrations=[DjangoIntegration()],
+        release="1.0",
+    )

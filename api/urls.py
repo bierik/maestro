@@ -14,6 +14,11 @@ from invoice.viewsets import InvoiceViewset
 from report.viewsets import ReportViewset
 from task.viewsets import TaskViewset
 
+
+def trigger_error(request):
+    raise Exception("Sentry Debug")
+
+
 router = routers.DefaultRouter()
 router.register(r"customers", CustomerViewset)
 router.register(r"tasks", TaskViewset)
@@ -33,3 +38,6 @@ customer_router.register(r"reports", CustomerReportViewset, basename="customer-r
 
 urlpatterns = router.urls + customer_router.urls
 urlpatterns.append(path("auth/", include("authentication.urls")))
+urlpatterns.append(
+    path("sentry-debug/", trigger_error),
+)
