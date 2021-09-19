@@ -32,3 +32,7 @@
 .v-slide-group__prev {
     display: none !important;   
 }
+
+.v-bottom-navigation .v-btn {
+    min-width: 70px !important;
+}

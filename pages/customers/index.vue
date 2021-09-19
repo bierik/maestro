@@ -49,7 +49,7 @@ export default {
         page_size: itemsPerPage,
         page,
       }
-      return this.$http.$get('customers/', { searchParams })
+      return this.$axios.$get('customers/', { searchParams })
     },
   },
 }

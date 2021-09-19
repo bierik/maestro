@@ -27,8 +27,7 @@
       </div>
     </template>
     <template #no-data>
-      <div class="d-flex align-center justify-center flex-column">
-        <img src="~assets/stories/no-items.svg" style="max-height: 50vh" />
+      <div class="d-flex align-center justify-center flex-column py-8">
         <span class="text-h6 font-weight-light">Keine Einträge gefunden</span>
       </div>
     </template>

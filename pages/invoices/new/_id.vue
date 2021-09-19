@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     save() {
-      return this.$http.post('/invoices/', this.invoice)
+      return this.$axios.post('/invoices/', this.invoice)
     },
     cancel() {
       this.$router.push(`/customers/${this.invoice.customer}#rechnungen`)

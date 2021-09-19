@@ -35,7 +35,7 @@ export default {
         page_size: itemsPerPage,
         page,
       }
-      return this.$http.$get(path.join('customers', this.$route.params.id, 'flats/'), { searchParams })
+      return this.$axios.$get(path.join('customers', this.$route.params.id, 'flats/'), { searchParams })
     },
   },
 }

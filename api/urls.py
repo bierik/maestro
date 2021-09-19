@@ -1,15 +1,18 @@
+from django.urls import path
+from django.urls.conf import include
 from rest_framework import routers
-
 from rest_framework_nested import routers as nested_routers
 
-from customer.viewsets import CustomerViewset
+from customer.viewsets import (
+    CustomerFlatViewset,
+    CustomerInvoiceViewset,
+    CustomerReportViewset,
+    CustomerViewset,
+)
 from flat.viewsets import FlatTemplateViewset, FlatViewset
 from invoice.viewsets import InvoiceViewset
 from report.viewsets import ReportViewset
 from task.viewsets import TaskViewset
-from customer.viewsets import CustomerInvoiceViewset
-from customer.viewsets import CustomerFlatViewset
-from customer.viewsets import CustomerReportViewset
 
 router = routers.DefaultRouter()
 router.register(r"customers", CustomerViewset)
@@ -29,3 +32,4 @@ customer_router.register(r"flats", CustomerFlatViewset, basename="customer-flat"
 customer_router.register(r"reports", CustomerReportViewset, basename="customer-report")
 
 urlpatterns = router.urls + customer_router.urls
+urlpatterns.append(path("auth/", include("authentication.urls")))

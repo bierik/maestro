@@ -28,12 +28,12 @@ import DateTime from 'luxon/src/datetime'
 
 export default {
   async asyncData({
-    $http,
+    $axios,
     route: {
       params: { id },
     },
   }) {
-    const report = await $http.$get(`reports/${id}/`)
+    const report = await $axios.$get(`reports/${id}/`)
     return {
       report: {
         id: report.id,
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     save() {
-      return this.$http.$patch(`reports/${this.report.id}/`, this.report)
+      return this.$axios.$patch(`reports/${this.report.id}/`, this.report)
     },
     cancel() {
       this.$router.push(`/customers/${this.report.customer_id}#rapporte`)

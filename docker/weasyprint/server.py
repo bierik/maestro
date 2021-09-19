@@ -6,12 +6,12 @@ A tiny aiohttp based web server that wraps weasyprint
 It expects a multipart/form-data upload containing a html file, an optional
 css file and optional attachments.
 """
-from aiohttp import web
-from weasyprint import CSS
-from weasyprint import HTML
 import logging
 import os.path
 import tempfile
+
+from aiohttp import web
+from weasyprint import CSS, HTML
 
 CHUNK_SIZE = 65536
 

@@ -8,12 +8,12 @@
 export default {
   name: 'NewCustomer',
   async asyncData({
-    $http,
+    $axios,
     route: {
       params: { id },
     },
   }) {
-    const customer = await $http.$get(`customers/${id}/`)
+    const customer = await $axios.$get(`customers/${id}/`)
     return { customer }
   },
 }

@@ -21,7 +21,7 @@ export const mutations = {
 
 export const actions = {
   async fetchRunningReport({ commit }) {
-    const report = await this.$http.$get('/reports/running/')
+    const report = await this.$axios.$get('/reports/running/')
     commit('setRunningReport', report)
   },
   computeRunningReportDuration({ commit, getters: { hasRunningReport }, state: { runningReport } }) {

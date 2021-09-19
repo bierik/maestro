@@ -9,6 +9,7 @@
       <slot name="append-actions">
         <portal-target name="append-actions" />
       </slot>
+      <LayoutUserMenu v-if="$vuetify.breakpoint.smAndUp" target-class="ml-4" />
     </v-app-bar>
     <slot />
   </v-container>

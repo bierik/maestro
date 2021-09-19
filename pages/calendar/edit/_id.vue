@@ -7,12 +7,12 @@
 <script>
 export default {
   async asyncData({
-    $http,
+    $axios,
     route: {
       params: { id },
     },
   }) {
-    const task = await $http.$get(`tasks/${id}/`)
+    const task = await $axios.$get(`tasks/${id}/`)
     return {
       task: {
         id: task.id,

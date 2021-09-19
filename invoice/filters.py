@@ -1,7 +1,7 @@
-from invoice.models import HistoryStatus
-from django_filters import widgets
 from django_filters import rest_framework as filters
-from invoice.models import Invoice
+from django_filters import widgets
+
+from invoice.models import HistoryStatus, Invoice
 
 
 class InvoiceFilter(filters.FilterSet):

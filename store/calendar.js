@@ -1,6 +1,6 @@
 import noop from 'lodash/noop'
 
-const dateFormat = new Intl.DateTimeFormat('de-CH', { month: 'long', year: 'numeric' })
+const dateFormat = new Intl.DateTimeFormat('de-CH', { month: 'short', year: 'numeric' })
 
 let api = {
   changeView: noop,

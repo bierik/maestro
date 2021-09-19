@@ -108,15 +108,15 @@ export default {
   methods: {
     save() {
       if (this.isEditMode) {
-        return this.$http.$patch(`tasks/${this.task.id}/`, { ...this.task, rrule: this.rrule.toString() })
+        return this.$axios.$patch(`tasks/${this.task.id}/`, { ...this.task, rrule: this.rrule.toString() })
       }
-      return this.$http.$post('tasks/', { ...this.task, rrule: this.rrule.toString() })
+      return this.$axios.$post('tasks/', { ...this.task, rrule: this.rrule.toString() })
     },
     cancel() {
       this.$router.push('/')
     },
     destroy() {
-      return this.$http.$delete(`tasks/${this.task.id}/`)
+      return this.$axios.$delete(`tasks/${this.task.id}/`)
     },
     success() {
       this.notifySuccess('Auftrag wurde gespeichert')

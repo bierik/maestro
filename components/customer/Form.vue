@@ -44,9 +44,9 @@ export default {
   methods: {
     save() {
       if (this.isEditMode) {
-        return this.$http.$patch(`customers/${this.customer.id}/`, { ...this.customer })
+        return this.$axios.$patch(`customers/${this.customer.id}/`, { ...this.customer })
       }
-      return this.$http.$post('customers/', { ...this.customer })
+      return this.$axios.$post('customers/', { ...this.customer })
     },
     cancel() {
       this.$router.push({ name: 'customers-id', params: { id: this.customer.id } })

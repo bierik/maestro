@@ -40,12 +40,12 @@ import DateTime from 'luxon/src/datetime'
 export default {
   name: 'ShowCustomer',
   async asyncData({
-    $http,
+    $axios,
     route: {
       params: { id },
     },
   }) {
-    const customer = await $http.$get(`customers/${id}/`)
+    const customer = await $axios.$get(`customers/${id}/`)
     return { customer }
   },
   data() {
@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     async loadFlats() {
-      this.flats = await this.$http.$get(`customers/${this.customer.id}/flats/`)
+      this.flats = await this.$axios.$get(`customers/${this.customer.id}/flats/`)
     },
   },
 }

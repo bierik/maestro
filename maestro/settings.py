@@ -18,8 +18,10 @@ class Base(Configuration):
         "colorfield",
         "recurrence",
         "rest_framework",
+        "rest_framework.authtoken",
         "django_filters",
         "storages",
+        "authentication",
         "customer",
         "task",
         "report",
@@ -38,6 +40,8 @@ class Base(Configuration):
     ]
     ROOT_URLCONF = "maestro.urls"
     WSGI_APPLICATION = "maestro.wsgi.application"
+
+    AUTH_USER_MODEL = "authentication.User"
 
     DATABASE_NAME = values.Value("maestro_development")
     DATABASE_ENGINE = values.Value("django.db.backends.postgresql_psycopg2")
@@ -104,6 +108,12 @@ class Base(Configuration):
         "DEFAULT_FILTER_BACKENDS": (
             "django_filters.rest_framework.DjangoFilterBackend",
         ),
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            "rest_framework.authentication.TokenAuthentication",
+        ],
+        "DEFAULT_PERMISSION_CLASSES": [
+            "rest_framework.permissions.IsAuthenticated",
+        ],
     }
 
     LOGGING = {

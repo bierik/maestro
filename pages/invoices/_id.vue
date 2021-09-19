@@ -75,12 +75,12 @@ import status from '@/components/invoice/status'
 
 export default {
   async asyncData({
-    $http,
+    $axios,
     route: {
       params: { id },
     },
   }) {
-    const invoice = await $http.$get(`invoices/${id}/`)
+    const invoice = await $axios.$get(`invoices/${id}/`)
     return { invoice }
   },
   data() {
@@ -134,7 +134,7 @@ export default {
   },
   methods: {
     async reloadInvoice() {
-      this.invoice = await this.$http.$get(`invoices/${this.invoice.id}/`)
+      this.invoice = await this.$axios.$get(`invoices/${this.invoice.id}/`)
     },
     statusIcon({ status }) {
       return this.STATUS_MAPPING[status].icon
@@ -143,15 +143,15 @@ export default {
       return this.STATUS_MAPPING[status].actions
     },
     async send() {
-      await this.$http.$post(`/invoices/${this.invoice.id}/send/`)
+      await this.$axios.$post(`/invoices/${this.invoice.id}/send/`)
       this.reloadInvoice()
     },
     async pay() {
-      await this.$http.$post(`/invoices/${this.invoice.id}/pay/`)
+      await this.$axios.$post(`/invoices/${this.invoice.id}/pay/`)
       this.reloadInvoice()
     },
     async archive() {
-      await this.$http.$post(`/invoices/${this.invoice.id}/archive/`)
+      await this.$axios.$post(`/invoices/${this.invoice.id}/archive/`)
       this.reloadInvoice()
     },
   },

@@ -87,9 +87,9 @@ import { mapActions } from 'vuex'
 
 export default {
   layout: 'blank',
-  async asyncData({ $http }) {
-    const { customer, next_event_title: nextEventTitle } = await $http.$get('/tasks/next_event/')
-    const report = (await $http.$get('/reports/running/')) || {}
+  async asyncData({ $axios }) {
+    const { customer, next_event_title: nextEventTitle } = await $axios.$get('/tasks/next_event/')
+    const report = (await $axios.$get('/reports/running/')) || {}
     return {
       report: Object.assign({
         id: report.id || null,
@@ -148,9 +148,9 @@ export default {
     },
     saveReport() {
       if (this.report.id) {
-        return this.$http.$patch(`/reports/${this.report.id}/`, this.report)
+        return this.$axios.$patch(`/reports/${this.report.id}/`, this.report)
       } else {
-        return this.$http.$post(`/reports/`, this.report)
+        return this.$axios.$post(`/reports/`, this.report)
       }
     },
     successFlat() {
@@ -158,7 +158,7 @@ export default {
       this.$router.push(`/customers/${this.report.customer_id}#pauschale`)
     },
     saveFlat() {
-      return this.$http.$post(`/flats/`, this.flat)
+      return this.$axios.$post(`/flats/`, this.flat)
     },
     applyTemplate(template) {
       Object.assign(this.flat, omit(template, ['id']))

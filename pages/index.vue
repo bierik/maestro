@@ -92,7 +92,7 @@ export default {
       try {
         const rrule = rrulestr(rruleString)
         const updateRrule = new RRule({ freq: rrule.options.freq, dtstart: start, interval: rrule.options.interval })
-        await this.$http.$patch(`/tasks/${id}/`, { rrule: updateRrule.toString(), duration })
+        await this.$axios.$patch(`/tasks/${id}/`, { rrule: updateRrule.toString(), duration })
         this.refetchEvents()
       } catch (error) {
         this.notifyError('Beim Aktualisieren ist ein Fehler aufgetreten')

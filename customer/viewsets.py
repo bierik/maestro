@@ -8,15 +8,15 @@ from rest_framework.mixins import (
 from rest_framework.viewsets import GenericViewSet
 
 from customer.models import Customer
-from invoice.models import Invoice
-from flat.models import Flat
-from report.models import Report
 from customer.serializers import CustomerSerializer
+from flat.models import Flat
 from flat.serializers import FlatSerializer
-from invoice.serializers import InvoiceSerializer
-from report.serializers import ReportSerializer
 from invoice.filters import InvoiceFilter
+from invoice.models import Invoice
+from invoice.serializers import InvoiceSerializer
 from report.filters import ReportFilter
+from report.models import Report
+from report.serializers import ReportSerializer
 
 
 class CustomerViewset(

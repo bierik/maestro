@@ -12,7 +12,7 @@
       class="elevation-0 justify-start"
       background-color="primary"
     >
-      <ReportRunningButton />
+      <ReportRunningButton class="grow" />
       <v-btn to="/" nuxt>
         <v-icon>{{ mdiCalendar }}</v-icon>
       </v-btn>
@@ -22,16 +22,17 @@
       <v-btn to="/invoices" nuxt>
         <v-icon>{{ mdiReceipt }}</v-icon>
       </v-btn>
+      <LayoutUserMenu />
     </v-bottom-navigation>
   </v-app>
 </template>
 
 <script>
-import { mdiAccountGroup, mdiCalendar, mdiReceipt } from '@mdi/js'
+import { mdiAccountGroup, mdiCalendar, mdiReceipt, mdiAccount } from '@mdi/js'
 
 export default {
   data() {
-    return { mdiAccountGroup, mdiCalendar, mdiReceipt }
+    return { mdiAccountGroup, mdiCalendar, mdiReceipt, mdiAccount }
   },
 }
 </script>

@@ -1,10 +1,13 @@
 <template>
-  <v-chip-group v-model="filter" multiple>
-    <v-chip filter color="created" :value="status.CREATED">Erstellt</v-chip>
-    <v-chip filter color="sent" :value="status.SENT">Versendet</v-chip>
-    <v-chip filter color="payed" :value="status.PAYED">Bezahlt</v-chip>
-    <v-chip filter color="archived" :value="status.ARCHIVED">Archiviert</v-chip>
-  </v-chip-group>
+  <div class="d-flex flex-column my-2">
+    <label class="caption">Statusfilter</label>
+    <v-chip-group v-model="filter" multiple>
+      <v-chip filter color="created" :value="status.CREATED">Erstellt</v-chip>
+      <v-chip filter color="sent" :value="status.SENT">Versendet</v-chip>
+      <v-chip filter color="payed" :value="status.PAYED">Bezahlt</v-chip>
+      <v-chip filter color="archived" :value="status.ARCHIVED">Archiviert</v-chip>
+    </v-chip-group>
+  </div>
 </template>
 
 <script>

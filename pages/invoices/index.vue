@@ -1,6 +1,6 @@
 <template>
   <LayoutDefault title="Rechnungen" narrow>
-    <InvoiceStatusFilter v-model="invoiceFilter.status" class="px-4" />
+    <InvoiceStatusFilter v-model="invoiceFilter.status" class="px-2" />
     <ServerSideIterator :fetch="fetchInvoices" :filter="invoiceFilter">
       <template #default="{ items }">
         <ListDivided :items="items">
@@ -47,7 +47,7 @@ export default {
         page,
         ...filter,
       }
-      return this.$http.$get('invoices/', { searchParams })
+      return this.$axios.$get('invoices/', { searchParams })
     },
   },
 }

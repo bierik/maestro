@@ -28,8 +28,8 @@ export default {
   ],
   components: true,
   buildModules: ['@nuxtjs/vuetify'],
-  modules: ['@nuxt/http', '@nuxtjs/pwa', 'portal-vue/nuxt'],
-  http: {
+  modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/pwa', 'portal-vue/nuxt'],
+  axios: {
     prefix: '/api',
     proxy: true,
   },
@@ -38,7 +38,7 @@ export default {
     '/media/': 'http://localhost:8000',
   },
   router: {
-    middleware: ['running-report'],
+    middleware: ['auth', 'running-report'],
   },
   vuetify: {
     lang: {
@@ -70,6 +70,23 @@ export default {
     meta: {
       nativeUI: true,
       theme_color: '#ffffff',
+    },
+  },
+  auth: {
+    redirect: {
+      logout: '/login',
+    },
+    strategies: {
+      local: {
+        token: {
+          type: 'Token',
+        },
+        endpoints: {
+          login: { url: '/auth/login/', method: 'post' },
+          logout: { url: '/auth/logout/', method: 'post' },
+          user: { url: '/auth/user/', method: 'get' },
+        },
+      },
     },
   },
 }

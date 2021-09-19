@@ -17,12 +17,12 @@
 <script>
 export default {
   async asyncData({
-    $http,
+    $axios,
     route: {
       params: { id },
     },
   }) {
-    const flat = await $http.$get(`flats/${id}/`)
+    const flat = await $axios.$get(`flats/${id}/`)
     return {
       flat: {
         name: flat.name,
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     save() {
-      return this.$http.$patch(`flats/${this.flat.id}/`, this.flat)
+      return this.$axios.$patch(`flats/${this.flat.id}/`, this.flat)
     },
     cancel() {
       this.$router.push(`/customers/${this.flat.customer_id}#pauschale`)
