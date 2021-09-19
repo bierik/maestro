@@ -22,6 +22,7 @@ COPY ./invoice ./invoice
 COPY ./maestro ./maestro
 COPY ./task ./task
 COPY ./customer ./customer
+COPY ./authentication ./authentication
 COPY ./report ./report
 COPY ./manage.py ./
 COPY ./docker/maestro/entrypoint.sh ./

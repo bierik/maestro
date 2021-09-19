@@ -4,10 +4,8 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
-COPY package.json package-lock.json ./
-RUN --mount=type=cache,target=/usr/src/app/.npm \
-    npm set cache /usr/src/app/.npm && \
-    npm ci
+COPY package.json yarn.lock ./
+RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn yarn install --production --ignore-optional --frozen-lockfile
 
 COPY ./assets ./assets
 COPY ./components ./components
