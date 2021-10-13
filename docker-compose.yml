@@ -16,9 +16,9 @@ services:
     image: bierik/maestro-backend:latest
     ports:
       - "8000:8000"
-    depends_on:
-      db:
-        condition: service_healthy
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
     environment:
       ALLOWED_HOSTS: localhost
       DJANGO_SECRET_KEY: secret

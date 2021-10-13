@@ -1,3 +1,4 @@
+from pathlib import Path
 import os
 
 from configurations import Configuration, values
@@ -6,7 +7,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 
 
 class Base(Configuration):
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    BASE_DIR = Path(__file__).absolute().parent.parent
     SECRET_KEY = values.Value("secret")
     ALLOWED_HOSTS = ["localhost"]
     INSTALLED_APPS = [
@@ -23,13 +24,13 @@ class Base(Configuration):
         "rest_framework.authtoken",
         "django_filters",
         "storages",
-        "authentication",
-        "customer",
-        "task",
-        "report",
-        "invoice",
-        "flat",
-        "api",
+        "apps.authentication",
+        "apps.customer",
+        "apps.task",
+        "apps.report",
+        "apps.invoice",
+        "apps.flat",
+        "apps.api",
     ]
     MIDDLEWARE = [
         "django.middleware.security.SecurityMiddleware",
@@ -85,8 +86,6 @@ class Base(Configuration):
     USE_TZ = True
     TIME_ZONE = "Europe/Zurich"
 
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-
     X_FRAME_OPTIONS = "ALLOWALL"
 
     TEMPLATES = [
@@ -105,7 +104,7 @@ class Base(Configuration):
     ]
 
     REST_FRAMEWORK = {
-        "DEFAULT_PAGINATION_CLASS": "api.pagination.PageNumberPagination",
+        "DEFAULT_PAGINATION_CLASS": "apps.api.pagination.PageNumberPagination",
         "PAGE_SIZE": 100,
         "DEFAULT_FILTER_BACKENDS": (
             "django_filters.rest_framework.DjangoFilterBackend",
@@ -169,12 +168,12 @@ class Development(Base):
 
     @property
     def STATIC_ROOT(self):
-        return os.path.join(self.BASE_DIR, "staticfiles")
+        return self.BASE_DIR / "staticfiles"
 
     MEDIA_URL = "/media/"
 
     def MEDIA_ROOT(self):
-        return os.path.join(self.BASE_DIR, "media")
+        return self.BASE_DIR / "media"
 
     WEASYPRINT_HOST = "localhost"
 
@@ -195,12 +194,12 @@ class Production(Base):
     }
     STATIC_LOCATION = "static"
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/"
-    STATICFILES_STORAGE = "invoice.storage_backends.StaticStorage"
+    STATICFILES_STORAGE = "apps.invoice.storage_backends.StaticStorage"
 
-    DEFAULT_FILE_STORAGE = "invoice.storage_backends.MediaStorage"
+    DEFAULT_FILE_STORAGE = "apps.invoice.storage_backends.MediaStorage"
 
     PRIVATE_MEDIA_LOCATION = "media"
-    PRIVATE_FILE_STORAGE = "invoice.storage_backends.MediaStorage"
+    PRIVATE_FILE_STORAGE = "apps.invoice.storage_backends.MediaStorage"
 
     WEASYPRINT_HOST = "weasyprint"
 

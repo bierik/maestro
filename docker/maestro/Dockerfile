@@ -16,17 +16,10 @@ RUN --mount=type=cache,target=/root/.cache \
     pip install --no-cache-dir --no-warn-script-location -r requirements.txt
 
 # Backend
-COPY ./api ./api
-COPY ./flat ./flat
-COPY ./invoice ./invoice
+COPY ./apps ./apps
 COPY ./maestro ./maestro
-COPY ./task ./task
-COPY ./customer ./customer
-COPY ./authentication ./authentication
-COPY ./report ./report
 COPY ./manage.py ./
 COPY ./docker/maestro/entrypoint.sh ./
-COPY ./static ./static
 
 ARG AWS_ACCESS_KEY_ID
 ARG AWS_SECRET_ACCESS_KEY

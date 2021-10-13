@@ -1,6 +1,8 @@
+import path from 'path'
 import de from 'vuetify/lib/locale/de'
 
 export default {
+  rootDir: path.join(__dirname, 'frontend'),
   ssr: false,
   target: 'static',
   loading: false,
