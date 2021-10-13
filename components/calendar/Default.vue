@@ -62,12 +62,12 @@ export default {
     },
   },
   mounted() {
-    document.addEventListener('swiped-left', this.prev)
-    document.addEventListener('swiped-right', this.next)
+    document.addEventListener('swiped-left', this.next)
+    document.addEventListener('swiped-right', this.prev)
   },
   destroyed() {
-    document.removeEventListener('swiped-left', this.prev)
-    document.removeEventListener('swiped-right', this.next)
+    document.removeEventListener('swiped-left', this.next)
+    document.removeEventListener('swiped-right', this.prev)
   },
   methods: {
     ...mapMutations('calendar', ['setApi']),
