@@ -8,7 +8,7 @@
         <v-btn color="error" depressed class="mr-2" @click="cancel">
           <span>Abbrechen</span>
         </v-btn>
-        <v-btn type="submit" :loading="loading" :disabled="!valid" depressed color="success" @click="_save">
+        <v-btn type="submit" :loading="loading" :disabled="!valid" depressed color="success">
           <span>Speichern</span>
         </v-btn>
         <v-btn v-if="deleteable" :loading="loading" depressed color="error" class="ml-2" @click="_destroy">
