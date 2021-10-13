@@ -106,7 +106,7 @@ async def stream_file(request, filename, content_type):
 
 
 async def healthcheck(request):
-    return web.Response(status=200, text=f"OK")
+    return web.Response(status=200, text="OK")
 
 
 def url_fetcher(url):

@@ -10,10 +10,10 @@ from apps.customer.viewsets import (
     CustomerViewset,
 )
 from apps.flat.viewsets import FlatTemplateViewset, FlatViewset
+from apps.invoice.views import InvoicePreviewView
 from apps.invoice.viewsets import InvoiceViewset
 from apps.report.viewsets import ReportViewset
 from apps.task.viewsets import TaskViewset
-from apps.invoice.views import InvoicePreviewView
 
 
 def trigger_error(request):

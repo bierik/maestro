@@ -1,8 +1,8 @@
-from pathlib import Path
 import os
+from pathlib import Path
 
-from configurations import Configuration, values
 import sentry_sdk
+from configurations import Configuration, values
 from sentry_sdk.integrations.django import DjangoIntegration
 
 

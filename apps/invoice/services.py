@@ -6,8 +6,8 @@ import requests
 from django.conf import settings
 from django.template.loader import get_template
 from django.utils import timezone
-from apps.customer.models import Customer
 
+from apps.customer.models import Customer
 from apps.flat.serializers import FlatInvoiceSerializer
 from apps.invoice.models import Invoice
 from apps.report.serializers import ReportInvoiceSerializer
