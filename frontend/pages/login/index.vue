@@ -44,6 +44,7 @@ import get from 'lodash/get'
 import { mdiChartArc } from '@mdi/js'
 
 export default {
+  layout: 'blank',
   data() {
     return {
       credentials: {},
@@ -51,7 +52,11 @@ export default {
       mdiChartArc,
     }
   },
-  layout: 'blank',
+  head() {
+    return {
+      title: 'Login',
+    }
+  },
   methods: {
     async login() {
       try {
@@ -66,11 +71,6 @@ export default {
         }
       }
     },
-  },
-  head() {
-    return {
-      title: 'Login',
-    }
   },
 }
 </script>

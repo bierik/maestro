@@ -55,15 +55,15 @@ export default {
       mdiAlarm,
     }
   },
-  methods: {
-    async loadFlats() {
-      this.flats = await this.$axios.$get(`customers/${this.customer.id}/flats/`)
-    },
-  },
   head() {
     return {
       title: [upperFirst(this.tab), this.customer.full_name].join(' - '),
     }
+  },
+  methods: {
+    async loadFlats() {
+      this.flats = await this.$axios.$get(`customers/${this.customer.id}/flats/`)
+    },
   },
 }
 </script>

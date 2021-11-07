@@ -26,7 +26,7 @@
           </v-col>
           <v-col cols="12">
             <FieldsCurrency
-              v-model="address.route_flat"
+              v-model.number="address.route_flat"
               :error-messages="errorsForAddressIndex(index).route_flat"
               label="Wegpauschale"
             />
@@ -55,7 +55,7 @@ export default {
   props: {
     value: {
       type: Array,
-      default: () => [{ id: 0 }],
+      default: () => [],
     },
     errors: {
       type: Array,
@@ -72,7 +72,13 @@ export default {
     primaryAddress: {
       get() {
         const primaryAddress = this.addresses.find((address) => address.is_primary === true)
-        return primaryAddress ? primaryAddress.id : first(this.addresses).id
+        if (primaryAddress) {
+          return primaryAddress
+        }
+        if (this.addresses.length) {
+          return first(this.addresses).id
+        }
+        return null
       },
       set(addressId) {
         this.addresses = this.addresses.map((address) => {

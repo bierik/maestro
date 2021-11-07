@@ -51,6 +51,11 @@ export default {
       errors: {},
     }
   },
+  head() {
+    return {
+      title: ['Rapport', this.report.customer_full_name].join(' - '),
+    }
+  },
   computed: {
     duration() {
       const start = DateTime.fromISO(this.report.start)
@@ -69,11 +74,6 @@ export default {
       this.notifySuccess('Rapport wurde aktualisiert')
       this.$router.push(`/customers/${this.report.customer_id}#rapporte`)
     },
-  },
-  head() {
-    return {
-      title: ['Rapport', this.report.customer_full_name].join(' - '),
-    }
   },
 }
 </script>

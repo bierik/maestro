@@ -13,7 +13,7 @@
     @input="close"
   >
     <span data-testid="snackbar-message">{{ message }}</span>
-    <template v-slot:action>
+    <template #action>
       <v-btn icon @click.native="close">
         <v-icon>{{ mdiClose }}</v-icon>
       </v-btn>
@@ -23,8 +23,8 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import { SEVERITIES, SEVERITY_COLOR_MAPPING } from '@/store/notification'
 import { mdiClose } from '@mdi/js'
+import { SEVERITIES, SEVERITY_COLOR_MAPPING } from '@/store/notification'
 
 export default {
   data() {

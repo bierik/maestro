@@ -35,6 +35,11 @@ export default {
       errors: {},
     }
   },
+  head() {
+    return {
+      title: 'Neue Rechung',
+    }
+  },
   computed: {
     previewURL() {
       const searchParams = new URLSearchParams({
@@ -61,11 +66,6 @@ export default {
       this.notifySuccess('Rechnung erstellt')
       this.$router.push(`/customers/${this.invoice.customer}#rechnungen`)
     },
-  },
-  head() {
-    return {
-      title: 'Neue Rechung',
-    }
   },
 }
 </script>

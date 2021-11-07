@@ -1,6 +1,6 @@
 <template>
   <LayoutDefault>
-    <TaskForm :task="task" />
+    <TaskForm v-model="task" />
   </LayoutDefault>
 </template>
 

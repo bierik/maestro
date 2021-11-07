@@ -125,6 +125,11 @@ export default {
       mdiCheck,
     }
   },
+  head() {
+    return {
+      title: this.tab === 'rapport' ? 'Neuer Rapport' : 'Neue Pauschale',
+    }
+  },
   computed: {
     reportDuration() {
       const start = DateTime.fromISO(this.report.start)
@@ -171,11 +176,6 @@ export default {
     applyTemplate(template) {
       Object.assign(this.flat, omit(template, ['id']))
     },
-  },
-  head() {
-    return {
-      title: this.tab === 'rapport' ? 'Neuer Rapport' : 'Neue Pauschale',
-    }
   },
 }
 </script>

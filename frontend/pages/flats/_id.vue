@@ -37,6 +37,11 @@ export default {
       errors: {},
     }
   },
+  head() {
+    return {
+      title: this.flat.name,
+    }
+  },
   methods: {
     save() {
       return this.$axios.$patch(`flats/${this.flat.id}/`, this.flat)
@@ -48,11 +53,6 @@ export default {
       this.notifySuccess('Pauschal wurde aktualisiert')
       this.$router.push(`/customers/${this.flat.customer_id}#pauschale`)
     },
-  },
-  head() {
-    return {
-      title: this.flat.name,
-    }
   },
 }
 </script>
