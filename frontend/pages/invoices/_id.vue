@@ -44,7 +44,7 @@
       </div>
       <v-timeline dense clipped class="grow">
         <v-timeline-item v-for="historyEntry in invoice.history" :key="`history-entry-${historyEntry.id}`" fill-dot>
-          <template v-slot:icon>
+          <template #icon>
             <v-icon small color="white">{{ statusIcon(historyEntry) }}</v-icon>
           </template>
           <div class="d-flex pr-4 flex-column">
@@ -133,6 +133,11 @@ export default {
       },
     }
   },
+  head() {
+    return {
+      title: ['Rechnung', this.invoice.number].join(' - '),
+    }
+  },
   methods: {
     async reloadInvoice() {
       this.invoice = await this.$axios.$get(`invoices/${this.invoice.id}/`)
@@ -155,11 +160,6 @@ export default {
       await this.$axios.$post(`/invoices/${this.invoice.id}/archive/`)
       this.reloadInvoice()
     },
-  },
-  head() {
-    return {
-      title: ['Rechnung', this.invoice.number].join(' - '),
-    }
   },
 }
 </script>

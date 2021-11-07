@@ -22,6 +22,7 @@
 
 <script>
 import noop from 'lodash/noop'
+import get from 'lodash/get'
 import { mdiCheck, mdiChevronLeft, mdiTrashCan } from '@mdi/js'
 
 export default {
@@ -86,15 +87,19 @@ export default {
         const response = await this.save()
         this.$emit('success', response)
       } catch (error) {
-        if (error.statusCode >= 400 && error.statusCode < 500) {
+        const statusCode = get(error, 'response.status')
+        if (!statusCode) {
+          return this.$emit('error', error)
+        }
+        if (statusCode >= 400 && statusCode < 500) {
           this.$emit('update:errors', error.response.data)
           this.notifyWarning('Überprüfen Sie die Eingabefelder auf Fehler')
-          this.$emit('clientError', error)
-        } else if (error.statusCode >= 500) {
-          this.$emit('serverError', error)
-          this.notifyError('Beim Speichern ist ein unerwarteter Fehler aufgetreten')
+          return this.$emit('clientError', error)
         }
-        this.$emit('error', error)
+        if (error.statusCode >= 500) {
+          this.notifyError('Beim Speichern ist ein unerwarteter Fehler aufgetreten')
+          return this.$emit('serverError', error)
+        }
       } finally {
         this.loading = false
       }

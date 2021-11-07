@@ -4,24 +4,40 @@
       <h2>Personalien</h2>
     </v-col>
     <v-col cols="6">
-      <FieldsText v-model="customer.last_name" autofocus label="Nachname" :error-messages="errors.last_name" />
+      <FieldsText
+        :value="customer.last_name"
+        autofocus
+        label="Nachname"
+        :error-messages="errors.last_name"
+        @input="(lastName) => update('last_name', lastName)"
+      />
     </v-col>
     <v-col cols="6">
-      <FieldsText v-model="customer.first_name" label="Vorname" :error-messages="errors.first_name" />
+      <FieldsText
+        :value="customer.first_name"
+        label="Vorname"
+        :error-messages="errors.first_name"
+        @input="(firstName) => update('first_name', firstName)"
+      />
     </v-col>
     <v-col cols="12">
       <FieldsCurrency
-        v-model.number="customer.price_per_hour"
+        :value="customer.price_per_hour"
         type="number"
         label="Stundenansatz"
         :error-messages="errors.price_per_hour"
+        @input="(pricePerHour) => update('price_per_hour', Number.parseInt(pricePerHour, 10))"
       />
     </v-col>
     <v-col cols="12" class="py-0">
       <h2>Adressen</h2>
     </v-col>
     <v-col cols="12">
-      <CustomerEditAddressList v-model="customer.addresses" :errors="errors.addresses" />
+      <CustomerEditAddressList
+        :value="customer.addresses"
+        :errors="errors.addresses"
+        @input="(addresses) => update('addresses', addresses)"
+      />
     </v-col>
   </Form>
 </template>
@@ -29,10 +45,18 @@
 <script>
 export default {
   name: 'CustomerForm',
+  model: {
+    prop: 'customer',
+  },
   props: {
     customer: {
       type: Object,
-      default: () => ({}),
+      default: () => ({
+        last_name: '',
+        first_name: '',
+        price_per_hour: 0,
+        addresses: [{ id: 0 }],
+      }),
     },
   },
   data() {
@@ -58,6 +82,9 @@ export default {
     success() {
       this.notifySuccess('Kunde wurde gespeichert')
       this.$router.push('/customers')
+    },
+    update(key, value) {
+      this.$emit('input', { ...this.customer, [key]: value })
     },
   },
 }

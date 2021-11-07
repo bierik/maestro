@@ -11,16 +11,18 @@
   >
     <v-col cols="12">
       <FieldsText
-        v-model="task.title"
+        :value="task.title"
         autofocus
         label="Titel"
         :rules="[validators.required('Titel')]"
         :error-messages="errors['title']"
+        @input="(title) => update('title', title)"
       />
       <CustomerSelect
-        v-model="task.customer_id"
+        :value="task.customer_id"
         :rules="[validators.required('Kunde')]"
         :error-messages="errors['customer']"
+        @input="(customerId) => update('customer_id', customerId)"
       />
       <FieldsText
         v-model="dtstart"
@@ -30,10 +32,11 @@
         :error-messages="errors['start']"
       />
       <FieldsDuration
-        v-model="task.duration"
+        :value="task.duration"
         label="Dauer"
         :error-messages="errors['duration']"
         class="task-duration-field"
+        @input="(duration) => update('duration', duration)"
       />
       <v-radio-group v-model="frequency" label="Wiederholen" :error-messages="errors['frequency']">
         <v-radio :value="frequencies.daily" label="Täglich" />
@@ -52,6 +55,9 @@ import DateTime from 'luxon/src/datetime'
 const htmlDateTimeLocalFormat = "yyyy-MM-dd'T'HH:mm"
 
 export default {
+  model: {
+    prop: 'task',
+  },
   props: {
     task: {
       type: Object,
@@ -125,6 +131,9 @@ export default {
     successDestroy() {
       this.notifySuccess('Auftrag wurde gelöscht')
       this.$router.push('/')
+    },
+    update(key, value) {
+      this.$emit('input', { ...this.task, [key]: value })
     },
   },
 }

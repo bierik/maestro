@@ -1,6 +1,6 @@
 <template>
   <LayoutDefault>
-    <CustomerForm :customer="customer" />
+    <CustomerForm v-model="customer" />
   </LayoutDefault>
 </template>
 

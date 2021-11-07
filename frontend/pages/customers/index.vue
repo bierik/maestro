@@ -43,6 +43,11 @@ export default {
   data() {
     return { mdiAccount }
   },
+  head() {
+    return {
+      title: 'Kunden',
+    }
+  },
   methods: {
     fetchCustomers({ page, itemsPerPage }) {
       const searchParams = {
@@ -51,11 +56,6 @@ export default {
       }
       return this.$axios.$get('customers/', { searchParams })
     },
-  },
-  head() {
-    return {
-      title: 'Kunden',
-    }
   },
 }
 </script>

@@ -1,5 +1,3 @@
 module.exports = {
-  extends: [
-    '@4tw',
-  ],
+  extends: ['@4tw'],
 }

@@ -40,6 +40,11 @@ export default {
       mdiFilePdfBox,
     }
   },
+  head() {
+    return {
+      title: 'Rechnungen',
+    }
+  },
   methods: {
     fetchInvoices({ page, itemsPerPage, filter }) {
       const searchParams = {
@@ -49,11 +54,6 @@ export default {
       }
       return this.$axios.$get('invoices/', { searchParams })
     },
-  },
-  head() {
-    return {
-      title: 'Rechnungen',
-    }
   },
 }
 </script>

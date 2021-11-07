@@ -20,8 +20,8 @@ import rrulePlugin from '@fullcalendar/rrule'
 import interactionPlugin from '@fullcalendar/interaction'
 import DateTime from 'luxon/src/datetime'
 import { rrulestr, RRule } from 'rrule'
-import EventElement from '@/components/task/Event'
 import { mapGetters, mapActions } from 'vuex'
+import EventElement from '@/components/task/Event'
 
 const EventElementConstructor = Vue.extend(EventElement)
 
@@ -40,6 +40,11 @@ export default {
         eventResize: this.dragTask,
         eventContent: this.renderEvent,
       },
+    }
+  },
+  head() {
+    return {
+      title: 'Kalender',
     }
   },
   computed: {
@@ -105,11 +110,6 @@ export default {
         revert()
       }
     },
-  },
-  head() {
-    return {
-      title: 'Kalender',
-    }
   },
 }
 </script>
