@@ -15,6 +15,7 @@ RUN apk add --no-cache \
     pango-dev \
     gdk-pixbuf-dev \
     python3-dev \
+    libxslt-dev \
     py3-pip \
     py3-cffi \
     py3-pillow \
@@ -37,6 +38,7 @@ RUN apk add --no-cache \
     openjpeg \
     libwebp \
     libffi \
+    libxslt \
     cairo \
     pango \
     gdk-pixbuf \

@@ -14,10 +14,27 @@ map $sent_http_content_type $expires {
 }
 
 server {
-    listen       80;
-    listen  [::]:80;
-    server_name  localhost;
+    listen 80;
+    server_name  app.putztrix.ch localhost;
+    location / {
+        return 301 https://$host$request_uri;
+    }    
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+}
+
+server {
+    listen       443 ssl;
+    listen  [::]:443 ssl;
+    server_name  app.putztrix.ch localhost;
     charset utf-8;
+
+    ssl_certificate /etc/letsencrypt/live/app.putztrix.ch/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/app.putztrix.ch/privkey.pem;
+
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
     # proxy to backend
     location ~* ^/(api|admin)($|/) {

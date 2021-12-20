@@ -22,7 +22,7 @@ RUN yarn build
 FROM nginx:stable-alpine
 
 RUN rm /etc/nginx/conf.d/default.conf
-COPY ./docker/web/default.conf.template /etc/nginx/templates/default.conf.template
+COPY ./docker/web/default.conf.template /etc/nginx/conf.d/app.putztrix.ch.conf
 COPY --from=builder /app/frontend/dist /usr/share/nginx/html
 
 EXPOSE 80
