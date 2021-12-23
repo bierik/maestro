@@ -8,6 +8,7 @@
     :destroy="destroy"
     @success="success"
     @successDestroy="successDestroy"
+    @serverError="error"
   >
     <v-col cols="12">
       <FieldsText
@@ -24,9 +25,8 @@
         :error-messages="errors['customer']"
         @input="(customerId) => update('customer_id', customerId)"
       />
-      <FieldsText
+      <FieldsDateTime
         v-model="dtstart"
-        type="datetime-local"
         label="Startdatum"
         :rules="[validators.required('Datum')]"
         :error-messages="errors['start']"
@@ -45,14 +45,13 @@
         <v-radio :value="frequencies.monthly" label="Monatlich" />
       </v-radio-group>
     </v-col>
+    <TaskDeleteDialog v-model="deleteDialog" :current-date="currentDate" :task="task" @deleted="confirmDestroy" />
   </Form>
 </template>
 
 <script>
-import { rrulestr, RRule } from 'rrule'
-import DateTime from 'luxon/src/datetime'
-
-const htmlDateTimeLocalFormat = "yyyy-MM-dd'T'HH:mm"
+import { RRule, rrulestr } from 'rrule'
+import { update } from '@/rrule-helpers'
 
 export default {
   model: {
@@ -61,13 +60,16 @@ export default {
   props: {
     task: {
       type: Object,
-      default: () => ({
-        duration: this.$route.query.duration || '01:00:00',
-      }),
+      required: true,
+    },
+    currentDate: {
+      type: String,
+      default: () => '',
     },
   },
   data() {
     return {
+      deleteDialog: false,
       frequencies: {
         daily: RRule.DAILY,
         weekly: RRule.WEEKLY,
@@ -75,54 +77,66 @@ export default {
         monthly: RRule.MONTHLY,
       },
       errors: {},
-      isEditMode: !!this.task.title,
-      rrule: this.task.title
-        ? rrulestr(this.task.rrule)
-        : new RRule({
-            freq: RRule.WEEKLY,
-            dtstart:
-              (this.$route.query.start ? DateTime.fromISO(this.$route.query.start).toJSDate() : false) || new Date(),
-          }),
+      isEditMode: !!this.task.id,
     }
   },
   computed: {
+    rrule: {
+      get() {
+        return rrulestr(this.task.rrule, { forceset: true })
+      },
+      set(rrule) {
+        this.update('rrule', rrule.toString())
+      },
+    },
     frequency: {
       get() {
-        if (this.rrule.options.interval === 2 && this.rrule.options.freq === RRule.WEEKLY) {
+        if (this.rrule.rrules()[0].options.interval === 2 && this.rrule.rrules()[0].options.freq === RRule.WEEKLY) {
           return this.frequencies.fortNightly
         }
-        return this.rrule.options.freq
+        return this.rrule.rrules()[0].options.freq
       },
       set(frequency) {
         if (frequency === this.frequencies.fortNightly) {
-          this.rrule = new RRule({ freq: RRule.WEEKLY, dtstart: this.rrule.options.dtstart, interval: 2 })
+          this.rrule = update(this.rrule, { freq: RRule.WEEKLY, interval: 2 })
         } else {
-          this.rrule = new RRule({ freq: frequency, dtstart: this.rrule.options.dtstart })
+          this.rrule = update(this.rrule, { freq: frequency })
         }
       },
     },
     dtstart: {
       get() {
-        return DateTime.fromJSDate(this.rrule.options.dtstart).toFormat(htmlDateTimeLocalFormat)
+        return this.rrule.rrules()[0].options.dtstart
       },
       set(dtstart) {
-        const dtstartDateTime = DateTime.fromFormat(dtstart, htmlDateTimeLocalFormat).toJSDate()
-        this.rrule = new RRule({ freq: this.rrule.options.freq, dtstart: dtstartDateTime })
+        this.rrule = update(this.rrule, { dtstart })
       },
     },
   },
   methods: {
     save() {
       if (this.isEditMode) {
-        return this.$axios.$patch(`tasks/${this.task.id}/`, { ...this.task, rrule: this.rrule.toString() })
+        return this.$axios.$patch(`tasks/${this.task.id}/`, { ...this.task })
       }
-      return this.$axios.$post('tasks/', { ...this.task, rrule: this.rrule.toString() })
+      return this.$axios.$post('tasks/', { ...this.task })
     },
     cancel() {
       this.$router.push('/')
     },
     destroy() {
-      return this.$axios.$delete(`tasks/${this.task.id}/`)
+      this.deleteDialog = true
+      return new Promise((resolve, reject) => {
+        this.resolveDestroy = resolve
+        this.rejectDestroy = reject
+      })
+    },
+    async confirmDestroy(promise) {
+      try {
+        await promise
+        this.resolveDestroy()
+      } catch (error) {
+        this.rejectDestroy(error)
+      }
     },
     success() {
       this.notifySuccess('Auftrag wurde gespeichert')
@@ -130,6 +144,11 @@ export default {
     },
     successDestroy() {
       this.notifySuccess('Auftrag wurde gelöscht')
+      this.deleteDialog = false
+      this.$router.push('/')
+    },
+    error() {
+      this.deleteDialog = false
       this.$router.push('/')
     },
     update(key, value) {

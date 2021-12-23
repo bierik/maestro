@@ -30,6 +30,7 @@
     "nuxt": "^2.14.6",
     "rrule": "^2.6.8",
     "swiped-events": "^1.1.6",
+    "v-mask": "^2.3.0",
     "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {

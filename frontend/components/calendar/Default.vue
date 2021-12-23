@@ -26,6 +26,7 @@ export default {
         initialView: 'timeGridThreeDay',
         headerToolbar: false,
         height: '100%',
+        timeZone: 'UTC',
         displayEventEnd: true,
         nowIndicator: true,
         weekNumbers: true,
