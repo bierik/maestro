@@ -6,16 +6,24 @@
 
 <script>
 import DateTime from 'luxon/src/datetime'
+import { RRule, RRuleSet } from 'rrule'
+
+function createTask({ start = DateTime.utc().toISO(), duration = '01:00:00' } = {}) {
+  const dtstart = DateTime.fromISO(start).toJSDate()
+  const rrule = new RRuleSet()
+  rrule.rrule(new RRule({ freq: RRule.WEEKLY, dtstart }))
+
+  return {
+    rrule: rrule.toString(),
+    duration,
+  }
+}
 
 export default {
   name: 'NewTask',
-  data() {
+  asyncData({ route }) {
     return {
-      task: {
-        start: this.$route.query.start || DateTime.local().toFormat("yyyy-MM-dd'T'HH:mm"),
-        duration: this.$route.query.duration || '01:00:00',
-        frequency: 'WEEKLY',
-      },
+      task: createTask(route.query),
     }
   },
   head() {

@@ -19,9 +19,10 @@ import Vue from 'vue'
 import rrulePlugin from '@fullcalendar/rrule'
 import interactionPlugin from '@fullcalendar/interaction'
 import DateTime from 'luxon/src/datetime'
-import { rrulestr, RRule } from 'rrule'
+import { rrulestr } from 'rrule'
 import { mapGetters, mapActions } from 'vuex'
 import EventElement from '@/components/task/Event'
+import { updateStart } from '@/rrule-helpers'
 
 const EventElementConstructor = Vue.extend(EventElement)
 
@@ -75,14 +76,15 @@ export default {
     },
     createTask({ start, end }) {
       const duration = this.getDuration(start, end)
-      const startDateTime = DateTime.fromJSDate(start).toISO()
+      const startDateTime = DateTime.fromJSDate(start).toUTC().toISO()
       this.$router.push({
         path: '/calendar/new',
         query: { duration, start: startDateTime },
       })
     },
-    editTask({ event: { id } }) {
-      this.$router.push({ path: `/calendar/edit/${id}` })
+    editTask({ event: { id, start } }) {
+      const startQueryString = DateTime.fromJSDate(start).toUTC().toISO()
+      this.$router.push({ path: `/calendar/edit/${id}`, query: { currentDate: startQueryString } })
     },
     loadTasks({ startStr, endStr }, resolve, reject) {
       this.$axios
@@ -101,9 +103,8 @@ export default {
     }) {
       const duration = this.getDuration(start, end)
       try {
-        const rrule = rrulestr(rruleString)
-        const updateRrule = new RRule({ freq: rrule.options.freq, dtstart: start, interval: rrule.options.interval })
-        await this.$axios.$patch(`/tasks/${id}/`, { rrule: updateRrule.toString(), duration })
+        const rrule = rrulestr(rruleString, { forceset: true })
+        await this.$axios.$patch(`/tasks/${id}/`, { rrule: updateStart(rrule, start).toString(), duration })
         this.refetchEvents()
       } catch (error) {
         this.notifyError('Beim Aktualisieren ist ein Fehler aufgetreten')

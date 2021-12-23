@@ -1,6 +1,6 @@
 <template>
   <LayoutDefault>
-    <TaskForm v-model="task" />
+    <TaskForm v-model="task" :current-date="currentDate" />
   </LayoutDefault>
 </template>
 
@@ -18,7 +18,6 @@ export default {
         id: task.id,
         duration: task.duration,
         rrule: task.rrule,
-        rrule_string: task.rrule_string,
         title: task.title,
         customer_id: task.customer.id,
       },
@@ -28,6 +27,11 @@ export default {
     return {
       title: ['Auftrag', this.task.title].join(' - '),
     }
+  },
+  computed: {
+    currentDate() {
+      return this.$route.query.currentDate
+    },
   },
 }
 </script>

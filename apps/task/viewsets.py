@@ -9,13 +9,16 @@ from rest_framework.mixins import (
 )
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
+from apps.api.mixins import SerializerActionMixin
 
 from apps.customer.serializers import NextEventSerializer
 from apps.task.models import Task
 from apps.task.serializers import TaskSerializer
+from apps.task.serializers import TaskCreateSerializer
 
 
 class TaskViewset(
+    SerializerActionMixin,
     GenericViewSet,
     ListModelMixin,
     CreateModelMixin,
@@ -26,6 +29,10 @@ class TaskViewset(
     pagination_class = None
     queryset = Task.objects.order_by("title").all()
     serializer_class = TaskSerializer
+    serializer_action_classes = {
+        "create": TaskCreateSerializer,
+        "partial_update": TaskCreateSerializer,
+    }
 
     @action(detail=False)
     def next_event(self, request):
