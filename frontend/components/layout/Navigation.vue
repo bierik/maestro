@@ -56,6 +56,7 @@
 import { mdiAccountGroup, mdiCalendar, mdiReceipt, mdiChartArc, mdiPlus } from '@mdi/js'
 
 export default {
+  name: 'DefaultNavigation',
   data() {
     return { mdiAccountGroup, mdiCalendar, mdiReceipt, mdiChartArc, mdiPlus }
   },

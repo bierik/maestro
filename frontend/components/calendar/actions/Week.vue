@@ -9,6 +9,7 @@ import { mdiCalendarWeek } from '@mdi/js'
 import { mapActions } from 'vuex'
 
 export default {
+  name: 'WeekAction',
   inheritAttrs: false,
   data() {
     return {

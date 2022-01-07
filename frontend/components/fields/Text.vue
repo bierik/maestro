@@ -4,6 +4,7 @@
 
 <script>
 export default {
+  name: 'TextField',
   inheritAttrs: false,
 }
 </script>

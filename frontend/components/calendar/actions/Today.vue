@@ -9,6 +9,7 @@ import { mdiCalendarToday } from '@mdi/js'
 import { mapActions } from 'vuex'
 
 export default {
+  name: 'TodayAction',
   inheritAttrs: false,
   data() {
     return {

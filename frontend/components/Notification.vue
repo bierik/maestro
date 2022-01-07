@@ -22,11 +22,12 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
 import { mdiClose } from '@mdi/js'
+import { mapState, mapMutations } from 'vuex'
 import { SEVERITIES, SEVERITY_COLOR_MAPPING } from '@/store/notification'
 
 export default {
+  name: 'BaseNotification',
   data() {
     return {
       mdiClose,

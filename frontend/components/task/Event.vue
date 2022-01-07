@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'Event',
+  name: 'CalendarEvent',
   props: {
     customer: {
       type: Object,

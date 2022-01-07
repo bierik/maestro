@@ -9,6 +9,7 @@ import { mdiChevronLeft } from '@mdi/js'
 import { mapActions } from 'vuex'
 
 export default {
+  name: 'PrevAction',
   inheritAttrs: false,
   data() {
     return {

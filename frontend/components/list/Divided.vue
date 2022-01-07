@@ -9,6 +9,7 @@
 
 <script>
 export default {
+  name: 'DividedList',
   props: {
     items: {
       type: Array,

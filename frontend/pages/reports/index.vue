@@ -85,13 +85,14 @@
 </template>
 
 <script>
-import DateTime from 'luxon/src/datetime'
-import get from 'lodash/get'
 import { mdiChevronLeft, mdiCheck } from '@mdi/js'
+import get from 'lodash/get'
 import omit from 'lodash/omit'
+import DateTime from 'luxon/src/datetime'
 import { mapActions } from 'vuex'
 
 export default {
+  name: 'ReportsPage',
   layout: 'blank',
   async asyncData({ $axios }) {
     const { customer, next_event_title: nextEventTitle } = await $axios.$get('/tasks/next_event/')

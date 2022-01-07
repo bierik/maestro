@@ -23,7 +23,7 @@ function toDurationPart(part) {
 }
 
 export default {
-  name: 'Duration',
+  name: 'DurationField',
   inheritAttrs: false,
   props: {
     value: {

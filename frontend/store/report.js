@@ -1,5 +1,5 @@
-import DateTime from 'luxon/src/datetime'
 import get from 'lodash/get'
+import DateTime from 'luxon/src/datetime'
 
 export const state = () => ({
   runningReport: null,

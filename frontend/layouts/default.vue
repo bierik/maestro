@@ -31,6 +31,7 @@
 import { mdiAccountGroup, mdiCalendar, mdiReceipt, mdiAccount } from '@mdi/js'
 
 export default {
+  name: 'DefaultLayout',
   data() {
     return { mdiAccountGroup, mdiCalendar, mdiReceipt, mdiAccount }
   },

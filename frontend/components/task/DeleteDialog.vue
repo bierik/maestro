@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import { rrulestr } from 'rrule'
 import DateTime from 'luxon/src/datetime'
+import { rrulestr } from 'rrule'
 import { exclude, until } from '@/rrule-helpers'
 
 const deleteOptions = {

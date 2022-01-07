@@ -1,6 +1,6 @@
-import Vue from 'vue'
 import isEmpty from 'lodash/isEmpty'
 import DateTime from 'luxon/src/datetime'
+import Vue from 'vue'
 
 Vue.mixin({
   data() {

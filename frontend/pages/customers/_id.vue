@@ -29,8 +29,8 @@
 
 <script>
 import { mdiPencil, mdiChevronLeft, mdiAlarm } from '@mdi/js'
-import DateTime from 'luxon/src/datetime'
 import upperFirst from 'lodash/upperFirst'
+import DateTime from 'luxon/src/datetime'
 
 export default {
   name: 'ShowCustomer',

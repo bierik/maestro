@@ -34,6 +34,7 @@ import { mdiFilePdfBox } from '@mdi/js'
 import status from '@/components/invoice/status'
 
 export default {
+  name: 'InvoiceIndex',
   data() {
     return {
       invoiceFilter: { status: [status.CREATED] },

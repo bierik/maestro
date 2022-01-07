@@ -9,6 +9,7 @@ import { mdiCalendarMonth } from '@mdi/js'
 import { mapActions } from 'vuex'
 
 export default {
+  name: 'MonthAction',
   inheritAttrs: false,
   data() {
     return {

@@ -4,14 +4,15 @@
 
 <script>
 import '@fullcalendar/core'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import dayGridPlugin from '@fullcalendar/daygrid'
 import locale from '@fullcalendar/core/locales/de'
-import mergeWith from 'lodash/mergeWith'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
 import isArray from 'lodash/isArray'
+import mergeWith from 'lodash/mergeWith'
 import { mapMutations, mapActions } from 'vuex'
 
 export default {
+  name: 'DefaultCalendar',
   props: {
     options: {
       type: Object,

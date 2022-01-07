@@ -21,12 +21,12 @@
 </template>
 
 <script>
-import noop from 'lodash/noop'
-import get from 'lodash/get'
 import { mdiCheck, mdiChevronLeft, mdiTrashCan } from '@mdi/js'
+import get from 'lodash/get'
+import noop from 'lodash/noop'
 
 export default {
-  name: 'Form',
+  name: 'DefaultForm',
   inheritAttrs: false,
   props: {
     value: {

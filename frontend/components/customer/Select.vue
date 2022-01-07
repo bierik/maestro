@@ -11,6 +11,7 @@
 
 <script>
 export default {
+  name: 'SelectField',
   inheritAttrs: false,
   props: {
     value: {

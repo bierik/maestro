@@ -15,11 +15,11 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import rrulePlugin from '@fullcalendar/rrule'
 import interactionPlugin from '@fullcalendar/interaction'
+import rrulePlugin from '@fullcalendar/rrule'
 import DateTime from 'luxon/src/datetime'
 import { rrulestr } from 'rrule'
+import Vue from 'vue'
 import { mapGetters, mapActions } from 'vuex'
 import EventElement from '@/components/task/Event'
 import { updateStart } from '@/rrule-helpers'
@@ -27,7 +27,7 @@ import { updateStart } from '@/rrule-helpers'
 const EventElementConstructor = Vue.extend(EventElement)
 
 export default {
-  name: 'Calendar',
+  name: 'CalendarPage',
   data() {
     return {
       calendarOptions: {

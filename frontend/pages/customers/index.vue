@@ -39,7 +39,7 @@
 import { mdiAccount } from '@mdi/js'
 
 export default {
-  name: 'Customers',
+  name: 'CustomersPage',
   data() {
     return { mdiAccount }
   },

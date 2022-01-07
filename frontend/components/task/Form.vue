@@ -54,6 +54,7 @@ import { RRule, rrulestr } from 'rrule'
 import { update } from '@/rrule-helpers'
 
 export default {
+  name: 'TaskForm',
   model: {
     prop: 'task',
   },

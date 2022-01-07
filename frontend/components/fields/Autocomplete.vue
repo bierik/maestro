@@ -4,6 +4,7 @@
 
 <script>
 export default {
+  name: 'AutocompleteField',
   inheritAttrs: false,
 }
 </script>

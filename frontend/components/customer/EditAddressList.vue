@@ -45,10 +45,10 @@
 </template>
 
 <script>
-import cloneDeep from 'lodash/cloneDeep'
 import { mdiDelete } from '@mdi/js'
-import last from 'lodash/last'
+import cloneDeep from 'lodash/cloneDeep'
 import first from 'lodash/first'
+import last from 'lodash/last'
 
 export default {
   name: 'EditAddress',

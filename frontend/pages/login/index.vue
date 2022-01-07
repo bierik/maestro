@@ -40,10 +40,11 @@
 </template>
 
 <script>
-import get from 'lodash/get'
 import { mdiChartArc } from '@mdi/js'
+import get from 'lodash/get'
 
 export default {
+  name: 'LoginPage',
   layout: 'blank',
   data() {
     return {
