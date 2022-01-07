@@ -60,6 +60,9 @@ export default {
 }
 </script>
 <style>
+.duration-field {
+  max-width: 200px;
+}
 .duration-field .v-input__slot {
   flex-direction: column;
   align-items: flex-start;

@@ -157,9 +157,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.task-duration-field {
-  max-width: 200px;
-}
-</style>
