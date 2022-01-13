@@ -22,6 +22,7 @@ import { mdiChevronUp, mdiChevronDown } from '@mdi/js'
 
 export default {
   name: 'NumberStepper',
+  inheritAttrs: false,
   props: {
     value: {
       type: Number,

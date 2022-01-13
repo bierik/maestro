@@ -38,11 +38,16 @@
         class="task-duration-field"
         @input="(duration) => update('duration', duration)"
       />
-      <v-radio-group v-model="frequency" label="Wiederholen" :error-messages="errors['frequency']">
-        <v-radio :value="frequencies.daily" label="Täglich" />
-        <v-radio :value="frequencies.weekly" label="Wöchentlich" />
-        <v-radio :value="frequencies.fortNightly" label="Alle zwei Wochen" />
-        <v-radio :value="frequencies.monthly" label="Monatlich" />
+      <v-radio-group v-model="frequencyMode" label="Wiederholen" :error-messages="errors['frequency']">
+        <v-radio value="daily" label="Täglich" />
+        <v-radio value="weekly" label="Wöchentlich" />
+        <v-radio value="fortNightly" label="Alle zwei Wochen" />
+        <v-radio value="monthly" label="Monatlich" />
+        <TaskCustomRRuleDialog v-model="rruleDialog" :rrule.sync="rrule" @cancel="resetRRule">
+          <template #activator="{ on, attrs }">
+            <v-radio v-bind="attrs" value="custom" label="Benutzerdefiniert" v-on="on" />
+          </template>
+        </TaskCustomRRuleDialog>
       </v-radio-group>
     </v-col>
     <TaskDeleteDialog v-model="deleteDialog" :current-date="currentDate" :task="task" @deleted="confirmDestroy" />
@@ -70,7 +75,10 @@ export default {
   },
   data() {
     return {
+      originalRRule: this.task.rrule,
+      rruleDialog: false,
       deleteDialog: false,
+      frequencyMode: 'weekly',
       frequencies: {
         daily: RRule.DAILY,
         weekly: RRule.WEEKLY,
@@ -101,7 +109,7 @@ export default {
         if (frequency === this.frequencies.fortNightly) {
           this.rrule = update(this.rrule, { freq: RRule.WEEKLY, interval: 2 })
         } else {
-          this.rrule = update(this.rrule, { freq: frequency })
+          this.rrule = update(this.rrule, { freq: frequency, interval: 1 })
         }
       },
     },
@@ -112,6 +120,16 @@ export default {
       set(dtstart) {
         this.rrule = update(this.rrule, { dtstart })
       },
+    },
+  },
+  watch: {
+    frequencyMode(frequencyMode) {
+      if (frequencyMode === 'custom') {
+        this.frequency = RRule.WEEKLY
+        this.rruleDialog = true
+      } else {
+        this.frequency = this.frequencies[frequencyMode]
+      }
     },
   },
   methods: {
@@ -130,6 +148,10 @@ export default {
         this.resolveDestroy = resolve
         this.rejectDestroy = reject
       })
+    },
+    resetRRule() {
+      this.update('rrule', this.originalRRule)
+      this.frequencyMode = 'weekly'
     },
     async confirmDestroy(promise) {
       try {

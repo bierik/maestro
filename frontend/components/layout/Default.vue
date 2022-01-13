@@ -1,5 +1,5 @@
 <template>
-  <v-container class="fill-height flex-column align-stretch" :class="{ 'pa-0': narrow }">
+  <v-container class="fill-height flex-column align-stretch" :class="narrow ? 'pa-0' : 'pb-16'">
     <v-app-bar app elevation="0" color="primary" dark height="67" class="app-bar pl-2">
       <slot name="prepend-actions" />
       <v-toolbar-title class="ml-2">{{ title }}</v-toolbar-title>

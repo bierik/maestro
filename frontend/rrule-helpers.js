@@ -43,7 +43,7 @@ export function until(rruleset, until) {
   return update(rruleset, { until: untilRule })
 }
 
-export function update(rruleset, { freq, dtstart, interval, until } = {}) {
+export function update(rruleset, { freq, dtstart, interval, until, count } = {}) {
   const updatedRruleset = new RRuleSet()
   applyExdates(rruleset, updatedRruleset)
   const currentRrule = rruleset.rrules()[0]
@@ -52,6 +52,7 @@ export function update(rruleset, { freq, dtstart, interval, until } = {}) {
     dtstart: dtstart || currentRrule.options.dtstart,
     interval: interval || currentRrule.options.interval,
     until: until || currentRrule.options.until,
+    count: count || currentRrule.options.count,
   })
   updatedRruleset.rrule(newRrule)
   return updatedRruleset
