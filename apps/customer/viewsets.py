@@ -6,8 +6,8 @@ from rest_framework.mixins import (
     UpdateModelMixin,
 )
 from rest_framework.viewsets import GenericViewSet
-from apps.customer.filters import CustomerFilter
 
+from apps.customer.filters import CustomerFilter
 from apps.customer.models import Customer
 from apps.customer.serializers import CustomerSerializer
 from apps.flat.models import Flat

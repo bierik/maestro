@@ -1,7 +1,6 @@
-from django_filters import rest_framework as filters
-from django.db.models import TextField
-from django.db.models import Value
+from django.db.models import TextField, Value
 from django.db.models.functions import Concat
+from django_filters import rest_framework as filters
 
 from apps.customer.models import Customer
 

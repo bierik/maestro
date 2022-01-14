@@ -9,12 +9,11 @@ from rest_framework.mixins import (
 )
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-from apps.api.mixins import SerializerActionMixin
 
+from apps.api.mixins import SerializerActionMixin
 from apps.customer.serializers import NextEventSerializer
 from apps.task.models import Task
-from apps.task.serializers import TaskSerializer
-from apps.task.serializers import TaskCreateSerializer
+from apps.task.serializers import TaskCreateSerializer, TaskSerializer
 
 
 class TaskViewset(

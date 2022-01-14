@@ -1,8 +1,7 @@
+from django.db.models import TextField, Value
+from django.db.models.functions import Concat
 from django_filters import rest_framework as filters
 from django_filters import widgets
-from django.db.models import TextField
-from django.db.models import Value
-from django.db.models.functions import Concat
 
 from apps.invoice.models import HistoryStatus, Invoice
 
