@@ -6,6 +6,7 @@
 import DateTime from 'luxon/src/datetime'
 
 export default {
+  name: 'DateField',
   inheritAttrs: false,
   props: {
     value: {
