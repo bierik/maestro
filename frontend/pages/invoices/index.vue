@@ -1,6 +1,6 @@
 <template>
   <LayoutDefault title="Rechnungen" narrow>
-    <InvoiceStatusFilter v-model="invoiceFilter.status" class="px-2" />
+    <InvoiceFilter v-model="invoiceFilter" customer-filter />
     <ServerSideIterator :fetch="fetchInvoices" :filter="invoiceFilter">
       <template #default="{ items }">
         <ListDivided :items="items">
@@ -40,7 +40,13 @@ export default {
   data() {
     const userStatusFilter = flatten([this.$route.query.status]).filter(Boolean)
     return {
-      invoiceFilter: { status: isEmpty(userStatusFilter) ? [status.CREATED] : userStatusFilter },
+      invoiceFilter: {
+        status: isEmpty(userStatusFilter) ? [status.CREATED] : userStatusFilter,
+        number: this.$route.query.number,
+        customer: this.$route.query.customer,
+        date_after: this.$route.query.date_after,
+        date_before: this.$route.query.date_before,
+      },
       mdiFilePdfBox,
     }
   },
@@ -51,12 +57,12 @@ export default {
   },
   methods: {
     fetchInvoices({ page, itemsPerPage, filter }) {
-      const searchParams = {
+      const params = {
         page_size: itemsPerPage,
         page,
         ...filter,
       }
-      return this.$axios.$get('invoices/', { searchParams })
+      return this.$axios.$get('invoices/', { params })
     },
   },
 }

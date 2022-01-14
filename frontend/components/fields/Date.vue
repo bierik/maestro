@@ -1,5 +1,5 @@
 <template>
-  <FieldsText v-model="date" v-bind="$attrs" type="date" style="width: 190px" />
+  <FieldsText v-model="date" v-bind="$attrs" type="date" :style="block ? '' : 'width: 190px'" />
 </template>
 
 <script>
@@ -9,19 +9,23 @@ export default {
   inheritAttrs: false,
   props: {
     value: {
-      type: Date,
-      required: true,
+      type: String,
+      default: '',
+    },
+    block: {
+      type: Boolean,
+      default: () => false,
     },
   },
   computed: {
     date: {
       get() {
-        return DateTime.fromJSDate(this.value).toISODate()
+        return this.value
       },
       set(dateString) {
-        const date = DateTime.fromISO(dateString).toUTC()
+        const date = DateTime.fromISO(dateString)
         if (date.isValid) {
-          this.$emit('input', date.toJSDate())
+          this.$emit('input', date.toISODate())
         }
       },
     },

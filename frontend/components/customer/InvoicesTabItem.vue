@@ -1,6 +1,6 @@
 <template>
   <v-tab-item v-bind="$attrs">
-    <InvoiceStatusFilter v-model="invoiceFilter.status" class="px-2" />
+    <InvoiceFilter v-model="invoiceFilter" />
     <ServerSideIterator :fetch="fetchInvoices" :filter="invoiceFilter">
       <template #default="{ items }">
         <ListDivided :items="items">
@@ -52,12 +52,12 @@ export default {
   },
   methods: {
     fetchInvoices({ page, itemsPerPage, filter }) {
-      const searchParams = {
+      const params = {
         page_size: itemsPerPage,
         page,
         ...filter,
       }
-      return this.$axios.$get(path.join('customers', this.$route.params.id, 'invoices/'), { searchParams })
+      return this.$axios.$get(path.join('customers', this.$route.params.id, 'invoices/'), { params })
     },
   },
 }

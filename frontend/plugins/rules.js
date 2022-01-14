@@ -20,7 +20,7 @@ Vue.mixin({
         afterToday(dateString) {
           const datetime = DateTime.fromISO(dateString)
           if (!datetime.isValid) {
-            return true
+            return false
           }
           return datetime > DateTime.now().startOf('day').toUTC() || 'Muss nach Heute sein'
         },

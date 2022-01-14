@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import DateTime from 'luxon/src/datetime'
 import { RRule, rrulestr } from 'rrule'
 import { update } from '@/rrule-helpers'
 
@@ -115,10 +116,10 @@ export default {
     },
     dtstart: {
       get() {
-        return this.rrule.rrules()[0].options.dtstart
+        return DateTime.fromJSDate(this.rrule.rrules()[0].options.dtstart).toISO()
       },
       set(dtstart) {
-        this.rrule = update(this.rrule, { dtstart })
+        this.rrule = update(this.rrule, { dtstart: DateTime.fromISO(dtstart).toUTC().toJSDate() })
       },
     },
   },

@@ -1,6 +1,7 @@
 <template>
   <LayoutDefault title="Kunden" narrow>
-    <ServerSideIterator :fetch="fetchCustomers">
+    <FieldsText v-model="customerFilter.text" hide-details class="shrink" label="Suchen" append-icon="mdi-magnify" />
+    <ServerSideIterator :fetch="fetchCustomers" :filter="customerFilter">
       <template #default="{ items }">
         <ListDivided :items="items">
           <template #item="{ item: customer }">
@@ -41,7 +42,7 @@ import { mdiAccount } from '@mdi/js'
 export default {
   name: 'CustomersPage',
   data() {
-    return { mdiAccount }
+    return { mdiAccount, customerFilter: { text: this.$route.query.text } }
   },
   head() {
     return {
@@ -49,12 +50,13 @@ export default {
     }
   },
   methods: {
-    fetchCustomers({ page, itemsPerPage }) {
-      const searchParams = {
+    fetchCustomers({ page, itemsPerPage, filter }) {
+      const params = {
         page_size: itemsPerPage,
         page,
+        ...filter,
       }
-      return this.$axios.$get('customers/', { searchParams })
+      return this.$axios.$get('customers/', { params })
     },
   },
 }

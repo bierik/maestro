@@ -20,6 +20,7 @@ export default {
     { src: '~/plugins/vuex-persist', ssr: false },
     { src: '~/plugins/swiped-events', ssr: false },
     { src: '~/plugins/mask', ssr: false },
+    { src: '~/plugins/axios', ssr: false },
   ],
   components: true,
   buildModules: ['@nuxtjs/vuetify', '@nuxtjs/pwa'],

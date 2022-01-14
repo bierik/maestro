@@ -1,5 +1,5 @@
 <template>
-  <v-select filled v-bind="$attrs" v-on="$listeners" />
+  <v-select filled v-bind="$attrs" class="rounded-0" v-on="$listeners" />
 </template>
 
 <script>

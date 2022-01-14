@@ -102,7 +102,7 @@ export default {
         { text: 'Jahre', value: RRule.YEARLY },
       ],
       endKey: 'NEVER',
-      untilIntermediate: DateTime.local().plus({ years: 5 }).toJSDate(),
+      untilIntermediate: DateTime.local().plus({ years: 5 }).toISODate(),
       countIntermediate: 13,
       valid: null,
     }
@@ -154,9 +154,11 @@ export default {
       this.intermediateRRule = update(this.intermediateRRule, { count })
     },
     untilIntermediate(until) {
-      if (this.validators.afterToday(DateTime.fromJSDate(until).toISODate())) {
+      const untilDateTime = DateTime.fromISO(until)
+      const afterToday = untilDateTime > DateTime.now().startOf('day').toUTC()
+      if (afterToday) {
         this.intermediateRRule = update(this.intermediateRRule, {
-          until: DateTime.fromJSDate(until).endOf('day').toUTC().toJSDate(),
+          until: DateTime.fromISO(until).endOf('day').toUTC().toJSDate(),
         })
       }
     },

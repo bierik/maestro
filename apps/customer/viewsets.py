@@ -6,6 +6,7 @@ from rest_framework.mixins import (
     UpdateModelMixin,
 )
 from rest_framework.viewsets import GenericViewSet
+from apps.customer.filters import CustomerFilter
 
 from apps.customer.models import Customer
 from apps.customer.serializers import CustomerSerializer
@@ -29,6 +30,7 @@ class CustomerViewset(
 ):
     queryset = Customer.objects.order_by("last_name", "first_name")
     serializer_class = CustomerSerializer
+    filterset_class = CustomerFilter
 
 
 class CustomerInvoiceViewset(GenericViewSet, ListModelMixin):

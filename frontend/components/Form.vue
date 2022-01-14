@@ -96,7 +96,7 @@ export default {
           this.notifyWarning('Überprüfen Sie die Eingabefelder auf Fehler')
           return this.$emit('clientError', error)
         }
-        if (error.statusCode >= 500) {
+        if (statusCode >= 500) {
           this.notifyError('Beim Speichern ist ein unerwarteter Fehler aufgetreten')
           return this.$emit('serverError', error)
         }

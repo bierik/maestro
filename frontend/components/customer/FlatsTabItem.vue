@@ -31,11 +31,11 @@ export default {
   inheritAttrs: false,
   methods: {
     fetchFlats({ page, itemsPerPage }) {
-      const searchParams = {
+      const params = {
         page_size: itemsPerPage,
         page,
       }
-      return this.$axios.$get(path.join('customers', this.$route.params.id, 'flats/'), { searchParams })
+      return this.$axios.$get(path.join('customers', this.$route.params.id, 'flats/'), { params })
     },
   },
 }

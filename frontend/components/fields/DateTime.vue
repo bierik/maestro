@@ -9,20 +9,20 @@ export default {
   inheritAttrs: false,
   props: {
     value: {
-      type: Date,
-      required: true,
+      type: String,
+      default: () => '',
     },
   },
   data() {
     return {
-      datetime: DateTime.fromJSDate(this.value).toUTC().toFormat('dd.MM.yyyy, HH:mm'),
+      datetime: DateTime.fromISO(this.value).toUTC().toFormat('dd.MM.yyyy, HH:mm'),
     }
   },
   watch: {
     datetime(string) {
       const datetime = DateTime.fromFormat(string, 'dd.MM.yyyy, HH:mm')
       if (datetime.isValid) {
-        this.$emit('input', datetime.setZone('utc', { keepLocalTime: true }).toJSDate())
+        this.$emit('input', datetime.setZone('utc', { keepLocalTime: true }).toISO())
       }
     },
   },
