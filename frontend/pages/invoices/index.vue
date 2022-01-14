@@ -31,13 +31,16 @@
 
 <script>
 import { mdiFilePdfBox } from '@mdi/js'
+import flatten from 'lodash/flatten'
+import isEmpty from 'lodash/isEmpty'
 import status from '@/components/invoice/status'
 
 export default {
   name: 'InvoiceIndex',
   data() {
+    const userStatusFilter = flatten([this.$route.query.status]).filter(Boolean)
     return {
-      invoiceFilter: { status: [status.CREATED] },
+      invoiceFilter: { status: isEmpty(userStatusFilter) ? [status.CREATED] : userStatusFilter },
       mdiFilePdfBox,
     }
   },

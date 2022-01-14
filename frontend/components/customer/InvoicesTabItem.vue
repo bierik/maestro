@@ -32,8 +32,9 @@
 import path from 'path'
 import { mdiFilePdfBox } from '@mdi/js'
 import flatten from 'lodash/flatten'
-
+import isEmpty from 'lodash/isEmpty'
 import status from '@/components/invoice/status'
+
 export default {
   inheritAttrs: false,
   props: {
@@ -43,9 +44,10 @@ export default {
     },
   },
   data() {
+    const userStatusFilter = flatten([this.$route.query.status]).filter(Boolean)
     return {
       mdiFilePdfBox,
-      invoiceFilter: { status: flatten([this.$route.query.status]) || [status.CREATED] },
+      invoiceFilter: { status: isEmpty(userStatusFilter) ? [status.CREATED] : userStatusFilter },
     }
   },
   methods: {
