@@ -11,7 +11,7 @@ import { RRule, RRuleSet } from 'rrule'
 function createTask({ start = DateTime.utc().toISO(), duration = '01:00:00' } = {}) {
   const dtstart = DateTime.fromISO(start).toJSDate()
   const rrule = new RRuleSet()
-  rrule.rrule(new RRule({ freq: RRule.WEEKLY, dtstart }))
+  rrule.rrule(new RRule({ freq: RRule.WEEKLY, interval: 1, dtstart }))
 
   return {
     rrule: rrule.toString(),

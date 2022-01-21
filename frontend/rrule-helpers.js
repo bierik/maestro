@@ -1,3 +1,5 @@
+import isNull from 'lodash/isNull'
+import isUndefined from 'lodash/isUndefined'
 import DateTime from 'luxon/src/datetime'
 import { RRule, RRuleSet } from 'rrule'
 
@@ -43,16 +45,26 @@ export function until(rruleset, until) {
   return update(rruleset, { until: untilRule })
 }
 
+function applyReset(value, defaultValue) {
+  if (isUndefined(value)) {
+    return defaultValue
+  }
+  if (isNull(value)) {
+    return undefined
+  }
+  return value
+}
+
 export function update(rruleset, { freq, dtstart, interval, until, count } = {}) {
   const updatedRruleset = new RRuleSet()
   applyExdates(rruleset, updatedRruleset)
   const currentRrule = rruleset.rrules()[0]
   const newRrule = new RRule({
-    freq: freq || currentRrule.options.freq,
-    dtstart: dtstart || currentRrule.options.dtstart,
-    interval: interval || currentRrule.options.interval,
-    until: until || currentRrule.options.until,
-    count: count || currentRrule.options.count,
+    freq: applyReset(freq, currentRrule.options.freq),
+    dtstart: applyReset(dtstart, currentRrule.options.dtstart),
+    interval: applyReset(interval, currentRrule.options.interval),
+    until: applyReset(until, currentRrule.options.until),
+    count: applyReset(count, currentRrule.options.count),
   })
   updatedRruleset.rrule(newRrule)
   return updatedRruleset

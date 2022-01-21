@@ -3,14 +3,14 @@
     <v-card tile>
       <v-card-title> Benutzerdefinierte Wiederholung </v-card-title>
       <v-card-text>
-        <v-form v-model="valid">
+        <v-form>
           <div class="d-flex align-center mb-4">
             <strong class="mr-2 text-no-wrap">Wiederholen alle</strong>
             <FieldsText v-model="interval" style="width: 60px" dense class="mr-2 shrink" type="number" hide-details />
             <FieldsSelect
               v-model="frequency"
               dense
-              :items="intervalUnits"
+              :items="frequencyChoices"
               style="width: 120px"
               class="shrink"
               hide-details
@@ -18,34 +18,33 @@
           </div>
           <div class="d-flex flex-column">
             <strong>Ende</strong>
-            <v-radio-group v-model="endKey">
-              <v-radio label="Nie" value="NEVER" />
-              <v-radio label="Am" value="AT">
+            <v-radio-group v-model="untilMode">
+              <v-radio label="Nie" :value="untilModes.NEVER" />
+              <v-radio label="Am" :value="untilModes.AT">
                 <template #label>
                   <div class="d-flex align-center">
                     <span class="mr-2">Am</span>
                     <FieldsDate
-                      v-model="untilIntermediate"
+                      v-model="until"
                       dense
-                      :disabled="endKey !== 'AT'"
+                      :disabled="untilMode !== untilModes.AT"
                       :rules="[validators.afterToday]"
                     />
                   </div>
                 </template>
               </v-radio>
-
-              <v-radio value="AFTER">
+              <v-radio :value="untilModes.AFTER">
                 <template #label>
                   <div class="d-flex align-center">
                     <span class="mr-2">Nach</span>
                     <FieldsText
-                      v-model="countIntermediate"
+                      v-model="count"
                       style="width: 140px"
                       dense
                       hide-details
                       type="number"
                       suffix="Terminen"
-                      :disabled="endKey !== 'AFTER'"
+                      :disabled="untilMode !== untilModes.AFTER"
                     />
                   </div>
                 </template>
@@ -68,17 +67,23 @@
 </template>
 
 <script>
+import first from 'lodash/first'
 import DateTime from 'luxon/src/datetime'
-import { RRule, RRuleSet } from 'rrule'
+import { RRule } from 'rrule'
 import { update } from '@/rrule-helpers'
 
-const defaultRRule = new RRuleSet()
-defaultRRule.rrule(
-  new RRule({
-    interval: 1,
-    freq: RRule.WEEKLY,
-  }),
-)
+const untilModes = {
+  AT: 'AT',
+  AFTER: 'AFTER',
+  NEVER: 'NEVER',
+}
+
+const frequencyChoices = [
+  { text: 'Tage', value: RRule.DAILY },
+  { text: 'Wochen', value: RRule.WEEKLY },
+  { text: 'Monate', value: RRule.MONTHLY },
+  { text: 'Jahre', value: RRule.YEARLY },
+]
 
 export default {
   name: 'CustomRRuleDialog',
@@ -87,57 +92,61 @@ export default {
       type: Boolean,
       default: () => false,
     },
-    rrule: {
+    rruleSet: {
       type: Object,
-      default: () => defaultRRule,
+      required: true,
     },
   },
   data() {
     return {
-      intermediateRRule: this.rrule,
-      intervalUnits: [
-        { text: 'Tage', value: RRule.DAILY },
-        { text: 'Wochen', value: RRule.WEEKLY },
-        { text: 'Monate', value: RRule.MONTHLY },
-        { text: 'Jahre', value: RRule.YEARLY },
-      ],
-      endKey: 'NEVER',
-      untilIntermediate: DateTime.local().plus({ years: 5 }).toISODate(),
-      countIntermediate: 13,
-      valid: null,
+      intermediateRruleSet: this.rruleSet,
+      untilMode: untilModes.NEVER,
+      frequencyChoices,
+      untilModes,
     }
   },
   computed: {
-    interval: {
+    rrule() {
+      return first(this.intermediateRruleSet.rrules())
+    },
+    frequency: {
       get() {
-        return this.intermediateRRule.rrules()[0].options.interval
+        return this.rrule.options.freq
       },
-      set(interval) {
-        this.intermediateRRule = update(this.intermediateRRule, { interval })
+      set(frequency) {
+        this.intermediateRruleSet = update(this.intermediateRruleSet, { freq: frequency })
       },
     },
-    count: {
+    interval: {
       get() {
-        return this.intermediateRRule.rrules()[0].options.count
+        return this.rrule.options.interval
       },
-      set(count) {
-        this.intermediateRRule = update(this.intermediateRRule, { count })
+      set(interval) {
+        this.intermediateRruleSet = update(this.intermediateRruleSet, { interval })
       },
     },
     until: {
       get() {
-        return this.intermediateRRule.rrules()[0].options.until
+        return (
+          DateTime.fromJSDate(this.rrule.options.until).toISODate() || DateTime.utc().plus({ years: 5 }).toISODate()
+        )
       },
       set(until) {
-        this.intermediateRRule = update(this.intermediateRRule, { until })
+        const untilDateTime = DateTime.fromISO(until)
+        const afterToday = untilDateTime > DateTime.now().startOf('day').toUTC()
+        if (afterToday) {
+          this.intermediateRruleSet = update(this.intermediateRruleSet, {
+            until: untilDateTime.endOf('day').toUTC().toJSDate(),
+          })
+        }
       },
     },
-    frequency: {
+    count: {
       get() {
-        return this.intermediateRRule.rrules()[0].options.freq
+        return this.rrule.options.count || 13
       },
-      set(freq) {
-        this.intermediateRRule = update(this.intermediateRRule, { freq })
+      set(count) {
+        this.intermediateRruleSet = update(this.intermediateRruleSet, { count })
       },
     },
     open: {
@@ -150,40 +159,17 @@ export default {
     },
   },
   watch: {
-    countIntermediate(count) {
-      this.intermediateRRule = update(this.intermediateRRule, { count })
-    },
-    untilIntermediate(until) {
-      const untilDateTime = DateTime.fromISO(until)
-      const afterToday = untilDateTime > DateTime.now().startOf('day').toUTC()
-      if (afterToday) {
-        this.intermediateRRule = update(this.intermediateRRule, {
-          until: DateTime.fromISO(until).endOf('day').toUTC().toJSDate(),
-        })
-      }
-    },
-    endKey(endKey) {
-      switch (endKey) {
-        case 'AT':
-          this.intermediateRRule = update(this.intermediateRRule, { until: this.untilIntermediate })
-          break
-        case 'AFTER':
-          this.intermediateRRule = update(this.intermediateRRule, { count: this.countIntermediate })
-          break
-        default:
-          this.intermediateRRule = update(this.intermediateRRule, { until: undefined, count: undefined })
-          break
-      }
+    rruleSet(rruleSet) {
+      this.intermediateRruleSet = rruleSet
     },
   },
   methods: {
     apply() {
-      this.$emit('update:rrule', this.intermediateRRule)
+      this.$emit('update:rruleSet', this.intermediateRruleSet)
       this.open = false
     },
     cancel() {
       this.open = false
-      this.$emit('cancel')
     },
   },
 }

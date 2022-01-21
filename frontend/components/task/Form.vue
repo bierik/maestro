@@ -3,7 +3,6 @@
     :cancel="cancel"
     :save="save"
     :errors.sync="errors"
-    lazy-validation
     :deleteable="isEditMode"
     :destroy="destroy"
     @success="success"
@@ -38,14 +37,18 @@
         class="task-duration-field"
         @input="(duration) => update('duration', duration)"
       />
-      <v-radio-group v-model="frequencyMode" label="Wiederholen" :error-messages="errors['frequency']">
-        <v-radio value="daily" label="Täglich" />
-        <v-radio value="weekly" label="Wöchentlich" />
-        <v-radio value="fortNightly" label="Alle zwei Wochen" />
-        <v-radio value="monthly" label="Monatlich" />
-        <TaskCustomRRuleDialog v-model="rruleDialog" :rrule.sync="rrule" @cancel="resetRRule">
+      <v-radio-group
+        v-model="frequencyMode"
+        :label="`Wiederholen (${rruleText})`"
+        :error-messages="errors['frequency']"
+      >
+        <v-radio :value="frequencyModes.DAILY" label="Täglich" />
+        <v-radio :value="frequencyModes.WEEKLY" label="Wöchentlich" />
+        <v-radio :value="frequencyModes.FORT_NIGHTLY" label="Alle zwei Wochen" />
+        <v-radio :value="frequencyModes.MONTHLY" label="Monatlich" />
+        <TaskCustomRRuleDialog v-model="rruleDialog" :rrule-set.sync="rruleSet">
           <template #activator="{ on, attrs }">
-            <v-radio v-bind="attrs" value="custom" label="Benutzerdefiniert" v-on="on" />
+            <v-radio v-bind="attrs" :value="frequencyModes.CUSTOM" label="Benutzerdefiniert" v-on="on" />
           </template>
         </TaskCustomRRuleDialog>
       </v-radio-group>
@@ -55,9 +58,18 @@
 </template>
 
 <script>
+import first from 'lodash/first'
 import DateTime from 'luxon/src/datetime'
-import { RRule, rrulestr } from 'rrule'
+import { rrulestr, RRule } from 'rrule'
 import { update } from '@/rrule-helpers'
+
+const frequencyModes = {
+  DAILY: 'daily',
+  WEEKLY: 'weekly',
+  FORT_NIGHTLY: 'fort_nightly',
+  MONTHLY: 'monthly',
+  CUSTOM: 'custom',
+}
 
 export default {
   name: 'TaskForm',
@@ -76,61 +88,72 @@ export default {
   },
   data() {
     return {
-      originalRRule: this.task.rrule,
+      frequencyModes,
       rruleDialog: false,
       deleteDialog: false,
-      frequencyMode: 'weekly',
-      frequencies: {
-        daily: RRule.DAILY,
-        weekly: RRule.WEEKLY,
-        fortNightly: 'FORT_NIGHTLY',
-        monthly: RRule.MONTHLY,
-      },
       errors: {},
       isEditMode: !!this.task.id,
     }
   },
   computed: {
-    rrule: {
+    rruleSet: {
       get() {
         return rrulestr(this.task.rrule, { forceset: true })
       },
-      set(rrule) {
-        this.update('rrule', rrule.toString())
+      set(rruleset) {
+        this.update('rrule', rruleset.toString())
       },
     },
-    frequency: {
-      get() {
-        if (this.rrule.rrules()[0].options.interval === 2 && this.rrule.rrules()[0].options.freq === RRule.WEEKLY) {
-          return this.frequencies.fortNightly
-        }
-        return this.rrule.rrules()[0].options.freq
-      },
-      set(frequency) {
-        if (frequency === this.frequencies.fortNightly) {
-          this.rrule = update(this.rrule, { freq: RRule.WEEKLY, interval: 2 })
-        } else {
-          this.rrule = update(this.rrule, { freq: frequency, interval: 1 })
-        }
-      },
+    rrule() {
+      return first(this.rruleSet.rrules())
+    },
+    rruleText() {
+      return this.rrule.toText()
     },
     dtstart: {
       get() {
-        return DateTime.fromJSDate(this.rrule.rrules()[0].options.dtstart).toISO()
+        return DateTime.fromJSDate(this.rrule.options.dtstart).toISO()
       },
       set(dtstart) {
-        this.rrule = update(this.rrule, { dtstart: DateTime.fromISO(dtstart).toUTC().toJSDate() })
+        this.rruleset = update(this.rruleSet, { dtstart: DateTime.fromISO(dtstart).toUTC().toJSDate() })
       },
     },
-  },
-  watch: {
-    frequencyMode(frequencyMode) {
-      if (frequencyMode === 'custom') {
-        this.frequency = RRule.WEEKLY
-        this.rruleDialog = true
-      } else {
-        this.frequency = this.frequencies[frequencyMode]
-      }
+    frequencyMode: {
+      get() {
+        const { freq, interval } = this.rrule.options
+        if (freq === RRule.WEEKLY && interval === 2) {
+          return frequencyModes.FORT_NIGHTLY
+        }
+        if (freq === RRule.WEEKLY && interval === 1) {
+          return frequencyModes.WEEKLY
+        }
+        if (freq === RRule.MONTHLY && interval === 1) {
+          return frequencyModes.MONTHLY
+        }
+        if (freq === RRule.DAILY && interval === 1) {
+          return frequencyModes.DAILY
+        }
+        return frequencyModes.CUSTOM
+      },
+      set(frequencyMode) {
+        switch (frequencyMode) {
+          case frequencyModes.DAILY:
+            this.rruleSet = update(this.rruleSet, { interval: 1, freq: RRule.DAILY })
+            break
+          case frequencyModes.WEEKLY:
+            this.rruleSet = update(this.rruleSet, { interval: 1, freq: RRule.WEEKLY })
+            break
+          case frequencyModes.FORT_NIGHTLY:
+            this.rruleSet = update(this.rruleSet, { interval: 2, freq: RRule.WEEKLY })
+            break
+          case frequencyModes.MONTHLY:
+            this.rruleSet = update(this.rruleSet, { interval: 1, freq: RRule.MONTHLY })
+            break
+          case frequencyModes.CUSTOM:
+            this.rruleSet = update(this.rruleSet, { interval: 1, freq: RRule.WEEKLY })
+            break
+        }
+      },
     },
   },
   methods: {
@@ -149,10 +172,6 @@ export default {
         this.resolveDestroy = resolve
         this.rejectDestroy = reject
       })
-    },
-    resetRRule() {
-      this.update('rrule', this.originalRRule)
-      this.frequencyMode = 'weekly'
     },
     async confirmDestroy(promise) {
       try {
