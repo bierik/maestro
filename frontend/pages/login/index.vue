@@ -18,6 +18,7 @@
               :error-messages="errors.username"
               label="Benutzername"
               autofocus
+              type="email"
             />
             <v-text-field
               v-model="credentials.password"
