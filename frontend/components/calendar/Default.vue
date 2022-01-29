@@ -97,4 +97,12 @@ export default {
 .fc-day {
   overflow: hidden;
 }
+
+.fc-timegrid-event .fc-event-main,
+.fc-timegrid-event {
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
 </style>

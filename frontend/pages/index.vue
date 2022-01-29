@@ -63,8 +63,11 @@ export default {
         title,
       },
       timeText,
+      view: { type },
     }) {
-      const event = new EventElementConstructor({ propsData: { customer, timeText, title } })
+      const event = new EventElementConstructor({
+        propsData: { customer, timeText, title, monthDisplay: type === 'dayGridMonth' },
+      })
       event.$mount()
       return { domNodes: [event.$el] }
     },

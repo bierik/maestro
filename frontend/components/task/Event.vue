@@ -1,11 +1,8 @@
 <template>
-  <div class="d-flex align-center">
-    <div class="fc-daygrid-event-dot" />
-    <div class="d-flex flex-column">
-      <strong>{{ title }}</strong>
-      <strong>{{ customer.full_name }}</strong>
-      <span>{{ timeText }}</span>
-    </div>
+  <div v-if="monthDisplay" class="primary rounded white--text px-1 caption">{{ customer.full_name }}</div>
+  <div v-else class="d-flex flex-column primary px-1 caption" style="height: 100%">
+    <span>{{ customer.full_name }}</span>
+    <span>{{ title }}</span>
   </div>
 </template>
 
@@ -24,6 +21,10 @@ export default {
     title: {
       type: String,
       default: () => '',
+    },
+    monthDisplay: {
+      type: Boolean,
+      default: () => false,
     },
   },
 }
