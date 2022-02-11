@@ -6,7 +6,6 @@
 
 <script>
 import { mdiCalendarMonth } from '@mdi/js'
-import { mapActions } from 'vuex'
 
 export default {
   name: 'MonthAction',
@@ -17,7 +16,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions('calendar', ['monthView']),
+    monthView() {
+      this.$router.replace({ query: { ...this.$route.query, calendarView: 'dayGridMonth' } })
+    },
   },
 }
 </script>

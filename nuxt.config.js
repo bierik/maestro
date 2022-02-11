@@ -42,7 +42,7 @@ export default {
     '/media/': 'http://localhost:8000',
   },
   router: {
-    middleware: ['auth', 'report'],
+    middleware: ['auth', 'report', 'calendar-view'],
   },
   vuetify: {
     lang: {
@@ -85,7 +85,10 @@ export default {
   },
   auth: {
     redirect: {
+      login: '/login',
       logout: '/login',
+      callback: false,
+      home: '/',
     },
     strategies: {
       local: {

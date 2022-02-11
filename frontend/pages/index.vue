@@ -87,7 +87,10 @@ export default {
     },
     editTask({ event: { id, start } }) {
       const startQueryString = DateTime.fromJSDate(start).toUTC().toISO()
-      this.$router.push({ path: `/calendar/edit/${id}`, query: { currentDate: startQueryString } })
+      this.$router.push({
+        path: `/calendar/edit/${id}`,
+        query: { ...this.$route.query, currentDate: startQueryString },
+      })
     },
     loadTasks({ startStr, endStr }, resolve, reject) {
       this.$axios

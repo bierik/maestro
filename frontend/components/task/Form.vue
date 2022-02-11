@@ -164,7 +164,7 @@ export default {
       return this.$axios.$post('tasks/', { ...this.task })
     },
     cancel() {
-      this.$router.push('/')
+      this.$router.push({ name: 'index', query: this.$route.query })
     },
     destroy() {
       this.deleteDialog = true

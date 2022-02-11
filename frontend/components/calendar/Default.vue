@@ -57,10 +57,13 @@ export default {
     },
   },
   watch: {
-    '$vuetify.breakpoint.smAndUp': {
-      handler() {
-        this.applyCalendarView()
+    $route: {
+      handler({ query: { calendarView } }) {
+        setTimeout(() => {
+          this.setView(calendarView)
+        }, 0)
       },
+      immediate: true,
     },
   },
   mounted() {
@@ -73,17 +76,10 @@ export default {
   },
   methods: {
     ...mapMutations('calendar', ['setApi']),
-    ...mapActions('calendar', ['applyDesktopView', 'applyMobileView', 'prev', 'next']),
-    applyCalendarView() {
-      if (this.$vuetify.breakpoint.smAndUp) {
-        this.applyDesktopView()
-      } else {
-        this.applyMobileView()
-      }
-    },
+    ...mapActions('calendar', ['setView', 'prev', 'next']),
     init() {
+      console.log(this.$refs.calendar.getApi())
       this.setApi(this.$refs.calendar.getApi())
-      this.applyCalendarView()
     },
   },
 }
@@ -104,5 +100,6 @@ export default {
   border-radius: 0 !important;
   box-shadow: none !important;
   border: 0 !important;
+  background: transparent !important;
 }
 </style>

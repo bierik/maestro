@@ -1,12 +1,11 @@
 <template>
-  <v-btn v-bind="$attrs" icon class="inherit-color" @click="weekView()">
+  <v-btn v-bind="$attrs" icon class="inherit-color" @click="applyWeekView()">
     <v-icon>{{ mdiCalendarWeek }}</v-icon>
   </v-btn>
 </template>
 
 <script>
 import { mdiCalendarWeek } from '@mdi/js'
-import { mapActions } from 'vuex'
 
 export default {
   name: 'WeekAction',
@@ -17,7 +16,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions('calendar', ['weekView']),
+    applyWeekView() {
+      this.$vuetify.breakpoint.smAndUp
+        ? this.$router.replace({
+            query: { ...this.$route.query, calendarView: 'timeGridWeek' },
+          })
+        : this.$router.replace({
+            query: { ...this.$route.query, calendarView: 'timeGridThreeDay' },
+          })
+    },
   },
 }
 </script>

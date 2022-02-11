@@ -12,15 +12,11 @@ let api = {
 
 export const state = () => ({
   currentDate: new Date(),
-  view: 'timeGridWeek',
 })
 
 export const mutations = {
   setApi(_, _api) {
     api = _api
-  },
-  setView(state, view) {
-    state.view = view
   },
   updateCurrentDate(state) {
     state.currentDate = api.getDate()
@@ -40,22 +36,7 @@ export const actions = {
     api.today()
     commit('updateCurrentDate')
   },
-  monthView({ commit }) {
-    commit('setView', 'dayGridMonth')
-    api.changeView('dayGridMonth')
-  },
-  weekView({ commit }) {
-    commit('setView', 'timeGridWeek')
-    api.changeView('timeGridWeek')
-  },
-  applyMobileView({ state }) {
-    if (state.view === 'timeGridWeek') {
-      api.changeView('timeGridThreeDay')
-    } else {
-      api.changeView(state.view)
-    }
-  },
-  applyDesktopView({ state: { view } }) {
+  setView(_, view) {
     api.changeView(view)
   },
   refetchEvents() {

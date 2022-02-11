@@ -13,7 +13,7 @@
     <v-divider></v-divider>
 
     <v-list class="py-2" nav>
-      <v-list-item to="/">
+      <v-list-item to="/" :exact="false">
         <v-list-item-icon>
           <v-icon>{{ mdiCalendar }}</v-icon>
         </v-list-item-icon>
@@ -26,7 +26,7 @@
           </v-btn>
         </v-list-item-action>
       </v-list-item>
-      <v-list-item to="/customers">
+      <v-list-item to="/customers" :exact="false">
         <v-list-item-icon>
           <v-icon>{{ mdiAccountGroup }}</v-icon>
         </v-list-item-icon>
@@ -37,7 +37,7 @@
           <v-icon>{{ mdiPlus }}</v-icon>
         </v-btn>
       </v-list-item>
-      <v-list-item to="/invoices">
+      <v-list-item to="/invoices" :exact="false">
         <v-list-item-icon>
           <v-icon>{{ mdiReceipt }}</v-icon>
         </v-list-item-icon>
