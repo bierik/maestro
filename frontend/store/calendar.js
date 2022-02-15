@@ -36,8 +36,8 @@ export const actions = {
     api.today()
     commit('updateCurrentDate')
   },
-  setView(_, view) {
-    api.changeView(view)
+  setView(_, { calendarView, calendarViewDate }) {
+    api.changeView(calendarView, calendarViewDate)
   },
   refetchEvents() {
     api.refetchEvents()

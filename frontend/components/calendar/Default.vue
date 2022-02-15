@@ -58,9 +58,9 @@ export default {
   },
   watch: {
     $route: {
-      handler({ query: { calendarView } }) {
+      handler({ query: { calendarView, calendarViewDate } }) {
         setTimeout(() => {
-          this.setView(calendarView)
+          this.setView({ calendarView, calendarViewDate })
         }, 0)
       },
       immediate: true,
@@ -78,7 +78,6 @@ export default {
     ...mapMutations('calendar', ['setApi']),
     ...mapActions('calendar', ['setView', 'prev', 'next']),
     init() {
-      console.log(this.$refs.calendar.getApi())
       this.setApi(this.$refs.calendar.getApi())
     },
   },

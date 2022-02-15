@@ -6,6 +6,7 @@
 
 <script>
 import { mdiCalendarWeek } from '@mdi/js'
+import noop from 'lodash/noop'
 
 export default {
   name: 'WeekAction',
@@ -18,12 +19,16 @@ export default {
   methods: {
     applyWeekView() {
       this.$vuetify.breakpoint.smAndUp
-        ? this.$router.replace({
-            query: { ...this.$route.query, calendarView: 'timeGridWeek' },
-          })
-        : this.$router.replace({
-            query: { ...this.$route.query, calendarView: 'timeGridThreeDay' },
-          })
+        ? this.$router
+            .replace({
+              query: { ...this.$route.query, calendarView: 'timeGridWeek' },
+            })
+            .catch(noop)
+        : this.$router
+            .replace({
+              query: { ...this.$route.query, calendarView: 'timeGridThreeDay' },
+            })
+            .catch(noop)
     },
   },
 }

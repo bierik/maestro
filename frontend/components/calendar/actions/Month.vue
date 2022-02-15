@@ -6,6 +6,7 @@
 
 <script>
 import { mdiCalendarMonth } from '@mdi/js'
+import noop from 'lodash/noop'
 
 export default {
   name: 'MonthAction',
@@ -17,7 +18,7 @@ export default {
   },
   methods: {
     monthView() {
-      this.$router.replace({ query: { ...this.$route.query, calendarView: 'dayGridMonth' } })
+      this.$router.replace({ query: { ...this.$route.query, calendarView: 'dayGridMonth' } }).catch(noop)
     },
   },
 }

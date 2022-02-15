@@ -77,7 +77,13 @@ export default {
       const duration = endDateTime.diff(startDateTime, ['hours', 'minutes', 'seconds'])
       return duration.toFormat('hh:mm:ss')
     },
-    createTask({ start, end }) {
+    createTask({ start, end, view }) {
+      if (view.type === 'dayGridMonth') {
+        return this.$router.push({
+          path: '/',
+          query: { calendarView: 'timeGridDay', calendarViewDate: DateTime.fromJSDate(start).toISODate() },
+        })
+      }
       const duration = this.getDuration(start, end)
       const startDateTime = DateTime.fromJSDate(start).toUTC().toISO()
       this.$router.push({
