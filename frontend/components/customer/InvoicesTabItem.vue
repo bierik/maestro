@@ -1,7 +1,12 @@
 <template>
   <v-tab-item v-bind="$attrs">
-    <InvoiceFilter v-model="invoiceFilter" />
+    <InvoiceFilter v-model="invoiceFilter" :show.sync="showFilter" />
     <ServerSideIterator :fetch="fetchInvoices" :filter="invoiceFilter">
+      <template v-if="$vuetify.breakpoint.smAndDown" #append-header>
+        <v-btn depressed small @click="showFilter = !showFilter"
+          ><v-icon small>{{ mdiFilterOutline }}</v-icon></v-btn
+        >
+      </template>
       <template #default="{ items }">
         <ListDivided :items="items">
           <template #item="{ item: invoice }">
@@ -30,7 +35,7 @@
 
 <script>
 import path from 'path'
-import { mdiFilePdfBox } from '@mdi/js'
+import { mdiFilePdfBox, mdiFilterOutline } from '@mdi/js'
 import flatten from 'lodash/flatten'
 import isEmpty from 'lodash/isEmpty'
 import status from '@/components/invoice/status'
@@ -46,7 +51,9 @@ export default {
   data() {
     const userStatusFilter = flatten([this.$route.query.status]).filter(Boolean)
     return {
+      showFilter: this.$vuetify.breakpoint.smAndUp,
       mdiFilePdfBox,
+      mdiFilterOutline,
       invoiceFilter: { status: isEmpty(userStatusFilter) ? [status.CREATED] : userStatusFilter },
     }
   },

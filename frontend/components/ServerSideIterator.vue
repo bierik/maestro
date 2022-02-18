@@ -11,12 +11,19 @@
     @update:options="debounceLoadItems"
   >
     <template #header="{ pagination, options: paginationOptions, updateOptions }">
-      <v-data-footer
-        :pagination="pagination"
-        :options="paginationOptions"
-        :items-per-page-options="[]"
-        @update:options="updateOptions"
-      />
+      <div class="d-flex shrink align-center">
+        <v-data-footer
+          :pagination="pagination"
+          :options="paginationOptions"
+          :items-per-page-options="[]"
+          class="grow"
+          @update:options="updateOptions"
+        />
+        <div class="pr-2">
+          <slot name="append-header" />
+        </div>
+      </div>
+      <v-divider />
     </template>
     <template v-for="name in $scopedSlots" #[name]="data">
       <slot :name="name" v-bind="data"></slot>
@@ -105,8 +112,6 @@ export default {
 }
 
 .v-data-footer {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
   padding-top: 6px;
   padding-bottom: 6px;
 }
