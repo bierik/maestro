@@ -86,7 +86,6 @@
 
 <script>
 import { mdiChevronLeft, mdiCheck } from '@mdi/js'
-import get from 'lodash/get'
 import omit from 'lodash/omit'
 import DateTime from 'luxon/src/datetime'
 import { mapActions } from 'vuex'
@@ -95,22 +94,18 @@ export default {
   name: 'ReportsPage',
   layout: 'blank',
   async asyncData({ $axios }) {
-    const { customer, next_event_title: nextEventTitle } = await $axios.$get('/tasks/next_event/')
     const report = (await $axios.$get('/reports/running/')) || {}
     return {
       report: Object.assign({
         id: report.id || null,
-        customer_id: get(report, 'customer.id', customer),
         start: report.start
           ? DateTime.fromISO(report.start).toFormat("yyyy-MM-dd'T'HH:mm")
           : DateTime.local().toFormat("yyyy-MM-dd'T'HH:mm"),
-        title: report.title || nextEventTitle,
         end: report.start ? DateTime.local().toFormat("yyyy-MM-dd'T'HH:mm") : null,
         route_flat: true,
       }),
       hasRunningReport: !!report,
       flat: {
-        customer_id: customer,
         name: '',
         price: 0,
       },

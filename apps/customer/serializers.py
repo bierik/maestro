@@ -82,16 +82,3 @@ class CustomerSerializer(serializers.ModelSerializer):
             Address.objects.update_or_create(id=address.get("id"), defaults=address)
 
         return customer
-
-
-class NextEventSerializer(serializers.Serializer):
-    next_event = serializers.DateTimeField()
-    next_event_title = serializers.CharField()
-    customer = serializers.PrimaryKeyRelatedField(queryset=Customer.objects.all())
-
-    class Meta:
-        fields = (
-            "customer",
-            "next_event",
-            "next_event_title",
-        )
