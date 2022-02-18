@@ -9,17 +9,8 @@ function applyExdates(source, target) {
 
 export function updateStart(rruleset, start) {
   const startDateTime = DateTime.fromJSDate(start).toUTC()
-  const rrule = rruleset.rrules()[0]
 
-  const updatedDtStart = DateTime.fromJSDate(rrule.options.dtstart)
-    .toUTC()
-    .set({
-      hours: startDateTime.hour,
-      minutes: startDateTime.minute,
-    })
-    .toJSDate()
-
-  const updateRruleset = update(rruleset, { dtstart: updatedDtStart })
+  const updateRruleset = update(rruleset, { dtstart: startDateTime.toJSDate() })
   rruleset.exdates().forEach((exdate) => {
     const updatedExdate = DateTime.fromJSDate(exdate)
       .toUTC()
