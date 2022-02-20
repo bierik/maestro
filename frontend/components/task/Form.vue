@@ -21,7 +21,7 @@
       <CustomerSelect
         :value="task.customer_id"
         :rules="[validators.required('Kunde')]"
-        :error-messages="errors['customer']"
+        :error-messages="errors['customer_id']"
         @input="(customerId) => update('customer_id', customerId)"
       />
       <FieldsDateTime

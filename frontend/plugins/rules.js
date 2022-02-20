@@ -13,9 +13,9 @@ Vue.mixin({
             return !isEmpty(value) || !isUndefined(value) || isNull(value) || `${name} muss ausgefüllt sein`
           }
         },
-        datetime(string) {
-          const datetime = DateTime.fromFormat(string, 'dd.MM.yyyy, HH:mm')
-          return datetime.isValid || `${string} ist kein gültiges Datums-Zeit-Format`
+        datetime(string = '') {
+          const datetime = DateTime.fromFormat(string, "yyyy-MM-dd'T'HH:mm")
+          return datetime.isValid || `Kein gültiges Datum`
         },
         afterToday(dateString) {
           const datetime = DateTime.fromISO(dateString)

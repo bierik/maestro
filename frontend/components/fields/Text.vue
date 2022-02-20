@@ -1,5 +1,5 @@
 <template>
-  <v-text-field filled v-bind="$attrs" class="rounded-0" v-on="$listeners" />
+  <v-text-field filled v-bind="$attrs" class="rounded-0" autocomplete="please-do-not-autocomplete" v-on="$listeners" />
 </template>
 
 <script>
