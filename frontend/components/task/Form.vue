@@ -112,10 +112,10 @@ export default {
     },
     dtstart: {
       get() {
-        return DateTime.fromJSDate(this.rrule.options.dtstart).toISO()
+        return DateTime.fromJSDate(this.rrule.options.dtstart).toUTC().toISO()
       },
       set(dtstart) {
-        this.rruleset = update(this.rruleSet, { dtstart: DateTime.fromISO(dtstart).toUTC().toJSDate() })
+        this.rruleSet = update(this.rruleSet, { dtstart: DateTime.fromISO(dtstart).toUTC().toJSDate() })
       },
     },
     frequencyMode: {
@@ -164,7 +164,7 @@ export default {
       return this.$axios.$post('tasks/', { ...this.task })
     },
     cancel() {
-      this.$router.push({ name: 'index', query: this.$route.query })
+      this.$router.push({ path: '/', query: this.$route.query })
     },
     destroy() {
       this.deleteDialog = true
@@ -183,16 +183,16 @@ export default {
     },
     success() {
       this.notifySuccess('Auftrag wurde gespeichert')
-      this.$router.push('/')
+      this.$router.push({ path: '/', query: this.$route.query })
     },
     successDestroy() {
       this.notifySuccess('Auftrag wurde gelöscht')
       this.deleteDialog = false
-      this.$router.push('/')
+      this.$router.push({ path: '/', query: this.$route.query })
     },
     error() {
       this.deleteDialog = false
-      this.$router.push('/')
+      this.$router.push({ path: '/', query: this.$route.query })
     },
     update(key, value) {
       this.$emit('input', { ...this.task, [key]: value })

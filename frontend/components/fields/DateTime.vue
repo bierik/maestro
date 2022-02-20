@@ -1,5 +1,5 @@
 <template>
-  <FieldsText v-model="datetime" v-mask="'##.##.####, ##:##'" v-bind="$attrs" :rules="[validators.datetime]" />
+  <FieldsText v-model="datetime" v-bind="$attrs" type="datetime-local" />
 </template>
 
 <script>
@@ -13,17 +13,15 @@ export default {
       default: () => '',
     },
   },
-  data() {
-    return {
-      datetime: DateTime.fromISO(this.value).toUTC().toFormat('dd.MM.yyyy, HH:mm'),
-    }
-  },
-  watch: {
-    datetime(string) {
-      const datetime = DateTime.fromFormat(string, 'dd.MM.yyyy, HH:mm')
-      if (datetime.isValid) {
-        this.$emit('input', datetime.setZone('utc', { keepLocalTime: true }).toISO())
-      }
+  computed: {
+    datetime: {
+      get() {
+        return DateTime.fromISO(this.value).toUTC().toFormat("yyyy-MM-dd'T'HH:mm")
+      },
+      set(datetimeString) {
+        const datetime = DateTime.fromFormat(datetimeString, "yyyy-MM-dd'T'HH:mm")
+        this.$emit('input', datetime.setZone('UTC', { keepLocalTime: true }).toISO())
+      },
     },
   },
 }

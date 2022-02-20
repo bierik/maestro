@@ -88,7 +88,7 @@ export default {
       const startDateTime = DateTime.fromJSDate(start).toUTC().toISO()
       this.$router.push({
         path: '/calendar/new',
-        query: { duration, start: startDateTime },
+        query: { ...this.$route.query, duration, start: startDateTime },
       })
     },
     editTask({ event: { id, start } }) {
