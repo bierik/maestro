@@ -94,6 +94,7 @@ export default {
       local: {
         token: {
           type: 'Token',
+          maxAge: Infinity,
         },
         endpoints: {
           login: { url: '/auth/login/', method: 'post' },
