@@ -18,8 +18,15 @@ class Customer(TimeStampedModel):
         choices=Sexes.choices,
         default=Sexes.MALE,
     )
-    first_name = models.CharField(verbose_name="Vorname", max_length=255)
-    last_name = models.CharField(verbose_name="Nachname", max_length=255)
+    first_name = models.CharField(
+        verbose_name="Vorname", max_length=255, null=True, blank=True
+    )
+    last_name = models.CharField(
+        verbose_name="Nachname", max_length=255, null=True, blank=True
+    )
+    company = models.CharField(
+        verbose_name="Nachname", max_length=255, null=True, blank=True
+    )
     price_per_hour = models.DecimalField(
         verbose_name="Stundenansatz", decimal_places=2, max_digits=5
     )
@@ -27,6 +34,9 @@ class Customer(TimeStampedModel):
 
     @property
     def full_name(self):
+        if self.company:
+            return self.company
+
         return " ".join([self.last_name, self.first_name])
 
     @property

@@ -1,22 +1,34 @@
 <template>
   <v-tab-item v-bind="$attrs">
     <v-list>
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title>
-            {{ customer.last_name }}
-          </v-list-item-title>
-          <v-list-item-subtitle> Nachname </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title>
-            {{ customer.first_name }}
-          </v-list-item-title>
-          <v-list-item-subtitle> Vorname </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
+      <template v-if="customer.company">
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>
+              {{ customer.company }}
+            </v-list-item-title>
+            <v-list-item-subtitle> Firmenname </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
+      <template v-else>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>
+              {{ customer.last_name }}
+            </v-list-item-title>
+            <v-list-item-subtitle> Nachname </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>
+              {{ customer.first_name }}
+            </v-list-item-title>
+            <v-list-item-subtitle> Vorname </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title>

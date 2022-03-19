@@ -1,6 +1,7 @@
 from pluck import pluck
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 from apps.customer.models import Address, Customer
 
@@ -36,6 +37,7 @@ class CustomerSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "full_name",
+            "company",
             "price_per_hour",
             "color",
             "addresses",
@@ -82,3 +84,17 @@ class CustomerSerializer(serializers.ModelSerializer):
             Address.objects.update_or_create(id=address.get("id"), defaults=address)
 
         return customer
+
+    def validate(self, attrs):
+        first_name = attrs.get("first_name")
+        last_name = attrs.get("last_name")
+        company = attrs.get("company")
+        if not company and last_name and first_name:
+            return attrs
+        if not last_name and not first_name and company:
+            return attrs
+        raise ValidationError(
+            _(
+                "Es muss entweder ein Vor- und Nachname oder eine Firma eingegeben werden."  # noqa
+            )
+        )

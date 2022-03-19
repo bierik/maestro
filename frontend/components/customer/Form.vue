@@ -3,6 +3,11 @@
     <v-col cols="12" class="py-0">
       <h2>Personalien</h2>
     </v-col>
+    <v-col cols="12">
+      <v-alert v-if="errors.non_field_errors" type="warning">
+        {{ errors.non_field_errors.join('\n') }}
+      </v-alert>
+    </v-col>
     <v-col cols="6">
       <FieldsText
         :value="customer.last_name"
@@ -18,6 +23,14 @@
         label="Vorname"
         :error-messages="errors.first_name"
         @input="(firstName) => update('first_name', firstName)"
+      />
+    </v-col>
+    <v-col cols="12">
+      <FieldsText
+        :value="customer.company"
+        label="Firmenname"
+        :error-messages="errors.company"
+        @input="(company) => update('company', company)"
       />
     </v-col>
     <v-col cols="12">
