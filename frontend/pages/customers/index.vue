@@ -1,6 +1,12 @@
 <template>
   <LayoutDefault title="Kunden" narrow>
-    <FieldsText v-model="customerFilter.text" hide-details class="shrink" label="Suchen" append-icon="mdi-magnify" />
+    <div class="d-flex">
+      <FieldsText v-model="customerFilter.text" hide-details label="Suchen" append-icon="mdi-magnify" class="mr-2" />
+      <v-btn tag="label" tile depressed style="height: 100%">
+        <input v-model="customerFilter.is_active" class="mr-1" type="checkbox" />
+        <span class="text-lowercase font-weight-regular">Nur Aktive</span>
+      </v-btn>
+    </div>
     <ServerSideIterator :fetch="fetchCustomers" :filter="customerFilter">
       <template #default="{ items }">
         <ListDivided :items="items">
@@ -42,7 +48,13 @@ import { mdiAccount } from '@mdi/js'
 export default {
   name: 'CustomersPage',
   data() {
-    return { mdiAccount, customerFilter: { text: this.$route.query.text } }
+    return {
+      mdiAccount,
+      customerFilter: {
+        text: this.$route.query.text,
+        is_active: this.$route.query.is_active === 'true',
+      },
+    }
   },
   head() {
     return {

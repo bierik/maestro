@@ -42,6 +42,7 @@ class CustomerSerializer(serializers.ModelSerializer):
             "color",
             "addresses",
             "primary_address",
+            "is_active",
         )
         read_only_fields = ("full_name", "primary_address")
 

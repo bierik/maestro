@@ -31,6 +31,7 @@ class Customer(TimeStampedModel):
         verbose_name="Stundenansatz", decimal_places=2, max_digits=5
     )
     color = ColorField(default="#1976d2")
+    is_active = models.BooleanField(verbose_name="Aktiv", default=True)
 
     @property
     def full_name(self):

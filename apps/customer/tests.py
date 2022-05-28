@@ -1,14 +1,14 @@
-from django.test import TestCase
-
 from model_bakery import baker
 from rest_framework.test import APIClient
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 
+from maestro.testing import MaestroTestCase, create_customer
+
 User = get_user_model()
 
 
-class CustomerTestCase(TestCase):
+class CustomerTestCase(MaestroTestCase):
     def test_natural_and_legal_customer(self):
         client = APIClient()
         user = baker.make(User)
@@ -62,3 +62,23 @@ class CustomerTestCase(TestCase):
             },
             response.json(),
         )
+
+    def test_deactivate(self):
+        customer = create_customer()
+        self.assertTrue(customer.is_active)
+        response = self.client.post(
+            reverse_lazy("customer-deactivate", kwargs={"pk": customer.pk})
+        )
+        self.assertEqual(200, response.status_code)
+        customer.refresh_from_db()
+        self.assertFalse(customer.is_active)
+
+    def test_activate(self):
+        customer = create_customer(is_active=False)
+        self.assertFalse(customer.is_active)
+        response = self.client.post(
+            reverse_lazy("customer-activate", kwargs={"pk": customer.pk})
+        )
+        self.assertEqual(200, response.status_code)
+        customer.refresh_from_db()
+        self.assertTrue(customer.is_active)

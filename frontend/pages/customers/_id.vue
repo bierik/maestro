@@ -1,5 +1,11 @@
 <template>
-  <LayoutDefault :title="customer.full_name" narrow>
+  <LayoutDefault narrow>
+    <template #title>
+      <div class="d-flex align-center">
+        {{ customer.full_name }}
+        <v-chip v-if="!customer.is_active" class="ml-2" color="warning" small>Deaktiviert</v-chip>
+      </div>
+    </template>
     <template #prepend-actions>
       <v-btn color="transparent" to="/customers" nuxt icon>
         <v-icon color="white">{{ mdiChevronLeft }}</v-icon>

@@ -52,6 +52,9 @@
         @input="(addresses) => update('addresses', addresses)"
       />
     </v-col>
+    <template v-for="(index, name) in $scopedSlots" #[name]="data">
+      <slot :name="name" v-bind="data"></slot>
+    </template>
   </Form>
 </template>
 

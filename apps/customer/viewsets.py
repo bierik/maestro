@@ -6,6 +6,8 @@ from rest_framework.mixins import (
     UpdateModelMixin,
 )
 from rest_framework.viewsets import GenericViewSet
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from apps.customer.filters import CustomerFilter
 from apps.customer.models import Customer
@@ -31,6 +33,20 @@ class CustomerViewset(
     queryset = Customer.objects.order_by("last_name", "first_name")
     serializer_class = CustomerSerializer
     filterset_class = CustomerFilter
+
+    @action(methods=["POST"], detail=True)
+    def deactivate(self, request, pk=None):
+        customer = self.get_object()
+        customer.is_active = False
+        customer.save()
+        return Response(status=200)
+
+    @action(methods=["POST"], detail=True)
+    def activate(self, request, pk=None):
+        customer = self.get_object()
+        customer.is_active = True
+        customer.save()
+        return Response(status=200)
 
 
 class CustomerInvoiceViewset(GenericViewSet, ListModelMixin):
