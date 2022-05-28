@@ -14,23 +14,24 @@ from apps.report.serializers import ReportInvoiceSerializer
 
 
 class InvoiceService:
-    def __init__(self, customer, start, end):
+    def __init__(self, customer, start, end, address=None):
         self.customer = customer
+        self.address = address
         self.start = start
         self.end = end
 
     @classmethod
     def from_data(cls, data):
         customer = data.get("customer")
-        start = data.get("start")
-        end = data.get("end")
+        start = data.get("start", arrow.now(tz=settings.TIME_ZONE))
+        end = data.get("end", arrow.now(tz=settings.TIME_ZONE))
         customer = Customer.objects.get(id=customer)
+        address = data.get("address")
         start = arrow.get(start, tzinfo=settings.TIME_ZONE).date()
         end = arrow.get(end, tzinfo=settings.TIME_ZONE).shift(days=1).date()
-        return cls(customer, start, end)
+        return cls(customer, start, end, address=address)
 
-    def generate_content(self, created, number):
-        template = get_template("default.html")
+    def generate_context(self, created, number):
         reports = self.customer.reports.filter(
             start__gte=self.start, start__lt=self.end
         )
@@ -49,15 +50,16 @@ class InvoiceService:
         for flat in list(flats):
             subtotal_flats += flat.price
 
-        route_flats_count = reports.filter(route_flat=True).count()
+        route_flats_count = reports.filter(route_flat=True).count() if reports.exists() else 0
+        address = self.customer.addresses.get(id=self.address) if self.address else self.customer.primary_address
         subtotal_route_flats = (
-            route_flats_count * self.customer.primary_address.route_flat
+            route_flats_count * address.route_flat
         )
 
         route_flat_data = [
             {
                 "name": "Wegpauschale",
-                "price": "{:.2f} CHF".format(self.customer.primary_address.route_flat),
+                "price": "{:.2f} CHF".format(address.route_flat),
                 "amount": route_flats_count,
                 "total": "{:.2f} CHF".format(subtotal_route_flats),
             }
@@ -69,13 +71,12 @@ class InvoiceService:
 
         total = float(subtotal_flats) + subtotal_reports
 
-        return template.render(
-            {
+        return {
                 "sex": self.customer.get_sex_display(),
                 "full_name": self.customer.full_name,
-                "address": self.customer.primary_address.address,
-                "place": self.customer.primary_address.place,
-                "zipcode": self.customer.primary_address.zip_code,
+                "address": address.address,
+                "place": address.place,
+                "zipcode": address.zip_code,
                 "date": created.format("DD.MM.YYYY"),
                 "invoice_place": "Bönigen",
                 "invoice_number": number,
@@ -85,7 +86,11 @@ class InvoiceService:
                 "subtotal_flats": "{:.2f} CHF".format(subtotal_flats),
                 "total": "{:.2f} CHF".format(total),
             }
-        )
+
+    def generate_content(self, created, number):
+        template = get_template("default.html")
+        context = self.generate_context(created, number)
+        return template.render(context)
 
     def generate_invoice_files(self, content):
         with tempfile.NamedTemporaryFile(suffix=".html", delete=False) as html_file:

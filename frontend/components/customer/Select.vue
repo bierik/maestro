@@ -6,6 +6,7 @@
     label="Kunde"
     item-text="full_name"
     item-value="id"
+    return-object
   />
 </template>
 
@@ -17,6 +18,10 @@ export default {
     value: {
       type: Number,
       default: () => null,
+    },
+    addresses: {
+      type: Array,
+      default: () => [],
     },
   },
   data() {
@@ -30,7 +35,8 @@ export default {
         return this.value
       },
       set(customer) {
-        this.$emit('input', customer)
+        this.$emit('input', customer.id)
+        this.$emit('update:addresses', customer.addresses)
       },
     },
   },
